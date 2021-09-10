@@ -7,6 +7,7 @@ buildscript {
         dataBindingCompilerVersion = gradleVersion // Always need to be the same.
         navigationVersion = "2.3.5"
         materialVersion = "1.4.0"
+        timberVersion='4.7.1'
     }
     repositories {
         google()
