@@ -1,14 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     tools:context=".fragments.DetailFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:padding="@dimen/_25dp">
 
-</FrameLayout>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/productNameTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/TextAppearance.MaterialComponents.Headline6"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Nombre del producto" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/imagesRecyclerView"
+            android:layout_width="@dimen/_250dp"
+            android:layout_height="@dimen/_250dp"
+            android:layout_marginTop="@dimen/_10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/productNameTextView" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/priceTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/PriceTextStyle"
+            app:layout_constraintTop_toBottomOf="@id/imagesRecyclerView"
+            tools:text="$ 50.000" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/productDetailTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/DetailTextStyle"
+            app:layout_constraintTop_toBottomOf="@id/priceTextView"
+            tools:text="Aqui vamos a poner el detalle del producto, solo escribimos para
+llenar este texto y visualizar la salida" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

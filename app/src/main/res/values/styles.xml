@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="PriceTextStyle" parent="TextAppearance.AppCompat.Display1">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+   <style name="DetailTextStyle" parent="TextAppearance.AppCompat.Body1">
+       <item name="android:textColorPrimary">@color/gris_600</item>
+   </style>
+
+
+</resources>
