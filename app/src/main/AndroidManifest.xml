@@ -13,8 +13,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MercadoPago">
         <activity
-            android:name=".MainActivity"
+            android:name=".uiControllers.activities.SearchResultsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".uiControllers.activities.MainActivity"
             android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
