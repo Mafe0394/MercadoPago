@@ -1,60 +1,110 @@
 package com.projects.mercadopago.uiControllers.fragments
 
+import android.app.SearchManager
+import android.content.Context
 import android.os.Bundle
+import android.view.*
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.projects.mercadopago.R
+import com.projects.mercadopago.databinding.FragmentSearchBinding
+import com.projects.mercadopago.viewModels.SearchViewModel
+import com.projects.mercadopago.viewModels.viewModelsFactory.SearchViewModelFactory
+import timber.log.Timber
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [SearchFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class SearchFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+    private val searchViewModel by viewModels<SearchViewModel> {
+        SearchViewModelFactory()
     }
+
+    private lateinit var binding: FragmentSearchBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search, container, false)
+        val view = inflater.inflate(R.layout.fragment_search, container, false)
+        binding = FragmentSearchBinding.bind(view).apply {
+            viewModel = searchViewModel
+        }
+        binding.lifecycleOwner = this.viewLifecycleOwner
+        setHasOptionsMenu(true)
+
+        binding.bu.setOnClickListener {
+            findNavController().navigate(
+                SearchFragmentDirections.actionSearchFragmentToResultsFragment(
+                    "algo"
+                )
+            )
+        }
+
+        return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SearchFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SearchFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.options_menu, menu)
+
+        // Check if searchView is expanded and keep it after rotation
+        keepExpandedAfterRotation(menu)
+
+        // Associate searchable configuration with the SearchView
+        val searchManager = activity?.getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        (menu.findItem(R.id.search)?.actionView as SearchView).apply {
+            isIconifiedByDefault = false
+            onActionViewExpanded()
+            setSearchableInfo(searchManager.getSearchableInfo(activity?.componentName))
+            setQuery(searchViewModel.query.value, false)
+            this.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(p0: String?): Boolean {
+                    Timber.i("Submited $p0")
+                    findNavController().navigate(
+                        SearchFragmentDirections.actionSearchFragmentToResultsFragment(
+                            p0 ?: ""
+                        )
+                    )
+                    return false
+                }
+
+                override fun onQueryTextChange(p0: String?): Boolean {
+                    Timber.i("Text changed $p0")
+                    searchViewModel.setQuery(p0)
+                    return true
+                }
+
+            })
+        }
+
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    private fun keepExpandedAfterRotation(menu: Menu) {
+        val searchViewMenuItem = menu.findItem(R.id.search)
+        if (searchViewModel.isExpanded.value == true)
+            searchViewMenuItem.expandActionView()
+        searchViewMenuItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
+            override fun onMenuItemActionExpand(p0: MenuItem?): Boolean {
+                Timber.i("expanded")
+                searchViewModel.setIsExpanded(true)
+                return true
+            }
+
+            override fun onMenuItemActionCollapse(p0: MenuItem?): Boolean {
+                Timber.i("collased")
+                searchViewModel.setIsExpanded(false)
+                return true
+            }
+
+        })
+    }
+
+
 }

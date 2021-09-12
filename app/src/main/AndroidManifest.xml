@@ -13,14 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MercadoPago">
         <activity
-            android:name=".uiControllers.activities.SearchResultsActivity"
-            android:exported="true" />
-        <activity
             android:name=".uiControllers.activities.MainActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-            </intent-filter>
+            android:exported="true"
+            android:launchMode="singleTop">
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
@@ -28,6 +23,7 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
         </activity>
     </application>

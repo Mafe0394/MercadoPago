@@ -4,7 +4,9 @@
     tools:context=".uiControllers.fragments.SearchFragment">
 
     <data>
-
+        <variable
+            name="viewModel"
+            type="com.projects.mercadopago.viewModels.SearchViewModel" />
     </data>
 
 <androidx.appcompat.widget.LinearLayoutCompat
@@ -12,27 +14,33 @@
     android:orientation="vertical"
     android:layout_height="match_parent"
     android:padding="@dimen/_25dp">
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/categoriesTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/filter_by_product"
-        android:theme="@style/TextAppearance.AppCompat.Title"/>
+        android:text="@string/filter_by_category"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/categoriesRecyclerView"
         android:layout_width="@dimen/_0dp"
         android:layout_height="@dimen/_115dp"
         android:layout_marginTop="@dimen/_10dp"/>
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/productsTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/products"
-        android:theme="@style/TextAppearance.AppCompat.Title"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
         android:layout_marginVertical="@dimen/_10dp"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/productsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_0dp"/>
+
+
+    <Button
+        android:id="@+id/bu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>
