@@ -59,13 +59,21 @@ class SearchFragment : Fragment() {
         // Associate searchable configuration with the SearchView
         val searchManager = activity?.getSystemService(Context.SEARCH_SERVICE) as SearchManager
         (menu.findItem(R.id.search)?.actionView as SearchView).apply {
+            setSearchableInfo(searchManager.getSearchableInfo(activity?.componentName))
+            // Open SearchView when click on optionsMenu search icon
             isIconifiedByDefault = false
             onActionViewExpanded()
-            setSearchableInfo(searchManager.getSearchableInfo(activity?.componentName))
+            // Set query value for persistence when screen rotation
             setQuery(searchViewModel.query.value, false)
+
             this.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(p0: String?): Boolean {
                     Timber.i("Submited $p0")
+                    // Reset SearchView
+                    searchViewModel.resetQuery()
+                    searchViewModel.setIsExpanded(false)
+
+                    // Go to Results Fragment to show results
                     findNavController().navigate(
                         SearchFragmentDirections.actionSearchFragmentToResultsFragment(
                             p0 ?: ""
@@ -76,6 +84,7 @@ class SearchFragment : Fragment() {
 
                 override fun onQueryTextChange(p0: String?): Boolean {
                     Timber.i("Text changed $p0")
+                    // Update Query in ViewModel
                     searchViewModel.setQuery(p0)
                     return true
                 }

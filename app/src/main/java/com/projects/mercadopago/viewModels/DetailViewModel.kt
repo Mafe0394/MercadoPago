@@ -1,4 +1,6 @@
 package com.projects.mercadopago.viewModels
 
-class DetailViewModel {
+import androidx.lifecycle.ViewModel
+
+class DetailViewModel: ViewModel() {
 }

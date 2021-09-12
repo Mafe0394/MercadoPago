@@ -24,5 +24,9 @@ class SearchViewModel: ViewModel() {
         _isExpanded.value=isExpanded
     }
 
+    fun resetQuery(){
+        _query.value=null
+    }
+
 
 }
