@@ -1,4 +1,6 @@
 package com.projects.mercadopago.viewModels
 
-class ResultsViewModel {
+import androidx.lifecycle.ViewModel
+
+class ResultsViewModel:ViewModel() {
 }

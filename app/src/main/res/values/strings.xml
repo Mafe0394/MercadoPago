@@ -6,4 +6,5 @@
     <string name="products">Products</string>
     <string name="search_hint">Search MercadoPago</string>
     <string name="filter_by_category">Filter by category</string>
+    <string name="results">Results</string>
 </resources>
