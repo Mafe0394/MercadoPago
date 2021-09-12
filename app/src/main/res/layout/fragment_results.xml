@@ -5,6 +5,9 @@
     tools:context=".uiControllers.fragments.ResultsFragment">
 
     <data>
+        <variable
+            name="viewModel"
+            type="com.projects.mercadopago.viewModels.ResultsViewModel" />
 
     </data>
 

@@ -30,9 +30,11 @@ class ResultsFragment : Fragment() {
         // Inflate the layout for this fragment
         binding= FragmentResultsBinding.inflate(inflater)
 
+        binding.viewModel=viewModel
+        binding.lifecycleOwner=this.viewLifecycleOwner
 
         val arguments=ResultsFragmentArgs.fromBundle(requireArguments())
-        Timber.i(arguments.queryString)
+        Timber.i("Query ${arguments.queryString}")
         return binding.root
     }
 
