@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.projects.mercadopago.R
+import com.projects.mercadopago.adapters.ResultsAdapter
 import com.projects.mercadopago.databinding.FragmentResultsBinding
 import com.projects.mercadopago.databinding.FragmentSearchBinding
 import com.projects.mercadopago.viewModels.ResultsViewModel
@@ -32,6 +33,9 @@ class ResultsFragment : Fragment() {
 
         binding.viewModel=viewModel
         binding.lifecycleOwner=this.viewLifecycleOwner
+
+        // Initialize the RecyclerView
+        binding.resultsRecyclerView.adapter=ResultsAdapter()
 
         val arguments=ResultsFragmentArgs.fromBundle(requireArguments())
         Timber.i("Query ${arguments.queryString}")

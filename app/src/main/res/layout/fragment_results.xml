@@ -32,7 +32,10 @@
             app:layout_constraintTop_toBottomOf="@id/resultsTextView"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:listData="@{viewModel.products}"
+            android:clipToPadding="true" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

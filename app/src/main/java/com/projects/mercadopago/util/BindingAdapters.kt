@@ -8,6 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.projects.mercadopago.R
+import com.projects.mercadopago.adapters.MarginItemDecoration
+import com.projects.mercadopago.adapters.ResultsAdapter
+import com.projects.mercadopago.domain.ProductModel
+import timber.log.Timber
 
 @BindingAdapter("imageUrl")
 fun bindImage(imgView: ImageView, imgUrl: String?) {
@@ -26,15 +30,23 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
     }
 }
 
-//@BindingAdapter("listData")
-//fun bindRecyclerView(
-//    recyclerView: RecyclerView,
-//    data: List<MarsProperty>?
-//) {
-//    val adapter = recyclerView.adapter as PhotoGridAdapter
-//    // Tells the RecyclerView when a new list is available
-//    adapter.submitList(data)
-//}
+@BindingAdapter("listData")
+fun bindRecyclerView(
+    recyclerView: RecyclerView,
+    data: List<ProductModel>?
+) {
+    Timber.i("${recyclerView.id} ")
+    val adapter = recyclerView.adapter as ResultsAdapter
+
+    // Adding separation between the recycler view Items
+    recyclerView.addItemDecoration(
+        MarginItemDecoration(
+            recyclerView.context.resources.getDimensionPixelSize(R.dimen._5dp)
+        )
+    )
+    // Tells the RecyclerView when a new list is available
+    adapter.submitList(data)
+}
 
 //@BindingAdapter("marsApiStatus")
 //fun bindStatus(

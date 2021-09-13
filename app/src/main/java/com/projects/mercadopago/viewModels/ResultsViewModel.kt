@@ -30,8 +30,10 @@ class ResultsViewModel : ViewModel() {
             _status.value = MercadoApiStatus.LOADING
             try {
                 val result = MercadoPagoNetwork.retrofitService.getProducts()
+                result.results?.get(0)?.thumbnail ="gato"
                 Timber.i("Respuesta del servicio ${result.results?.size}")
-                _products.value = MercadoPagoNetwork.retrofitService.getProducts().results
+                _products.value=result.results
+//                _products.value = MercadoPagoNetwork.retrofitService.getProducts().results
                 _status.value = MercadoApiStatus.DONE
             } catch (error: Exception) {
                 _products.value = ArrayList()
