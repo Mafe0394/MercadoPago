@@ -34,14 +34,6 @@ class SearchFragment : Fragment() {
         binding.lifecycleOwner = this.viewLifecycleOwner
         setHasOptionsMenu(true)
 
-        binding.bu.setOnClickListener {
-            findNavController().navigate(
-                SearchFragmentDirections.actionSearchFragmentToResultsFragment(
-                    "algo"
-                )
-            )
-        }
-
         return view
     }
 

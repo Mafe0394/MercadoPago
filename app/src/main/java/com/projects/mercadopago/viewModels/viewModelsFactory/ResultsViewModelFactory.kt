@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.projects.mercadopago.viewModels.ResultsViewModel
 
 @Suppress("UNCHECKED_CAST")
-class ResultsViewModelFactory : ViewModelProvider.NewInstanceFactory() {
+class ResultsViewModelFactory(val query:String) : ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-        ResultsViewModel() as T
+        ResultsViewModel(query) as T
 }

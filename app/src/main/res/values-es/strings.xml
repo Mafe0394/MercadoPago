@@ -9,4 +9,7 @@
     <string name="search_hint">Buscar en Mercado Pago</string>
     <string name="results">Resultados</string>
     <string name="product_image">Imagen del produto</string>
+    <string name="loading_elllipsis">Cargando…</string>
+    <string name="something_went_wrong">Algo salió mal</string>
+    <string name="we_couldnt_find_products_that_match_your_search_criteria">No pudimos encontrar resultados para tu búsqueda. \n Intenta una búsqueda diferente</string>
 </resources>

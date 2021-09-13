@@ -2,6 +2,8 @@ package com.projects.mercadopago.util
 
 import android.view.View
 import android.widget.ImageView
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -11,6 +13,7 @@ import com.projects.mercadopago.R
 import com.projects.mercadopago.adapters.MarginItemDecoration
 import com.projects.mercadopago.adapters.ResultsAdapter
 import com.projects.mercadopago.domain.ProductModel
+import com.projects.mercadopago.network.MercadoApiStatus
 import timber.log.Timber
 
 @BindingAdapter("imageUrl")
@@ -48,22 +51,48 @@ fun bindRecyclerView(
     adapter.submitList(data)
 }
 
-//@BindingAdapter("marsApiStatus")
-//fun bindStatus(
-//    statusImageView: ImageView,
-//    status: MarsApiStatus?
-//) {
-//    when (status) {
-//        MarsApiStatus.LOADING -> {
-//            statusImageView.visibility = View.VISIBLE
-//            statusImageView.setImageResource(R.drawable.loading_animation)
-//        }
-//        MarsApiStatus.ERROR -> {
-//            statusImageView.visibility = View.VISIBLE
-//            statusImageView.setImageResource(R.drawable.ic_connection_error)
-//        }
-//        MarsApiStatus.DONE -> statusImageView.visibility = View.GONE
-//
-//
-//    }
-//}
+@BindingAdapter("appApiStatus")
+fun bindStatus(
+    statusImageView: ImageView,
+    status: MercadoApiStatus?
+) {
+    when (status) {
+        MercadoApiStatus.LOADING -> {
+            statusImageView.visibility = View.VISIBLE
+            statusImageView.setImageResource(R.drawable.loading_animation)
+        }
+        MercadoApiStatus.ERROR -> {
+            statusImageView.visibility = View.VISIBLE
+            statusImageView.setImageResource(R.drawable.no_connection_icon)
+        }
+        MercadoApiStatus.DONE -> statusImageView.visibility = View.GONE
+        MercadoApiStatus.EMPTY_SEARCH-> {
+            statusImageView.visibility = View.VISIBLE
+            statusImageView.setImageResource(R.drawable.no_results_icon)
+        }
+
+    }
+}
+
+@BindingAdapter("appApiSTexttatus")
+fun bindTextStatus(
+    statusTextView: TextView,
+    status: MercadoApiStatus?
+) {
+    when (status) {
+        MercadoApiStatus.LOADING -> {
+            statusTextView.visibility = View.VISIBLE
+            statusTextView.setText(R.string.loading_elllipsis)
+        }
+        MercadoApiStatus.ERROR -> {
+            statusTextView.visibility = View.VISIBLE
+            statusTextView.setText(R.string.something_went_wrong)
+        }
+        MercadoApiStatus.DONE -> statusTextView.visibility = View.GONE
+        MercadoApiStatus.EMPTY_SEARCH-> {
+            statusTextView.visibility = View.VISIBLE
+            statusTextView.setText(R.string.we_couldnt_find_products_that_match_your_search_criteria)
+        }
+
+    }
+}

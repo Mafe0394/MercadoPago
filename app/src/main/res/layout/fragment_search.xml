@@ -36,11 +36,5 @@
         android:id="@+id/productsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_0dp"/>
-
-
-    <Button
-        android:id="@+id/bu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
 </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

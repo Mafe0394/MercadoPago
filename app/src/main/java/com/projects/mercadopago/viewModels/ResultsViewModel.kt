@@ -7,10 +7,11 @@ import androidx.lifecycle.viewModelScope
 import com.projects.mercadopago.domain.ProductModel
 import com.projects.mercadopago.network.MercadoApiStatus
 import com.projects.mercadopago.network.MercadoPagoNetwork
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class ResultsViewModel : ViewModel() {
+class ResultsViewModel(query: String) : ViewModel() {
 
     private val _products = MutableLiveData<List<ProductModel>>()
     private val _status = MutableLiveData<MercadoApiStatus>()
@@ -22,18 +23,23 @@ class ResultsViewModel : ViewModel() {
         get() = _status
 
     init {
-        getQueryProducts()
+        if (query.isBlank())
+            Timber.i("Need to controlled empty or blank")
+        getQueryProducts(query)
     }
 
-    private fun getQueryProducts() {
+    private fun getQueryProducts(query: String) {
         viewModelScope.launch {
             _status.value = MercadoApiStatus.LOADING
+            delay(2000)
             try {
-                val result = MercadoPagoNetwork.retrofitService.getProducts()
-                result.results?.get(0)?.thumbnail ="gato"
-                Timber.i("Respuesta del servicio ${result.results?.size}")
-                _products.value=result.results
-//                _products.value = MercadoPagoNetwork.retrofitService.getProducts().results
+                val products =
+                    MercadoPagoNetwork.retrofitService.getProductsByQuery(query = query).products
+                if (products.isNullOrEmpty()) {
+                    _status.value=MercadoApiStatus.EMPTY_SEARCH
+                    return@launch
+                }
+                _products.value = products
                 _status.value = MercadoApiStatus.DONE
             } catch (error: Exception) {
                 _products.value = ArrayList()

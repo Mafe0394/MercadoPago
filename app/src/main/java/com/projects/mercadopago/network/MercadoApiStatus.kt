@@ -1,3 +1,3 @@
 package com.projects.mercadopago.network
 
-enum class MercadoApiStatus {LOADING,ERROR,DONE}
+enum class MercadoApiStatus {LOADING,ERROR,DONE,EMPTY_SEARCH}

@@ -12,7 +12,8 @@ data class ResponseModel (
 
     val query: String? = null,
     val paging: Paging? = null,
-    val results: List<ProductModel>? = null,
+    @Json(name = "results")
+    val products: List<ProductModel>? = null,
     val sort: Sort? = null,
 
     @Json(name="available_sorts")
@@ -36,7 +37,7 @@ data class AvailableFilter (
 data class AvailableFilterValue (
     val id: String? = null,
     val name: String? = null,
-    val results: Long? = null
+    val results: Double? = null
 )
 
 
@@ -47,13 +48,13 @@ data class Sort (
 
 
 data class Paging (
-    val total: Long? = null,
+    val total: Double? = null,
 
     @Json(name="primary_results")
-    val primaryResults: Long? = null,
+    val primaryResults: Double? = null,
 
-    val offset: Long? = null,
-    val limit: Long? = null
+    val offset: Double? = null,
+    val limit: Double? = null
 )
 
 
@@ -74,7 +75,7 @@ data class Address (
 
 data class Attribute (
 
-    val source: Long? = null,
+    val source: Double? = null,
     val id: String? = null,
 
     @Json(name="value_id")
@@ -102,21 +103,21 @@ data class Attribute (
 data class AttributeValue (
     val id: String? = null,
     val name: String? = null,
-    val source: Long? = null
+    val source: Double? = null
 )
 
 
 
 
 data class DifferentialPricing (
-    val id: Long? = null
+    val id: Double? = null
 )
 
 
 data class Installments (
-    val quantity: Long? = null,
+    val quantity: Double? = null,
     val amount: Double? = null,
-    val rate: Long? = null,
+    val rate: Double? = null,
 
     @Json(name="currency_id")
     val currencyID: String? = null
@@ -132,7 +133,7 @@ data class Prices (
     val paymentMethodPrices: List<String>? = null,
 
     @Json(name="reference_prices")
-    val referencePrices: List<String>? = null,
+    val referencePrices: List<Any>? = null,
 
     @Json(name="purchase_discounts")
     val purchaseDiscounts: List<String>? = null
@@ -148,10 +149,10 @@ data class Presentation (
 data class Price (
     val id: String? = null,
     val type: String? = null,
-    val amount: Long? = null,
+    val amount: Double? = null,
 
     @Json(name="regular_amount")
-    val regularAmount: Long? = null,
+    val regularAmount: Double? = null,
 
     @Json(name="currency_id")
     val currencyID: String? = null,
@@ -193,21 +194,21 @@ data class Metadata (
     val promotionType: String? = null,
 
     @Json(name="discount_meli_amount")
-    val discountMeliAmount: Long? = null,
+    val discountMeliAmount: Double? = null,
 
     @Json(name="campaign_discount_percentage")
-    val campaignDiscountPercentage: Long? = null,
+    val campaignDiscountPercentage: Float? = null,
 
     @Json(name="campaign_end_date")
     val campaignEndDate: String? = null,
 
     @Json(name="order_item_price")
-    val orderItemPrice: Long? = null
+    val orderItemPrice: Double? = null
 )
 
 
 data class Seller (
-    val id: Long? = null,
+    val id: Double? = null,
     val permalink: String? = null,
 
     @Json(name="registration_date")
