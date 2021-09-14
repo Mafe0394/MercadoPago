@@ -218,9 +218,7 @@ data class Seller (
     val carDealer: Boolean? = null,
 
     @Json(name="real_estate_agency")
-    val realEstateAgency: Boolean? = null,
-
-    val tags: String? = null
+    val realEstateAgency: Boolean? = null
 )
 
 

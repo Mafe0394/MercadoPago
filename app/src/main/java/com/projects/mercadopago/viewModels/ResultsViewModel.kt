@@ -1,9 +1,6 @@
 package com.projects.mercadopago.viewModels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.projects.mercadopago.domain.ProductModel
 import com.projects.mercadopago.network.MercadoApiStatus
 import com.projects.mercadopago.network.MercadoPagoNetwork
@@ -11,7 +8,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class ResultsViewModel(query: String) : ViewModel() {
+class ResultsViewModel( _query: String) : ViewModel() {
 
     private val _products = MutableLiveData<List<ProductModel>>()
     private val _status = MutableLiveData<MercadoApiStatus>()
@@ -22,10 +19,14 @@ class ResultsViewModel(query: String) : ViewModel() {
     val status: LiveData<MercadoApiStatus>
         get() = _status
 
+    val query=_query
+
+
+
     init {
-        if (query.isBlank())
+        if (_query.isBlank())
             Timber.i("Need to controlled empty or blank")
-        getQueryProducts(query)
+        getQueryProducts(_query)
     }
 
     private fun getQueryProducts(query: String) {

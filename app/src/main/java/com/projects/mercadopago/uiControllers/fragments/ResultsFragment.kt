@@ -1,21 +1,17 @@
 package com.projects.mercadopago.uiControllers.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.projects.mercadopago.R
 import com.projects.mercadopago.adapters.ResultsAdapter
 import com.projects.mercadopago.databinding.FragmentResultsBinding
-import com.projects.mercadopago.databinding.FragmentSearchBinding
+import com.projects.mercadopago.util.setToolbarTitle
 import com.projects.mercadopago.viewModels.ResultsViewModel
-import com.projects.mercadopago.viewModels.SearchViewModel
-import com.projects.mercadopago.viewModels.viewModelsFactory.DetailViewModelFactory
 import com.projects.mercadopago.viewModels.viewModelsFactory.ResultsViewModelFactory
-import com.projects.mercadopago.viewModels.viewModelsFactory.SearchViewModelFactory
 import timber.log.Timber
 
 
@@ -33,7 +29,6 @@ class ResultsFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         binding = FragmentResultsBinding.inflate(inflater)
-
 
         return binding.root
     }

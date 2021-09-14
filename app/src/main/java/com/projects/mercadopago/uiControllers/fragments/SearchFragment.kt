@@ -37,10 +37,6 @@ class SearchFragment : Fragment() {
         return view
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.options_menu, menu)
@@ -62,7 +58,7 @@ class SearchFragment : Fragment() {
                 override fun onQueryTextSubmit(p0: String?): Boolean {
                     Timber.i("Submited $p0")
                     // Reset SearchView
-                    searchViewModel.resetQuery()
+//                    searchViewModel.resetQuery()
                     searchViewModel.setIsExpanded(false)
 
                     // Go to Results Fragment to show results

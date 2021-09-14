@@ -38,4 +38,8 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp()
 
     }
+
+    fun setActionBarTitle(title:String){
+        supportActionBar?.title=title
+    }
 }

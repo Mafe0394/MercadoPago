@@ -44,7 +44,7 @@ fun bindRecyclerView(
     // Adding separation between the recycler view Items
     recyclerView.addItemDecoration(
         MarginItemDecoration(
-            recyclerView.context.resources.getDimensionPixelSize(R.dimen._5dp)
+            recyclerView.context.resources.getDimensionPixelSize(R.dimen._2dp)
         )
     )
     // Tells the RecyclerView when a new list is available
@@ -95,4 +95,18 @@ fun bindTextStatus(
         }
 
     }
+}
+
+@BindingAdapter("priceInCop")
+fun priceFormatted(
+    textView: TextView,
+    price:Long?
+){
+    textView.text=textView.context.getString(R.string.display_price,price)
+}
+
+@BindingAdapter("resultsFor")
+fun queryFormatted(textView: TextView,
+query:String){
+    textView.text=textView.context.getString(R.string.results_for,query)
 }
