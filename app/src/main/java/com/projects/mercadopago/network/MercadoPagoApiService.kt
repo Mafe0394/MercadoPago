@@ -9,9 +9,9 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 private const val BASE_URL = "https://api.mercadolibre.com/"
-private const val SITE_ID="MCO"
+private const val SITE_ID = "MCO"
 
-enum class MercadoPagoCategoryFilter(val value:String){
+enum class MercadoPagoCategoryFilter(val value: String) {
     // ToDo(Replace with my own filters)
     SHOW_RENT("rent"),
     SHOW_BUY("buy"),
@@ -26,7 +26,15 @@ private val moshi = Moshi.Builder()
 
 interface MercadoPagoApiService {
     @GET("sites/MCO/search")
-    suspend fun getProductsByQuery(@Query("q") query:String): ResponseModel
+    suspend fun getProductsByQuery(@Query("q") query: String): ResponseModel
+
+    @GET("sites/MCO/search")
+    suspend fun getProductsByQueryWithOffset(
+        @Query("q")
+        query: String,
+        @Query("offset")
+        offset: Double,
+    ): ResponseModel
 }
 
 

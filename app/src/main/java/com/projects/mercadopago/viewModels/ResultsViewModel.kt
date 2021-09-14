@@ -47,7 +47,7 @@ class ResultsViewModel( _query: String) : ViewModel() {
             } catch (error: Exception) {
                 _products.value = ArrayList()
                 _status.value = MercadoApiStatus.ERROR
-                Timber.i("Error getting data \n $error")
+                Timber.e("Error getting data \n $error")
             }
         }
     }

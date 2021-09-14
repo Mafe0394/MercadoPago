@@ -3,7 +3,7 @@ package com.projects.mercadopago.domain
 import com.projects.mercadopago.database.DatabaseProduct
 
 /**
- * Map DatabaseProduct to domain entities
+ * Map DatabaseProduct to domain objects
  * */
 
 fun List<DatabaseProduct>.asDomainModel():List<Product>{
@@ -17,7 +17,7 @@ fun List<DatabaseProduct>.asDomainModel():List<Product>{
     }
 }
 
-fun DatabaseProduct.asDomain():Product{
+fun DatabaseProduct.asDomainModel():Product{
     return Product(
         productID = productID,
         title = title,
@@ -39,11 +39,43 @@ fun ResponseModel.asDomainModel():List<Product>{
     }
 }
 
-fun ResultModel.asDomain():Product{
+fun ResultModel.asDomainModel():Product{
     return Product(
         productID = id,
         title = title,
         price = price,
         image = thumbnail
+    )
+}
+
+/**
+ * Convert Network results to Database objects
+ * */
+
+fun ResponseModel.asDatabaseModel():List<DatabaseProduct>{
+    return results.map {
+        DatabaseProduct(
+            productID = it.id,
+            title = it.title,
+            price = it.price,
+            basePrice = it.originalPrice?:it.price,
+            stopTime = it.stopTime,
+            condition = it.condition,
+            permalink = it.permalink,
+            thumbnail = it.thumbnail,
+        )
+    }
+}
+
+fun ResultModel.asDatabaseModel():DatabaseProduct{
+    return DatabaseProduct(
+        productID = id,
+        title = title,
+        price = price,
+        basePrice = originalPrice?:price,
+        stopTime = stopTime,
+        condition = condition,
+        permalink = permalink,
+        thumbnail = thumbnail,
     )
 }

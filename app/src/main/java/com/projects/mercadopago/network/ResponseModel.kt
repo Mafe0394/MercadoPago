@@ -55,10 +55,10 @@ data class ResultModel (
     val listingTypeID: String? = null,
 
     @Json(name="stop_time")
-    val stopTime: String? = null,
+    val stopTime: String,
 
-    val condition: String? = null,
-    val permalink: String? = null,
+    val condition: String,
+    val permalink: String,
     var thumbnail: String,
 
     @Json(name="thumbnail_id")
@@ -80,7 +80,7 @@ data class ResultModel (
     val differentialPricing: DifferentialPricing? = null,
 
     @Json(name="original_price")
-    val originalPrice: Long? = null,
+    val originalPrice: Long?,
 
     @Json(name="category_id")
     val categoryID: String? = null,
