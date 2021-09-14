@@ -1,7 +1,9 @@
 package com.projects.mercadopago.viewModels
 
 import androidx.lifecycle.*
-import com.projects.mercadopago.domain.ProductModel
+import com.projects.mercadopago.domain.Product
+import com.projects.mercadopago.domain.ResponseModel
+import com.projects.mercadopago.domain.ResultModel
 import com.projects.mercadopago.network.MercadoApiStatus
 import com.projects.mercadopago.network.MercadoPagoNetwork
 import kotlinx.coroutines.delay
@@ -10,10 +12,10 @@ import timber.log.Timber
 
 class ResultsViewModel( _query: String) : ViewModel() {
 
-    private val _products = MutableLiveData<List<ProductModel>>()
+    private val _products = MutableLiveData<List<ResultModel>>()
     private val _status = MutableLiveData<MercadoApiStatus>()
 
-    val products: LiveData<List<ProductModel>>
+    val products: LiveData<List<ResultModel>>
         get() = _products
 
     val status: LiveData<MercadoApiStatus>
@@ -35,7 +37,7 @@ class ResultsViewModel( _query: String) : ViewModel() {
             delay(2000)
             try {
                 val products =
-                    MercadoPagoNetwork.retrofitService.getProductsByQuery(query = query).products
+                    MercadoPagoNetwork.retrofitService.getProductsByQuery(query = query).results
                 if (products.isNullOrEmpty()) {
                     _status.value=MercadoApiStatus.EMPTY_SEARCH
                     return@launch

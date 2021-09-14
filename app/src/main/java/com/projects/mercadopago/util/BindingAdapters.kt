@@ -2,7 +2,6 @@ package com.projects.mercadopago.util
 
 import android.view.View
 import android.widget.ImageView
-import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
@@ -12,7 +11,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.projects.mercadopago.R
 import com.projects.mercadopago.adapters.MarginItemDecoration
 import com.projects.mercadopago.adapters.ResultsAdapter
-import com.projects.mercadopago.domain.ProductModel
+import com.projects.mercadopago.domain.ResultModel
 import com.projects.mercadopago.network.MercadoApiStatus
 import timber.log.Timber
 
@@ -36,7 +35,7 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
 @BindingAdapter("listData")
 fun bindRecyclerView(
     recyclerView: RecyclerView,
-    data: List<ProductModel>?
+    data: List<ResultModel>?
 ) {
     Timber.i("${recyclerView.id} ")
     val adapter = recyclerView.adapter as ResultsAdapter

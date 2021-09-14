@@ -1,6 +1,5 @@
 package com.projects.mercadopago.network
 
-import com.projects.mercadopago.domain.ProductModel
 import com.projects.mercadopago.domain.ResponseModel
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
