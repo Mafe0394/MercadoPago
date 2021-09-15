@@ -49,6 +49,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:appApiStatus="@{viewModel.status}"/>
         <TextView
+            android:id="@+id/statusTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="@id/status_image"
@@ -57,7 +58,20 @@
             android:layout_marginTop="@dimen/_10dp"
             android:gravity="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-            app:appApiSTexttatus="@{viewModel.status}"/>
+            app:appApiSTextStatus="@{viewModel.status}"/>
+        <TextView
+            android:id="@+id/noResultsTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/we_couldnt_find_products_that_match_your_search_criteria"
+            app:emptySearchText="@{viewModel.isEmptySearch}"
+            app:drawableTopCompat="@drawable/no_results_icon"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Subtitle"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

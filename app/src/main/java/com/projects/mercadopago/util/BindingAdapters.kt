@@ -3,6 +3,8 @@ package com.projects.mercadopago.util
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.DrawableRes
+import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +17,7 @@ import com.projects.mercadopago.domain.Product
 import com.projects.mercadopago.domain.ResultModel
 import com.projects.mercadopago.network.MercadoApiStatus
 import timber.log.Timber
+import kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.DeclaredMemberIndex
 
 @BindingAdapter("imageUrl")
 fun bindImage(imgView: ImageView, imgUrl: String?) {
@@ -36,7 +39,7 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
 @BindingAdapter("listData")
 fun bindRecyclerView(
     recyclerView: RecyclerView,
-    data: List<Product>?
+    data: List<Product>?,
 ) {
     Timber.i("${recyclerView.id} ")
     val adapter = recyclerView.adapter as ResultsAdapter
@@ -54,7 +57,7 @@ fun bindRecyclerView(
 @BindingAdapter("appApiStatus")
 fun bindStatus(
     statusImageView: ImageView,
-    status: MercadoApiStatus?
+    status: MercadoApiStatus?,
 ) {
     when (status) {
         MercadoApiStatus.LOADING -> {
@@ -66,18 +69,13 @@ fun bindStatus(
             statusImageView.setImageResource(R.drawable.no_connection_icon)
         }
         MercadoApiStatus.DONE -> statusImageView.visibility = View.GONE
-        MercadoApiStatus.EMPTY_SEARCH-> {
-            statusImageView.visibility = View.VISIBLE
-            statusImageView.setImageResource(R.drawable.no_results_icon)
-        }
-
     }
 }
 
-@BindingAdapter("appApiSTexttatus")
+@BindingAdapter("appApiSTextStatus")
 fun bindTextStatus(
     statusTextView: TextView,
-    status: MercadoApiStatus?
+    status: MercadoApiStatus?,
 ) {
     when (status) {
         MercadoApiStatus.LOADING -> {
@@ -89,24 +87,34 @@ fun bindTextStatus(
             statusTextView.setText(R.string.something_went_wrong)
         }
         MercadoApiStatus.DONE -> statusTextView.visibility = View.GONE
-        MercadoApiStatus.EMPTY_SEARCH-> {
-            statusTextView.visibility = View.VISIBLE
-            statusTextView.setText(R.string.we_couldnt_find_products_that_match_your_search_criteria)
-        }
 
     }
+}
+
+@BindingAdapter("emptySearchText")
+fun isEmptySearchText(
+    textView: TextView,
+    isEmpty: Boolean,
+) {
+
+    if (isEmpty)
+        textView.visibility = View.VISIBLE
+    else
+        textView.visibility = View.GONE
 }
 
 @BindingAdapter("priceInCop")
 fun priceFormatted(
     textView: TextView,
-    price:Long?
-){
-    textView.text=textView.context.getString(R.string.display_price,price)
+    price: Long?,
+) {
+    textView.text = textView.context.getString(R.string.display_price, price)
 }
 
 @BindingAdapter("resultsFor")
-fun queryFormatted(textView: TextView,
-query:String){
-    textView.text=textView.context.getString(R.string.results_for,query)
+fun queryFormatted(
+    textView: TextView,
+    query: String,
+) {
+    textView.text = textView.context.getString(R.string.results_for, query)
 }

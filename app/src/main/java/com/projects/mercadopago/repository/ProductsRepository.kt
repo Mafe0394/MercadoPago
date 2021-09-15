@@ -41,6 +41,10 @@ class ProductsRepository(
             it.asDomainModel()
         }
 
+    fun getProductList():List<Product>?{
+        return _responseModel.value?.asDomainModel()
+    }
+
     /**
      * Refresh the products stored in the offline cache.
      *
@@ -54,11 +58,8 @@ class ProductsRepository(
         withContext(ioDispatcher) {
             // Fetch data from the Network
             _responseModel.postValue(mercadoPagoNetwork.getProductsByQuery(query))
-            Timber.i("por aqui paso 2")
-            // Store data in the database
-//            database.productDao.insertListOfProducts(products = response.asDatabaseModel())
+            Timber.i("results model is null ${_responseModel.value?.results==null} ${_responseModel.value?.results?.isEmpty()}")
         }
-
     }
 
     suspend fun getMoreProducts(

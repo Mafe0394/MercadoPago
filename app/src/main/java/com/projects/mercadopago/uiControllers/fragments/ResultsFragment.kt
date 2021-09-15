@@ -2,12 +2,17 @@ package com.projects.mercadopago.uiControllers.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.ui.NavigationUI
 import com.projects.mercadopago.R
 import com.projects.mercadopago.adapters.ResultsAdapter
 import com.projects.mercadopago.databinding.FragmentResultsBinding
@@ -25,10 +30,6 @@ class ResultsFragment : Fragment() {
         ResultsViewModelFactory(ProductsRepository.getRepository(requireActivity().application))
     }
 
-    //    private val viewModel by viewModels<TasksViewModel> {
-//        TasksViewModelFactory(DefaultTasksRepository.getRepository(requireActivity().application))
-//    }
-//    private lateinit var viewModel: ResultsViewModel
     private lateinit var binding: FragmentResultsBinding
 
     override fun onCreateView(
@@ -38,27 +39,31 @@ class ResultsFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentResultsBinding.inflate(inflater)
 
-        return binding.root
-    }
+        setHasOptionsMenu(true)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         val arguments = ResultsFragmentArgs.fromBundle(requireArguments())
         Timber.i("Query ${arguments.queryString}")
 
-//        viewModel = ViewModelProvider(this, ResultsViewModelFactory(query = arguments.queryString))
-//            .get(ResultsViewModel::class.java)
         viewModel.startQueryResults(arguments.queryString)
 
         binding.viewModel = viewModel
-        binding.lifecycleOwner = this.viewLifecycleOwner
-
-        viewModel.products1.observe(viewLifecycleOwner, {
-            Timber.i("Null or empty? ${it.isNullOrEmpty()} value $it")
-        })
+        binding.lifecycleOwner = viewLifecycleOwner
 
         // Initialize the RecyclerView
         binding.resultsRecyclerView.adapter = ResultsAdapter()
+
+        return binding.root
     }
+
+
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        viewModel.resetViewModel()
+        Timber.i("Back button ${viewModel.isEmptySearch.value}")
+
+        return NavigationUI.onNavDestinationSelected(item,
+            view?.findNavController() as NavController) || super.onOptionsItemSelected(item)
+    }
+
 
 }

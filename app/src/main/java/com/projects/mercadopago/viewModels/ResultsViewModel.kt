@@ -13,10 +13,20 @@ import timber.log.Timber
 
 class ResultsViewModel(private val repository: ProductsRepository) : ViewModel() {
 
-    private val _query = MutableLiveData<String>()
-    private val _products = MutableLiveData<List<Product>>()
     private val _status = MutableLiveData<MercadoApiStatus>()
+    private val _query = MutableLiveData<String>()
+    private val _products: LiveData<List<Product>> = Transformations.switchMap(_query) {
+        if (it.isNullOrBlank())
+            MutableLiveData<List<Product>>(null)
+        else
+            repository.products1
+    }
+    private val _isEmptySearch=Transformations.map(_products){
+        it?.isEmpty()==true
+    }
 
+    val isEmptySearch:LiveData<Boolean>
+    get() = _isEmptySearch
     val products: LiveData<List<Product>>
         get() = _products
 
@@ -26,7 +36,17 @@ class ResultsViewModel(private val repository: ProductsRepository) : ViewModel()
     val query: LiveData<String>
         get() = _query
 
-    val products1=repository.products1
+
+    fun resetViewModel() {
+        _query.value=""
+        _status.value=null
+    }
+
+    init {
+        _query.value=""
+        _status.value=null
+    }
+
 
 
     fun startQueryResults(query: String) {
@@ -43,21 +63,13 @@ class ResultsViewModel(private val repository: ProductsRepository) : ViewModel()
             _status.value = MercadoApiStatus.LOADING
             delay(1000)
             try {
-//                val products =
-//                    MercadoPagoNetwork.retrofitService.getProductsByQuery(query = query).results
-//                if (products.isNullOrEmpty()) {
-//                    _status.value=MercadoApiStatus.EMPTY_SEARCH
-//                    return@launch
-//                }
-//                _products.value = products
                 repository.getProductsQuery(query)
-                _products.value=repository.products1.value
                 _status.value = MercadoApiStatus.DONE
             } catch (error: Exception) {
-                _products.value = ArrayList()
                 _status.value = MercadoApiStatus.ERROR
                 Timber.e("Error getting data \n $error")
             }
         }
     }
+
 }

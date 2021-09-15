@@ -11,8 +11,8 @@
     <string name="api_status" translatable="false">API Status</string>
     <string name="loading_elllipsis">Loading…</string>
     <string name="something_went_wrong">Something went wrong</string>
-    <string name="we_couldnt_find_products_that_match_your_search_criteria">We couldn\'t find any
-        products that match your search criteria. \n Try something different</string>
+    <string name="we_couldnt_find_products_that_match_your_search_criteria"><b> We couldn\'t find any
+        products that match your search criteria! </b>\n Try something different</string>
     <string name="display_price" translatable="false">$ %,d</string>
     <string name="results_for">Results for: %s</string>
     <string name="search_results">Search Results</string>

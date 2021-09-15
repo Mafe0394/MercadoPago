@@ -11,8 +11,8 @@
     <string name="product_image">Imagen del produto</string>
     <string name="loading_elllipsis">Cargando…</string>
     <string name="something_went_wrong">Algo salió mal</string>
-    <string name="we_couldnt_find_products_that_match_your_search_criteria">No pudimos encontrar
-        resultados para tu búsqueda. \n Intenta una búsqueda diferente</string>
+    <string name="we_couldnt_find_products_that_match_your_search_criteria"><b> No pudimos encontrar
+        resultados para tu búsqueda! </b>\n Intenta una búsqueda diferente</string>
     <string name="results_for">Resultados para: %s</string>
     <string name="search_results">Resultados de búsqueda</string>
 </resources>
