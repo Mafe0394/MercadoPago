@@ -62,6 +62,20 @@ class ProductsRepository(
         }
     }
 
+    suspend fun getProductsQuery1(query: String){
+        withContext(ioDispatcher){
+            val products=mercadoPagoNetwork.getProductsByQuery(query = query)
+            // Store data in the database
+            database.productDao.insertListOfProducts(products = products.asDatabaseModel())
+        }
+    }
+
+    suspend fun deleteSearch(){
+        withContext(ioDispatcher){
+            database.productDao.deleteProducts()
+        }
+    }
+
     suspend fun getMoreProducts(
         query: String,
         offset: Double,

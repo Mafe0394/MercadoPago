@@ -21,14 +21,19 @@ class ResultsViewModel(private val repository: ProductsRepository) : ViewModel()
         else
             repository.products1
     }
-    private val _isEmptySearch=Transformations.map(_products){
-        it?.isEmpty()==true
+    private val _products1: LiveData<List<Product>> = Transformations.switchMap(_query) {
+            repository.products
+    }
+    private val _isEmptySearch = Transformations.switchMap(_products1) {list->
+        Transformations.map(_status){status->
+            list.isNullOrEmpty()&&status==MercadoApiStatus.DONE
+        }
     }
 
-    val isEmptySearch:LiveData<Boolean>
-    get() = _isEmptySearch
+    val isEmptySearch: LiveData<Boolean>
+        get() = _isEmptySearch
     val products: LiveData<List<Product>>
-        get() = _products
+        get() = repository.products
 
     val status: LiveData<MercadoApiStatus>
         get() = _status
@@ -38,16 +43,10 @@ class ResultsViewModel(private val repository: ProductsRepository) : ViewModel()
 
 
     fun resetViewModel() {
-        _query.value=""
-        _status.value=null
+        viewModelScope.launch {
+            repository.deleteSearch()
+        }
     }
-
-    init {
-        _query.value=""
-        _status.value=null
-    }
-
-
 
     fun startQueryResults(query: String) {
         // If we're already loading or already loaded, return (might be a config change)
@@ -63,7 +62,7 @@ class ResultsViewModel(private val repository: ProductsRepository) : ViewModel()
             _status.value = MercadoApiStatus.LOADING
             delay(1000)
             try {
-                repository.getProductsQuery(query)
+                repository.getProductsQuery1(query)
                 _status.value = MercadoApiStatus.DONE
             } catch (error: Exception) {
                 _status.value = MercadoApiStatus.ERROR

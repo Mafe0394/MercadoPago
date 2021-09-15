@@ -50,6 +50,10 @@ class ResultsFragment : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
+//        viewModel.products.observe(viewLifecycleOwner){
+//
+//        }
+
         // Initialize the RecyclerView
         binding.resultsRecyclerView.adapter = ResultsAdapter1()
 
