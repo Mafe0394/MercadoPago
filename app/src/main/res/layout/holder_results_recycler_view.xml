@@ -7,7 +7,7 @@
 
         <variable
             name="product"
-            type="com.projects.mercadopago.domain.ResultModel" />
+            type="com.projects.mercadopago.domain.Product" />
 
     </data>
 
@@ -25,7 +25,7 @@
             android:layout_height="@dimen/_120dp"
             android:contentDescription="@string/product_image"
             android:scaleType="fitCenter"
-            app:imageUrl="@{product.thumbnail}"
+            app:imageUrl="@{product.image}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

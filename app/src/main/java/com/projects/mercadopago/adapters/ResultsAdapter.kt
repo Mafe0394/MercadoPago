@@ -6,10 +6,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.projects.mercadopago.databinding.HolderResultsRecyclerViewBinding
-import com.projects.mercadopago.domain.ResultModel
+import com.projects.mercadopago.domain.Product
 
 
-class ResultsAdapter : ListAdapter<ResultModel,
+class ResultsAdapter : ListAdapter<Product,
         ResultsAdapter.ProductsViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):
@@ -23,19 +23,19 @@ class ResultsAdapter : ListAdapter<ResultModel,
     }
 
 
-    companion object DiffCallback : DiffUtil.ItemCallback<ResultModel>() {
-        override fun areItemsTheSame(oldItem: ResultModel, newItem: ResultModel): Boolean {
+    companion object DiffCallback : DiffUtil.ItemCallback<Product>() {
+        override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean {
             return oldItem === newItem
         }
 
-        override fun areContentsTheSame(oldItem: ResultModel, newItem: ResultModel): Boolean {
-            return oldItem.id == newItem.id
+        override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean {
+            return oldItem.productID == newItem.productID
         }
     }
 
     class ProductsViewHolder(private var binding: HolderResultsRecyclerViewBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(product: ResultModel) {
+        fun bind(product: Product) {
             binding.product = product
             // Causes the update to excute immediately
             binding.executePendingBindings()

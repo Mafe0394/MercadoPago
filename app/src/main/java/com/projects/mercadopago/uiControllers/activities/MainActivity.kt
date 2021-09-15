@@ -1,5 +1,6 @@
 package com.projects.mercadopago.uiControllers.activities
 
+import android.app.Activity
 import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
@@ -35,11 +36,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSupportNavigateUp(): Boolean {
         // Set up only UpButton on AppBar
-        return navController.navigateUp()
+        return navController.navigateUp()||super.onSupportNavigateUp()
 
-    }
-
-    fun setActionBarTitle(title:String){
-        supportActionBar?.title=title
     }
 }
+
+// Keys for navigation
+const val ADD_EDIT_RESULT_OK = Activity.RESULT_FIRST_USER + 1
+const val DELETE_RESULT_OK = Activity.RESULT_FIRST_USER + 2
+const val EDIT_RESULT_OK = Activity.RESULT_FIRST_USER + 3

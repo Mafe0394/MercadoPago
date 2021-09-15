@@ -7,7 +7,8 @@ import androidx.room.RoomDatabase
 
 /** A database tha stores Product information.
  * And a global method to get access to the database
- * */
+ * Note that exportSchema should be true in production databases.
+ */
 @Database(entities = [DatabaseProduct::class], version = 1)
 abstract class ProductsDatabase : RoomDatabase() {
 
@@ -60,20 +61,21 @@ abstract class ProductsDatabase : RoomDatabase() {
                 return instance
             }
         }
-    }
-}
 
+        // Another way to initialize the database
+        private lateinit var INSTANCE1: ProductsDatabase
 
-// Another way to initialize the database
-private lateinit var INSTANCE1: ProductsDatabase
-
-fun getDatabase(context: Context): ProductsDatabase {
-    synchronized(ProductsDatabase::class.java) {
-        if (!::INSTANCE1.isInitialized) {
-            INSTANCE1 = Room.databaseBuilder(context.applicationContext,
-                ProductsDatabase::class.java,
-                "videos").build()
+        fun getDatabase1(context: Context): ProductsDatabase {
+            synchronized(ProductsDatabase::class.java) {
+                if (!::INSTANCE1.isInitialized) {
+                    INSTANCE1 = Room.databaseBuilder(context.applicationContext,
+                        ProductsDatabase::class.java,
+                        "product_history_database").build()
+                }
+            }
+            return INSTANCE1
         }
     }
-    return INSTANCE1
 }
+
+

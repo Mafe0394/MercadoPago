@@ -1,30 +1,43 @@
 package com.projects.mercadopago.repository
 
+import android.app.Application
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.projects.mercadopago.database.ProductsDatabase
 import com.projects.mercadopago.domain.Product
+import com.projects.mercadopago.domain.ResponseModel
 import com.projects.mercadopago.domain.asDatabaseModel
 import com.projects.mercadopago.domain.asDomainModel
-import com.projects.mercadopago.network.MercadoApiStatus
+import com.projects.mercadopago.network.MercadoPagoApiService
 import com.projects.mercadopago.network.MercadoPagoNetwork
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 /** [database] is a [ProductsDatabase] object that works as the class's constructor
  * parameter to access the Dao methods
  * */
 class ProductsRepository(
     private val database: ProductsDatabase,
+    private val mercadoPagoNetwork:MercadoPagoApiService,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) {
 
+    private val _responseModel=MutableLiveData<ResponseModel>()
+//    val responseModel:LiveData<ResponseModel> = _responseModel
     // Transformations.map uses a conversion function to convert one LiveData object into
     // another LiveData object. it only is calculated when an activity or fragment
     // is observing the returned LiveData property
     val products: LiveData<List<Product>> =
         Transformations.map(database.productDao.getVisitedProducts()) {
+            it.asDomainModel()
+        }
+
+    val products1:LiveData<List<Product>> =
+        Transformations.map(_responseModel){
+            Timber.i("por aqui paso 1")
             it.asDomainModel()
         }
 
@@ -40,10 +53,10 @@ class ProductsRepository(
     suspend fun getProductsQuery(query: String) {
         withContext(ioDispatcher) {
             // Fetch data from the Network
-            val response =
-                MercadoPagoNetwork.retrofitService.getProductsByQuery(query = query)
+            _responseModel.postValue(mercadoPagoNetwork.getProductsByQuery(query))
+            Timber.i("por aqui paso 2")
             // Store data in the database
-            database.productDao.insertListOfProducts(products = response.asDatabaseModel())
+//            database.productDao.insertListOfProducts(products = response.asDatabaseModel())
         }
 
     }
@@ -58,7 +71,7 @@ class ProductsRepository(
             withContext(ioDispatcher) {
                 // Fetch data from the Network
                 val products =
-                    MercadoPagoNetwork.retrofitService.getProductsByQueryWithOffset(
+                    mercadoPagoNetwork.getProductsByQueryWithOffset(
                         query = query, offset = offset
                     )
                 // Store data in the database
@@ -66,5 +79,22 @@ class ProductsRepository(
 
             }
 
+    }
+
+    companion object {
+        @Volatile
+        private var INSTANCE: ProductsRepository? = null
+
+        fun getRepository(app: Application): ProductsRepository {
+            return INSTANCE ?: synchronized(this) {
+                val database = ProductsDatabase.getDatabase1(app)
+                ProductsRepository(
+                    database = database,
+                    mercadoPagoNetwork = MercadoPagoNetwork.retrofitService
+                ).also {
+                    INSTANCE = it
+                }
+            }
+        }
     }
 }
