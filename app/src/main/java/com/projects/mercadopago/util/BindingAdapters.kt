@@ -13,6 +13,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.projects.mercadopago.R
 import com.projects.mercadopago.adapters.MarginItemDecoration
 import com.projects.mercadopago.adapters.ResultsAdapter
+import com.projects.mercadopago.adapters.ResultsAdapter1
 import com.projects.mercadopago.domain.Product
 import com.projects.mercadopago.domain.ResultModel
 import com.projects.mercadopago.network.MercadoApiStatus
@@ -41,8 +42,8 @@ fun bindRecyclerView(
     recyclerView: RecyclerView,
     data: List<Product>?,
 ) {
-    Timber.i("${recyclerView.id} ")
-    val adapter = recyclerView.adapter as ResultsAdapter
+//    val adapter = recyclerView.adapter as ResultsAdapter
+    val adapter1=recyclerView.adapter as ResultsAdapter1
 
     // Adding separation between the recycler view Items
     recyclerView.addItemDecoration(
@@ -51,7 +52,8 @@ fun bindRecyclerView(
         )
     )
     // Tells the RecyclerView when a new list is available
-    adapter.submitList(data)
+//    adapter.submitList(data)
+    adapter1.submitList(data)
 }
 
 @BindingAdapter("appApiStatus")

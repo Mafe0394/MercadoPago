@@ -1,6 +1,7 @@
 package com.projects.mercadopago.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -42,4 +43,39 @@ class ResultsAdapter : ListAdapter<Product,
         }
 
     }
+}
+
+class ResultsAdapter1 : RecyclerView.Adapter<ResultsAdapter1.HolderProductAdapter>() {
+
+    private lateinit var itemList:List<Product>
+
+    fun submitList(items:List<Product>?){
+        itemList=items?:ArrayList()
+    }
+
+    class HolderProductAdapter(private var binding: HolderResultsRecyclerViewBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(product: Product) {
+            binding.product = product
+            // Causes the update to excute immediately
+            binding.executePendingBindings()
+        }
+
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HolderProductAdapter {
+        val binding = HolderResultsRecyclerViewBinding.inflate(LayoutInflater.from(parent.context),
+            parent,
+            false)
+        return HolderProductAdapter(binding)
+    }
+
+    override fun onBindViewHolder(holder: HolderProductAdapter, position: Int) {
+        holder.bind(itemList[position])
+    }
+
+    override fun getItemCount(): Int {
+        return itemList.size
+    }
+
 }

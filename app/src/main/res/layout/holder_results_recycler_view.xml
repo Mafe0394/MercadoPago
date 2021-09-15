@@ -14,7 +14,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/_140dp"
-        android:layout_marginVertical="@dimen/_10dp"
         android:background="@drawable/recycler_item_shape"
         android:elevation="@dimen/_2dp"
         android:padding="@dimen/_5dp">

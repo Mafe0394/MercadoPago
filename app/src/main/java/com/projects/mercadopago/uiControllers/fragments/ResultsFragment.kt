@@ -15,6 +15,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.projects.mercadopago.R
 import com.projects.mercadopago.adapters.ResultsAdapter
+import com.projects.mercadopago.adapters.ResultsAdapter1
 import com.projects.mercadopago.databinding.FragmentResultsBinding
 import com.projects.mercadopago.domain.Product
 import com.projects.mercadopago.repository.ProductsRepository
@@ -50,7 +51,7 @@ class ResultsFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         // Initialize the RecyclerView
-        binding.resultsRecyclerView.adapter = ResultsAdapter()
+        binding.resultsRecyclerView.adapter = ResultsAdapter1()
 
         return binding.root
     }
