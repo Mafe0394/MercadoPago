@@ -13,7 +13,7 @@ interface MercadoPagoApiService {
         @Query("q")
         query: String,
         @Query("offset")
-        offset: Double,
+        offset: Int,
     ): ResponseModel
 }
 

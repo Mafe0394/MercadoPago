@@ -135,13 +135,13 @@ data class Sort (
 
 
 data class Paging (
-    val total: Double? = null,
+    val total: Int? = null,
 
     @Json(name="primary_results")
-    val primaryResults: Double? = null,
+    val primaryResults: Int? = null,
 
-    val offset: Double? = null,
-    val limit: Double? = null
+    var offset: Int? = null,
+    val limit: Int = 0
 )
 
 

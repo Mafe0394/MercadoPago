@@ -7,6 +7,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.projects.mercadopago.databinding.HolderResultsRecyclerViewBinding
 import com.projects.mercadopago.data.domain.Product
+import com.projects.mercadopago.util.Event
+import com.projects.mercadopago.util.EventObserver
+import com.projects.mercadopago.util.ProductClick
 
 
 class ResultsAdapter : ListAdapter<Product,
@@ -44,7 +47,7 @@ class ResultsAdapter : ListAdapter<Product,
     }
 }
 
-class ResultsAdapter1 : RecyclerView.Adapter<ResultsAdapter1.HolderProductAdapter>() {
+class ResultsAdapter1(private val callback:ProductClick) : RecyclerView.Adapter<ResultsAdapter1.HolderProductAdapter>() {
 
     private lateinit var itemList:List<Product>
 
@@ -54,8 +57,11 @@ class ResultsAdapter1 : RecyclerView.Adapter<ResultsAdapter1.HolderProductAdapte
 
     class HolderProductAdapter(private var binding: HolderResultsRecyclerViewBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(product: Product) {
-            binding.product = product
+        fun bind(product: Product,callback: ProductClick) {
+            binding.also {
+                it.product=product
+                it.productCallback=callback
+            }
             // Causes the update to excute immediately
             binding.executePendingBindings()
         }
@@ -70,7 +76,7 @@ class ResultsAdapter1 : RecyclerView.Adapter<ResultsAdapter1.HolderProductAdapte
     }
 
     override fun onBindViewHolder(holder: HolderProductAdapter, position: Int) {
-        holder.bind(itemList[position])
+        holder.bind(itemList[position],callback)
         if(position==itemCount-1){
 //            listener.onLastItemReached()
         }

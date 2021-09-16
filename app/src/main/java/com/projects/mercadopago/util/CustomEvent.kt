@@ -17,6 +17,7 @@
 package com.projects.mercadopago.util
 
 import androidx.lifecycle.Observer
+import com.projects.mercadopago.data.domain.Product
 
 /**
  * Used as a wrapper for data that is exposed via a LiveData that represents an event.
@@ -57,4 +58,17 @@ class EventObserver<T>(private val onEventUnhandledContent: (T) -> Unit) : Obser
             onEventUnhandledContent(it)
         }
     }
+}
+
+/**
+ * Click listener for products. By giving the block a name it helps a reader understand what it does.
+ *
+ */
+class ProductClick(val block: (Product) -> Unit) {
+    /**
+     * Called when a video is clicked
+     *
+     * @param product the video that was clicked
+     */
+    fun onClick(product: Product) = block(product)
 }

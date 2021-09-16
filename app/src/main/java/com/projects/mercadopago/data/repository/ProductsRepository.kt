@@ -22,16 +22,6 @@ class ProductsRepository(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : IProductsRepository {
 
-    //    val responseModel:LiveData<ResponseModel> = _responseModel
-    // Transformations.map uses a conversion function to convert one LiveData object into
-    // another LiveData object. it only is calculated when an activity or fragment
-    // is observing the returned LiveData property
-//    val products: LiveData<List<Product>> =
-//        Transformations.map(database.productDao.getVisitedProducts()) {
-//            it.asDomainModel()
-//        }
-
-
     /**
      * Refresh the products stored in the offline cache.
      *
@@ -40,39 +30,6 @@ class ProductsRepository(
      * function is now safe to call from any thread including the Main thread.
      *
      */
-//    suspend fun getProductsQuery1(query: String) {
-//        withContext(ioDispatcher) {
-//            val products = mercadoPagoNetwork.getProductsByQuery(query = query)
-//            // Store data in the database
-//            database.productDao.insertListOfProducts(products = products.asDatabaseModel())
-//        }
-//    }
-//
-//    suspend fun deleteSearch() {
-//        withContext(ioDispatcher) {
-//            database.productDao.deleteProducts()
-//        }
-//    }
-
-//    suspend fun getMoreProducts(
-//        query: String,
-//        offset: Double,
-//        limit: Double,
-//        primaryResults: Double,
-//    ) {
-//        if (offset <= primaryResults)
-//            withContext(ioDispatcher) {
-//                // Fetch data from the Network
-//                val products =
-//                    mercadoPagoNetwork.getProductsByQueryWithOffset(
-//                        query = query, offset = offset
-//                    )
-//                // Store data in the database
-//                database.productDao.insertListOfProducts(products = products.asDatabaseModel())
-//
-//            }
-//
-//    }
 
     companion object {
         @Volatile

@@ -33,6 +33,10 @@ class ResultsViewModel(private val repository: ProductsRepository) : ViewModel()
     val query: LiveData<String>
         get() = _query
 
+    init {
+        resetViewModel()
+    }
+
     fun resetViewModel() {
         viewModelScope.launch {
             repository.deleteAllProducts()

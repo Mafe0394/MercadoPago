@@ -8,10 +8,14 @@
         <variable
             name="product"
             type="com.projects.mercadopago.data.domain.Product" />
+        <variable
+            name="productCallback"
+            type="com.projects.mercadopago.util.ProductClick" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:onClick="@{()->productCallback.onClick(product)}"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_140dp"
         android:background="@drawable/recycler_item_shape"
