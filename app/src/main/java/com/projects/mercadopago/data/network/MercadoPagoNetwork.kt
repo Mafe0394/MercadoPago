@@ -2,8 +2,12 @@ package com.projects.mercadopago.data.network
 
 import androidx.lifecycle.LiveData
 import com.projects.mercadopago.data.ProductsDataSource
+import com.projects.mercadopago.data.database.DatabaseProduct
+import com.projects.mercadopago.data.database.ProductsDatabase
 import com.projects.mercadopago.data.domain.Product
+import com.projects.mercadopago.data.domain.ResponseModel
 import com.projects.mercadopago.data.repository.ResultMercadoPago
+import com.projects.mercadopago.data.repository.ResultMercadoPago.Success
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit
@@ -33,13 +37,18 @@ object MercadoPagoNetwork:ProductsDataSource {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getProducts(): ResultMercadoPago<List<Product>> {
-        TODO("Not yet implemented")
+    override suspend fun getProducts(): ResultMercadoPago<List<Product>>? {
+        // nope
+        return null
     }
 
-    override suspend fun refreshProducts() {
-        TODO("Not yet implemented")
-    }
+    override suspend fun refreshProducts(query:String): ResultMercadoPago<ResponseModel>? =
+        try {
+           Success (retrofitService.getProductsByQuery(query))
+        }catch (e:Exception){
+            ResultMercadoPago.Error(e)
+        }
+
 
     override fun observeProduct(ProductId: String): LiveData<ResultMercadoPago<Product>> {
         TODO("Not yet implemented")
@@ -57,23 +66,11 @@ object MercadoPagoNetwork:ProductsDataSource {
         TODO("Not yet implemented")
     }
 
-    override suspend fun completeProduct(Product: Product) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun completeProduct(ProductId: String) {
-        TODO("Not yet implemented")
-    }
-
     override suspend fun activateProduct(Product: Product) {
         TODO("Not yet implemented")
     }
 
     override suspend fun activateProduct(ProductId: String) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun clearCompletedProducts() {
         TODO("Not yet implemented")
     }
 
@@ -83,5 +80,9 @@ object MercadoPagoNetwork:ProductsDataSource {
 
     override suspend fun deleteProduct(ProductId: String) {
         TODO("Not yet implemented")
+    }
+
+    override suspend fun saveProductsList(productsList: List<DatabaseProduct>) {
+        // nope
     }
 }

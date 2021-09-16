@@ -5,7 +5,7 @@ import com.projects.mercadopago.data.domain.Product
 
 interface IProductsRepository {
 
-    suspend fun getProducts(forceUpdate: Boolean = false): ResultMercadoPago<List<Product>>
+    suspend fun getProducts(query: String): ResultMercadoPago<List<Product>>?
 
     suspend fun refreshProducts()
     fun observeProducts(): LiveData<ResultMercadoPago<List<Product>>>

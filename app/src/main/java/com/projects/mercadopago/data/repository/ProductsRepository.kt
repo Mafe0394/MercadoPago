@@ -2,24 +2,23 @@ package com.projects.mercadopago.data.repository
 
 import android.app.Application
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
 import androidx.room.Room
+import com.projects.mercadopago.data.ProductsDataSource
+import com.projects.mercadopago.data.database.ProductLocalDataSource
 import com.projects.mercadopago.data.database.ProductsDatabase
 import com.projects.mercadopago.data.domain.Product
 import com.projects.mercadopago.data.domain.asDatabaseModel
 import com.projects.mercadopago.data.domain.asDomainModel
-import com.projects.mercadopago.data.network.MercadoPagoApiService
 import com.projects.mercadopago.data.network.MercadoPagoNetwork
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import com.projects.mercadopago.data.repository.ResultMercadoPago.Success
+import kotlinx.coroutines.*
 
 /** [database] is a [ProductsDatabase] object that works as the class's constructor
  * parameter to access the Dao methods
  * */
 class ProductsRepository(
-    private val database: ProductsDatabase,
-    private val mercadoPagoNetwork: MercadoPagoApiService,
+    private val database: ProductsDataSource,
+    private val mercadoPagoNetwork: ProductsDataSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : IProductsRepository {
 
@@ -27,10 +26,10 @@ class ProductsRepository(
     // Transformations.map uses a conversion function to convert one LiveData object into
     // another LiveData object. it only is calculated when an activity or fragment
     // is observing the returned LiveData property
-    val products: LiveData<List<Product>> =
-        Transformations.map(database.productDao.getVisitedProducts()) {
-            it.asDomainModel()
-        }
+//    val products: LiveData<List<Product>> =
+//        Transformations.map(database.productDao.getVisitedProducts()) {
+//            it.asDomainModel()
+//        }
 
 
     /**
@@ -41,39 +40,39 @@ class ProductsRepository(
      * function is now safe to call from any thread including the Main thread.
      *
      */
-    suspend fun getProductsQuery1(query: String) {
-        withContext(ioDispatcher) {
-            val products = mercadoPagoNetwork.getProductsByQuery(query = query)
-            // Store data in the database
-            database.productDao.insertListOfProducts(products = products.asDatabaseModel())
-        }
-    }
+//    suspend fun getProductsQuery1(query: String) {
+//        withContext(ioDispatcher) {
+//            val products = mercadoPagoNetwork.getProductsByQuery(query = query)
+//            // Store data in the database
+//            database.productDao.insertListOfProducts(products = products.asDatabaseModel())
+//        }
+//    }
+//
+//    suspend fun deleteSearch() {
+//        withContext(ioDispatcher) {
+//            database.productDao.deleteProducts()
+//        }
+//    }
 
-    suspend fun deleteSearch() {
-        withContext(ioDispatcher) {
-            database.productDao.deleteProducts()
-        }
-    }
-
-    suspend fun getMoreProducts(
-        query: String,
-        offset: Double,
-        limit: Double,
-        primaryResults: Double,
-    ) {
-        if (offset <= primaryResults)
-            withContext(ioDispatcher) {
-                // Fetch data from the Network
-                val products =
-                    mercadoPagoNetwork.getProductsByQueryWithOffset(
-                        query = query, offset = offset
-                    )
-                // Store data in the database
-                database.productDao.insertListOfProducts(products = products.asDatabaseModel())
-
-            }
-
-    }
+//    suspend fun getMoreProducts(
+//        query: String,
+//        offset: Double,
+//        limit: Double,
+//        primaryResults: Double,
+//    ) {
+//        if (offset <= primaryResults)
+//            withContext(ioDispatcher) {
+//                // Fetch data from the Network
+//                val products =
+//                    mercadoPagoNetwork.getProductsByQueryWithOffset(
+//                        query = query, offset = offset
+//                    )
+//                // Store data in the database
+//                database.productDao.insertListOfProducts(products = products.asDatabaseModel())
+//
+//            }
+//
+//    }
 
     companion object {
         @Volatile
@@ -87,8 +86,8 @@ class ProductsRepository(
                     "product_history_database"
                 ).build()
                 ProductsRepository(
-                    database = database,
-                    mercadoPagoNetwork = MercadoPagoNetwork.retrofitService
+                    database = ProductLocalDataSource(database.productDao),
+                    mercadoPagoNetwork = MercadoPagoNetwork
                 ).also {
                     INSTANCE = it
                 }
@@ -96,8 +95,27 @@ class ProductsRepository(
         }
     }
 
-    override suspend fun getProducts(forceUpdate: Boolean): ResultMercadoPago<List<Product>> {
-        TODO("Not yet implemented")
+    override suspend fun getProducts(query: String): ResultMercadoPago<List<Product>>? {
+
+        try {
+            withContext(ioDispatcher) {
+                getSearchProducts(query)
+            }
+        } catch (error: Exception) {
+            return ResultMercadoPago.Error(error)
+        }
+
+        return database.getProducts()
+    }
+
+    private suspend fun getSearchProducts(query: String) {
+        val remoteProducts = mercadoPagoNetwork.refreshProducts(query)
+        if (remoteProducts is Success) {
+            remoteProducts.data.asDomainModel()
+            database.saveProductsList(remoteProducts.data.asDatabaseModel())
+        } else if (remoteProducts is ResultMercadoPago.Error) {
+            throw remoteProducts.exception
+        }
     }
 
     override suspend fun refreshProducts() {
@@ -105,7 +123,7 @@ class ProductsRepository(
     }
 
     override fun observeProducts(): LiveData<ResultMercadoPago<List<Product>>> {
-        TODO("Not yet implemented")
+        return database.observeProducts()
     }
 
     override suspend fun refreshProduct(ProductId: String) {
@@ -148,10 +166,14 @@ class ProductsRepository(
     }
 
     override suspend fun deleteAllProducts() {
-        TODO("Not yet implemented")
+        withContext(ioDispatcher) {
+            coroutineScope {
+                launch { database.deleteAllProducts() }
+            }
+        }
     }
 
     override suspend fun deleteProduct(ProductId: String) {
-        TODO("Not yet implemented")
+        database.deleteAllProducts()
     }
 }

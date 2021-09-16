@@ -43,8 +43,9 @@ class ResultsFragment : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        // We to to use an observe task to get data from the database,
-            //this bc we need to fix our new proble, the status
+        viewModel.result.observe(viewLifecycleOwner,{
+            viewModel.refreshProducts(it)
+        })
 
         initializeRecyclerView()
 
@@ -62,7 +63,7 @@ class ResultsFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         viewModel.resetViewModel()
-        Timber.i("Back button ${viewModel.isEmptySearch.value}")
+        Timber.i("Back to Search Fragment")
 
         return NavigationUI.onNavDestinationSelected(item,
             view?.findNavController() as NavController) || super.onOptionsItemSelected(item)

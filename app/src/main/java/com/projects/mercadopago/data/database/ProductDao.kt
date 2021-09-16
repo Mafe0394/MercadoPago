@@ -12,7 +12,10 @@ interface ProductDao {
     * This method returns LiveData, so that the data displayed in the UI is refreshed
     * whenever the data in the database is changed*/
     @Query("select * from databaseproduct")
-    fun getVisitedProducts(): LiveData<List<DatabaseProduct>>
+    fun getProductsFromDatabase(): List<DatabaseProduct>
+
+    @Query("select * from databaseproduct")
+    fun observeProducts(): LiveData<List<DatabaseProduct>>
 
     /* Insert a list of products fetched from the network into the database.
     * Overwrite the database entry if the product is already present in the database,
