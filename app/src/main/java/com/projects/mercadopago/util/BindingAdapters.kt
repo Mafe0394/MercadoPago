@@ -3,8 +3,6 @@ package com.projects.mercadopago.util
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.annotation.DrawableRes
-import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -12,13 +10,9 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.projects.mercadopago.R
 import com.projects.mercadopago.adapters.MarginItemDecoration
-import com.projects.mercadopago.adapters.ResultsAdapter
 import com.projects.mercadopago.adapters.ResultsAdapter1
-import com.projects.mercadopago.domain.Product
-import com.projects.mercadopago.domain.ResultModel
-import com.projects.mercadopago.network.MercadoApiStatus
-import timber.log.Timber
-import kotlin.reflect.jvm.internal.impl.load.java.lazy.descriptors.DeclaredMemberIndex
+import com.projects.mercadopago.data.domain.Product
+import com.projects.mercadopago.data.network.MercadoApiStatus
 
 @BindingAdapter("imageUrl")
 fun bindImage(imgView: ImageView, imgUrl: String?) {

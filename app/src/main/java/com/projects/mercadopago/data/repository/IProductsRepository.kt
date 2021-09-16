@@ -1,9 +1,10 @@
-package com.projects.mercadopago.repository
+package com.projects.mercadopago.data.repository
 
 import androidx.lifecycle.LiveData
-import com.projects.mercadopago.domain.Product
+import com.projects.mercadopago.data.domain.Product
 
-interface ProductsRepositoryInterface {
+interface IProductsRepository {
+
     suspend fun getProducts(forceUpdate: Boolean = false): ResultMercadoPago<List<Product>>
 
     suspend fun refreshProducts()

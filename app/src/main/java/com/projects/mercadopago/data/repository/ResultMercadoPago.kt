@@ -1,6 +1,6 @@
-package com.projects.mercadopago.repository
+package com.projects.mercadopago.data.repository
 
-import com.projects.mercadopago.repository.ResultMercadoPago.Success
+import com.projects.mercadopago.data.repository.ResultMercadoPago.Success
 
 /**
  * A generic class that holds a value with its loading status.

@@ -1,4 +1,4 @@
-package com.projects.mercadopago.domain
+package com.projects.mercadopago.data.domain
 
 /**
  * Domain objects are plain Kotlin data classes that represent the things in our app. These are the

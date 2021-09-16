@@ -1,4 +1,4 @@
-package com.projects.mercadopago.domain
+package com.projects.mercadopago.data.domain
 
 enum class MercadoPagoSort(val sortValue: String) {
     SORT_RELEVANCE("relevance"),

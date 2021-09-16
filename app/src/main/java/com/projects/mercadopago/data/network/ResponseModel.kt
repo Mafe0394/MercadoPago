@@ -1,4 +1,4 @@
-package com.projects.mercadopago.domain
+package com.projects.mercadopago.data.domain
 
 import com.squareup.moshi.Json
 

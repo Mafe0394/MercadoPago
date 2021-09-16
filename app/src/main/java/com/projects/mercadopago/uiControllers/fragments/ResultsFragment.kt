@@ -5,21 +5,15 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
-import com.projects.mercadopago.R
-import com.projects.mercadopago.adapters.ResultsAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.projects.mercadopago.adapters.ResultsAdapter1
 import com.projects.mercadopago.databinding.FragmentResultsBinding
-import com.projects.mercadopago.domain.Product
-import com.projects.mercadopago.repository.ProductsRepository
-import com.projects.mercadopago.util.setToolbarTitle
+import com.projects.mercadopago.data.repository.ProductsRepository
 import com.projects.mercadopago.viewModels.ResultsViewModel
 import com.projects.mercadopago.viewModels.viewModelsFactory.ResultsViewModelFactory
 import timber.log.Timber
@@ -46,20 +40,24 @@ class ResultsFragment : Fragment() {
         Timber.i("Query ${arguments.queryString}")
 
         viewModel.startQueryResults(arguments.queryString)
-
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-//        viewModel.products.observe(viewLifecycleOwner){
-//
-//        }
+        // We to to use an observe task to get data from the database,
+            //this bc we need to fix our new proble, the status
 
-        // Initialize the RecyclerView
-        binding.resultsRecyclerView.adapter = ResultsAdapter1()
+        initializeRecyclerView()
 
         return binding.root
     }
 
+    private fun initializeRecyclerView() {
+        // Initialize the RecyclerView
+        binding.resultsRecyclerView.adapter = ResultsAdapter1()
+        binding.resultsRecyclerView.addOnScrollListener(object :RecyclerView.OnScrollListener(){
+
+        })
+    }
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -1,13 +1,12 @@
 package com.projects.mercadopago.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.projects.mercadopago.databinding.HolderResultsRecyclerViewBinding
-import com.projects.mercadopago.domain.Product
+import com.projects.mercadopago.data.domain.Product
 
 
 class ResultsAdapter : ListAdapter<Product,
@@ -72,6 +71,9 @@ class ResultsAdapter1 : RecyclerView.Adapter<ResultsAdapter1.HolderProductAdapte
 
     override fun onBindViewHolder(holder: HolderProductAdapter, position: Int) {
         holder.bind(itemList[position])
+        if(position==itemCount-1){
+//            listener.onLastItemReached()
+        }
     }
 
     override fun getItemCount(): Int {

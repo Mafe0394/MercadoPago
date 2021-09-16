@@ -1,4 +1,4 @@
-package com.projects.mercadopago.database
+package com.projects.mercadopago.data.database
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

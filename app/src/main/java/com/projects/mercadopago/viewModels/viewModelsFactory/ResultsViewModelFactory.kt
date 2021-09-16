@@ -2,7 +2,7 @@ package com.projects.mercadopago.viewModels.viewModelsFactory
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.projects.mercadopago.repository.ProductsRepository
+import com.projects.mercadopago.data.repository.ProductsRepository
 import com.projects.mercadopago.viewModels.ResultsViewModel
 
 @Suppress("UNCHECKED_CAST")

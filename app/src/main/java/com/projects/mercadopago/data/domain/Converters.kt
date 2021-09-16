@@ -1,6 +1,6 @@
-package com.projects.mercadopago.domain
+package com.projects.mercadopago.data.domain
 
-import com.projects.mercadopago.database.DatabaseProduct
+import com.projects.mercadopago.data.database.DatabaseProduct
 
 /**
  * Map DatabaseProduct to domain objects
@@ -67,7 +67,7 @@ fun ResponseModel.asDatabaseModel():List<DatabaseProduct>{
     }
 }
 
-fun ResultModel.asDatabaseModel():DatabaseProduct{
+fun ResultModel.asDatabaseModel(): DatabaseProduct {
     return DatabaseProduct(
         productID = id,
         title = title,

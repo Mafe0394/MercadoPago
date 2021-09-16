@@ -7,7 +7,7 @@
 
         <variable
             name="product"
-            type="com.projects.mercadopago.domain.Product" />
+            type="com.projects.mercadopago.data.domain.Product" />
 
     </data>
 
