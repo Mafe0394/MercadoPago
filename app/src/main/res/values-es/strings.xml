@@ -15,4 +15,6 @@
         resultados para tu búsqueda! </b>\n Intenta una búsqueda diferente</string>
     <string name="results_for">Resultados para: %s</string>
     <string name="search_results">Resultados de búsqueda</string>
+    <string name="clear_All">Borrar todo</string>
+    <string name="welcome_start_your_search"><b>Bienvenido!!!</b> \n  Empieza a buscar</string>
 </resources>

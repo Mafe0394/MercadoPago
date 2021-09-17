@@ -6,8 +6,12 @@
     </style>
 
    <style name="DetailTextStyle" parent="TextAppearance.AppCompat.Body1">
-       <item name="android:textColorPrimary">@color/gris_600</item>
+       <item name="android:textColorPrimary">@color/grey_600</item>
    </style>
+    <style name="ClearButtonStyle" parent="Widget.AppCompat.Button.Borderless.Colored">
+        <item name="android:textColor">@color/blue_700</item>
+        <item name="android:background">@drawable/clear_button_bg</item>
+    </style>
 
 
 </resources>

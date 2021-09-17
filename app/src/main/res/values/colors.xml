@@ -12,5 +12,6 @@
     <color name="yellow_700">#FFC305</color>
     <color name="blue_200">#91C9FF</color>
     <color name="blue_700">#3570E6</color>
-    <color name="gris_600">#5b5b5b</color>
+    <color name="grey_600">#5b5b5b</color>
+    <color name="grey_200">#EAEAEA</color>
 </resources>
