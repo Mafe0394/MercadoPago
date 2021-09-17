@@ -4,11 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import com.projects.mercadopago.data.ProductsDataSource
 import com.projects.mercadopago.data.domain.Product
-import com.projects.mercadopago.data.domain.ResponseModel
 import com.projects.mercadopago.data.domain.asDomainModel
+import com.projects.mercadopago.data.network.networkModels.ResponseModel
 import com.projects.mercadopago.data.repository.ResultMercadoPago
-import com.projects.mercadopago.data.repository.ResultMercadoPago.Success
 import com.projects.mercadopago.data.repository.ResultMercadoPago.Error
+import com.projects.mercadopago.data.repository.ResultMercadoPago.Success
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

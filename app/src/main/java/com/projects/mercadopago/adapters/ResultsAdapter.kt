@@ -5,10 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.projects.mercadopago.databinding.HolderResultsRecyclerViewBinding
 import com.projects.mercadopago.data.domain.Product
-import com.projects.mercadopago.util.Event
-import com.projects.mercadopago.util.EventObserver
+import com.projects.mercadopago.databinding.HolderProductSearchBinding
 import com.projects.mercadopago.util.ProductClick
 
 
@@ -17,7 +15,7 @@ class ResultsAdapter : ListAdapter<Product,
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):
             ProductsViewHolder = ProductsViewHolder(
-        HolderResultsRecyclerViewBinding.inflate(LayoutInflater.from(parent.context))
+        HolderProductSearchBinding.inflate(LayoutInflater.from(parent.context))
     )
 
     override fun onBindViewHolder(holder: ProductsViewHolder, position: Int) {
@@ -36,7 +34,7 @@ class ResultsAdapter : ListAdapter<Product,
         }
     }
 
-    class ProductsViewHolder(private var binding: HolderResultsRecyclerViewBinding) :
+    class ProductsViewHolder(private var binding: HolderProductSearchBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(product: Product) {
             binding.product = product
@@ -55,7 +53,7 @@ class ResultsAdapter1(private val callback:ProductClick) : RecyclerView.Adapter<
         itemList=items?:ArrayList()
     }
 
-    class HolderProductAdapter(private var binding: HolderResultsRecyclerViewBinding) :
+    class HolderProductAdapter(private var binding: HolderProductSearchBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(product: Product,callback: ProductClick) {
             binding.also {
@@ -69,7 +67,7 @@ class ResultsAdapter1(private val callback:ProductClick) : RecyclerView.Adapter<
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HolderProductAdapter {
-        val binding = HolderResultsRecyclerViewBinding.inflate(LayoutInflater.from(parent.context),
+        val binding = HolderProductSearchBinding.inflate(LayoutInflater.from(parent.context),
             parent,
             false)
         return HolderProductAdapter(binding)

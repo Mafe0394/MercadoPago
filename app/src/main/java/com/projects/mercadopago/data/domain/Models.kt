@@ -17,3 +17,13 @@ data class Product(
     val price:Long,
     val image:String
 )
+
+data class ProductDetail(
+    val productID: String,
+    val title: String,
+    val picturesUrls:List<String>
+)
+
+data class ProductDescription(
+    val description:String
+)

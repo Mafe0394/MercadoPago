@@ -1,6 +1,8 @@
 package com.projects.mercadopago.data.domain
 
 import com.projects.mercadopago.data.database.DatabaseProduct
+import com.projects.mercadopago.data.network.networkModels.ResponseModel
+import com.projects.mercadopago.data.network.networkModels.ResultModel
 
 /**
  * Map DatabaseProduct to domain objects

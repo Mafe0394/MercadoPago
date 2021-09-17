@@ -1,6 +1,6 @@
 package com.projects.mercadopago.data.network
 
-import com.projects.mercadopago.data.domain.ResponseModel
+import com.projects.mercadopago.data.network.networkModels.ResponseModel
 import retrofit2.http.GET
 import retrofit2.http.Query
 

@@ -3,9 +3,8 @@ package com.projects.mercadopago.data.network
 import androidx.lifecycle.LiveData
 import com.projects.mercadopago.data.ProductsDataSource
 import com.projects.mercadopago.data.database.DatabaseProduct
-import com.projects.mercadopago.data.database.ProductsDatabase
 import com.projects.mercadopago.data.domain.Product
-import com.projects.mercadopago.data.domain.ResponseModel
+import com.projects.mercadopago.data.network.networkModels.ResponseModel
 import com.projects.mercadopago.data.repository.ResultMercadoPago
 import com.projects.mercadopago.data.repository.ResultMercadoPago.Success
 import com.squareup.moshi.Moshi
