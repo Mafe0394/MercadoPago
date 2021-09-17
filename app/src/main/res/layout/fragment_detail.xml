@@ -5,6 +5,9 @@
     tools:context=".uiControllers.fragments.DetailFragment">
 
     <data>
+        <variable
+            name="viewModel"
+            type="com.projects.mercadopago.viewModels.DetailViewModel" />
 
     </data>
 
@@ -19,7 +22,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Nombre del producto" />
+            tools:text="@{viewModel.productID}" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/imagesRecyclerView"

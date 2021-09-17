@@ -38,5 +38,9 @@
         android:id="@+id/detailFragment"
         android:name="com.projects.mercadopago.uiControllers.fragments.DetailFragment"
         android:label="fragment_detail"
-        tools:layout="@layout/fragment_detail" />
+        tools:layout="@layout/fragment_detail" >
+        <argument
+            android:name="product_id"
+            app:argType="string" />
+    </fragment>
 </navigation>

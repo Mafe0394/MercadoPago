@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.RecyclerView
 import com.projects.mercadopago.adapters.ResultsAdapter1
@@ -42,20 +43,23 @@ class ResultsFragment : Fragment() {
 
         setHasOptionsMenu(true)
 
-        val arguments = ResultsFragmentArgs.fromBundle(requireArguments())
-        Timber.i("Query ${arguments.queryString}")
+        initViewModel()
 
-        viewModel.startQueryResults(arguments.queryString)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
-
-        viewModel.result.observe(viewLifecycleOwner, {
-            viewModel.refreshProducts(it)
-        })
 
         initializeRecyclerView()
 
         return binding.root
+    }
+
+    private fun initViewModel() {
+        val arguments = ResultsFragmentArgs.fromBundle(requireArguments())
+        Timber.i("Query ${arguments.queryString}")
+        viewModel.result.observe(viewLifecycleOwner, {
+            viewModel.refreshProducts(it)
+        })
+        viewModel.startQueryResults(arguments.queryString)
     }
 
     private fun initializeRecyclerView() {
@@ -65,6 +69,7 @@ class ResultsFragment : Fragment() {
             // longer on the screen
             val packageManager = context?.packageManager ?: return@ProductClick
 
+            findNavController().navigate(ResultsFragmentDirections.actionResultsFragmentToDetailFragment(it.productID))
             Timber.i("Product Title ${it.title}")
         })
         var i=0

@@ -10,6 +10,7 @@ import com.projects.mercadopago.R
 import com.projects.mercadopago.databinding.FragmentDetailBinding
 import com.projects.mercadopago.viewModels.DetailViewModel
 import com.projects.mercadopago.viewModels.viewModelsFactory.DetailViewModelFactory
+import timber.log.Timber
 
 
 class DetailFragment : Fragment() {
@@ -24,8 +25,23 @@ class DetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding=FragmentDetailBinding.inflate(inflater)
+
         // Inflate the layout for this fragment
+        binding=FragmentDetailBinding.inflate(inflater)
+
+        setHasOptionsMenu(true)
+
+        initViewModel()
+
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+
         return binding.root
+    }
+
+    private fun initViewModel() {
+        val arguments = DetailFragmentArgs.fromBundle(requireArguments())
+        Timber.i("Query ${arguments.productId}")
+        viewModel.getProductDetails(arguments.productId)
     }
 }
