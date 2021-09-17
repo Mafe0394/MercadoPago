@@ -41,7 +41,7 @@ class ProductsRepository(
                     app,
                     ProductsDatabase::class.java,
                     "product_history_database"
-                ).build()
+                ).fallbackToDestructiveMigration().build()
                 ProductsRepository(
                     database = ProductLocalDataSource(database.productDao),
                     mercadoPagoNetwork = MercadoPagoNetwork

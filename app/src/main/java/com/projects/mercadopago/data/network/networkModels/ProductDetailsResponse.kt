@@ -144,19 +144,18 @@ data class Description(
 )
 
 data class Shipping(
-    val mode: String,
+    val mode: String?,
     @Json(name="free_methods")
-    val freeMethods: List<FreeMethod>,
-    val tags: List<String>,
-    val dimensions: Any,
+    val freeMethods: List<FreeMethod>?,
+    val tags: List<String>?,
     @Json(name="local_pick_up")
-    val localPickUp: Boolean,
+    val localPickUp: Boolean?,
     @Json(name="free_shipping")
-    val freeShipping: Boolean,
+    val freeShipping: Boolean?,
     @Json(name="logistic_type")
-    val logisticType: String,
+    val logisticType: String?,
     @Json(name="store_pick_up")
-    val storePickUp: Boolean
+    val storePickUp: Boolean?
 )
 
 data class FreeMethod(

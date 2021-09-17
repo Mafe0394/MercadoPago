@@ -313,7 +313,7 @@ data class SellerAddress (
     val id: String? = null,
     val comment: String? = null,
     @Json(name="search_location")
-    val searchLocation: SearchLocation,
+    val searchLocation: SearchLocation?,
 
     @Json(name="address_line")
     val addressLine: String? = null,
