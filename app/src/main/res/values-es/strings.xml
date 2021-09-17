@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MercadoPago</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="search_title">Búsqueda</string>
+    <string name="products">Productos</string>
+    <string name="filter_by_category">Filtrar por categoría</string>
+    <string name="search_hint">Buscar en Mercado Pago</string>
+    <string name="results">Resultados</string>
+    <string name="product_image">Imagen del produto</string>
+    <string name="loading_elllipsis">Cargando…</string>
+    <string name="something_went_wrong">Algo salió mal</string>
+    <string name="we_couldnt_find_products_that_match_your_search_criteria"><b> No pudimos encontrar
+        resultados para tu búsqueda! </b>\n Intenta una búsqueda diferente</string>
+    <string name="results_for">Resultados para: %s</string>
+    <string name="search_results">Resultados de búsqueda</string>
+    <string name="clear_All">Borrar todo</string>
+    <string name="welcome_start_your_search"><b>Bienvenido!!!</b> \n  Empieza a buscar</string>
+</resources>
