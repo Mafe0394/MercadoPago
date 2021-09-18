@@ -16,7 +16,7 @@ class DetailViewModel(private val repository: ProductsRepository) : ViewModel() 
 
 
     private val _productID = MutableLiveData("")
-    private val _productDetail = MutableLiveData<Product?>(null)
+    private val _productDetail = MutableLiveData<Product?>()
     private val _description = MutableLiveData("")
 
     val productID: LiveData<String>
@@ -25,7 +25,6 @@ class DetailViewModel(private val repository: ProductsRepository) : ViewModel() 
         get() = _productDetail
     val description: LiveData<String?>
         get() = _description
-
 
 
     fun getProductDetails(productID: String) {

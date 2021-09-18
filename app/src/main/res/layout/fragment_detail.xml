@@ -18,7 +18,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:padding="@dimen/_25dp">
 
             <TextView
@@ -30,17 +30,22 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Product Name" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/imagesRecyclerView"
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/imageSliderViewPager"
                 android:layout_width="@dimen/_250dp"
                 android:layout_height="@dimen/_250dp"
-                android:layout_marginTop="@dimen/_10dp"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/productNameTextView"
-                app:listImages="@{viewModel.productDetail.imagesUrls}" />
+                app:layout_constraintTop_toBottomOf="@id/productNameTextView" />
+
+            <me.relex.circleindicator.CircleIndicator3
+                android:id="@+id/indicator"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                app:ci_drawable="@drawable/blue_indicator_icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imageSliderViewPager" />
 
             <TextView
                 android:id="@+id/priceTextView"
@@ -48,7 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/PriceTextStyle"
-                app:layout_constraintTop_toBottomOf="@id/imagesRecyclerView"
+                app:layout_constraintTop_toBottomOf="@id/indicator"
                 tools:text="$ 50.000" />
 
             <TextView
@@ -60,24 +65,8 @@
                 android:textAppearance="@style/DetailTextStyle"
                 app:layout_constraintTop_toBottomOf="@id/priceTextView"
                 tools:text="Aqui vamos a poner el detalle del producto, solo escribimos para
-                llenar este texto y visualizar la salida" />
+                llenar este texto y visualizar la salida"/>
 
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/imageSliderViewPager"
-                android:layout_width="@dimen/_250dp"
-                android:layout_height="@dimen/_250dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/productDetailTextView" />
-
-            <me.relex.circleindicator.CircleIndicator3
-                android:id="@+id/indicator"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                app:ci_drawable="@drawable/blue_indicator_icon"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/imageSliderViewPager" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,17 +6,13 @@ import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.projects.mercadopago.R
-import com.projects.mercadopago.adapters.ImageSliderAdapter
 import com.projects.mercadopago.adapters.MarginItemDecoration
-import com.projects.mercadopago.adapters.ProductPicturesAdapter
-import com.projects.mercadopago.adapters.ResultsAdapter1
+import com.projects.mercadopago.adapters.ResultsAdapter
 import com.projects.mercadopago.data.domain.Product
 import com.projects.mercadopago.data.network.MercadoApiStatus
-import me.relex.circleindicator.CircleIndicator3
 
 @BindingAdapter("imageUrl")
 fun bindImage(imgView: ImageView, imgUrl: String?) {
@@ -40,26 +36,7 @@ fun bindRecyclerView(
     recyclerView: RecyclerView,
     data: List<Product>?,
 ) {
-//    val adapter = recyclerView.adapter as ResultsAdapter
-    val adapter1:ResultsAdapter1=recyclerView.adapter as ResultsAdapter1
-
-    // Adding separation between the recycler view Items
-    recyclerView.addItemDecoration(
-        MarginItemDecoration(
-            recyclerView.context.resources.getDimensionPixelSize(R.dimen._2dp)
-        )
-    )
-    // Tells the RecyclerView when a new list is available
-//    adapter.submitList(data)
-    adapter1.submitList(data)
-}
-
-@BindingAdapter("listImages")
-fun bindImageRecyclerView(
-    recyclerView: RecyclerView,
-    data: List<String>?,
-) {
-    val adapter=recyclerView.adapter as ProductPicturesAdapter
+    val adapter: ResultsAdapter = recyclerView.adapter as ResultsAdapter
 
     // Adding separation between the recycler view Items
     recyclerView.addItemDecoration(
@@ -69,23 +46,6 @@ fun bindImageRecyclerView(
     )
     // Tells the RecyclerView when a new list is available
     adapter.submitList(data)
-}
-
-@BindingAdapter("listImages1")
-fun bindImageRecyclerView1(
-    viewPager: ViewPager2,
-    data: List<String>?,
-) {
-    data?.let {
-        viewPager.adapter=ImageSliderAdapter(it)
-        viewPager.orientation=ViewPager2.ORIENTATION_HORIZONTAL
-        val indicator=viewPager.findViewById<CircleIndicator3>(R.id.indicator)
-        indicator.setViewPager(viewPager)
-    }
-
-
-    // Tells the RecyclerView when a new list is available
-//    adapter.submitList(data)
 }
 
 @BindingAdapter("appApiStatus")

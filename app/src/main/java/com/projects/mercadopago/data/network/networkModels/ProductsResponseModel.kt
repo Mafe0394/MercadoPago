@@ -223,7 +223,22 @@ data class Prices (
     val referencePrices: List<Any>? = null,
 
     @Json(name="purchase_discounts")
-    val purchaseDiscounts: List<String>? = null
+    val purchaseDiscounts: List<PurchaseDiscount>? = null
+)
+
+data class PurchaseDiscount(
+    @Json(name = "purchase_discount_id")
+    val purchaseDiscountId: String?,
+    @Json(name = "campaign_id")
+    val campaignId: String?,
+    @Json(name = "rebate_id")
+    val rebateId: String?,
+    val type: String?,
+    @Json(name = "buy_quantity")
+    val buyQuantity: Long?,
+    @Json(name = "discount_percentage")
+    val discountPercentage: Double?,
+    val conditions: Conditions?
 )
 
 

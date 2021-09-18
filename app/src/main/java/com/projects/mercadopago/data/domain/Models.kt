@@ -13,7 +13,7 @@ data class Product(
     val title:String,
     val price:Long,
     val image:String,
-    val imagesUrls:List<String>?=null,
+    var imagesUrls:List<String>?=null,
     val descriptionID:String?=null
 )
 

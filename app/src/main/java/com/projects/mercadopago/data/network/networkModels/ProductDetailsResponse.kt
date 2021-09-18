@@ -56,7 +56,7 @@ data class ProductDetailsResponse(
     @Json(name="seller_address")
     val sellerAddress: SellerAddress?,
     @Json(name="seller_contact")
-    val sellerContact: String?,
+    val sellerContact: SellerContact?,
     val attributes: List<Attribute?>,
     @Json(name="listing_source")
     val listingSource: String?,
@@ -94,6 +94,24 @@ data class SaleTerm(
     @Json(name="value_struct")
     val valueStruct: ValueStruct?,
     val values: List<Value?>
+)
+
+data class SellerContact(
+    val contact: String,
+    @Json(name = "other_info")
+    val otherInfo: String,
+    @Json(name = "country_code")
+    val countryCode: String,
+    @Json(name = "area_code")
+    val areaCode: String,
+    val phone: String,
+    @Json(name = "country_code2")
+    val countryCode2: String,
+    @Json(name = "area_code2")
+    val areaCode2: String,
+    val phone2: String,
+    val email: String,
+    val webpage: String
 )
 
 data class ValueStruct(
