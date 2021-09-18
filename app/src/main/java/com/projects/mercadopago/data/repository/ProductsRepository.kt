@@ -10,6 +10,7 @@ import com.projects.mercadopago.data.domain.Product
 import com.projects.mercadopago.data.domain.asDatabaseModel
 import com.projects.mercadopago.data.domain.asDomainModel
 import com.projects.mercadopago.data.network.MercadoPagoNetwork
+import com.projects.mercadopago.data.network.networkModels.Description
 import com.projects.mercadopago.data.repository.ResultMercadoPago.Success
 import kotlinx.coroutines.*
 
@@ -82,12 +83,6 @@ class ProductsRepository(
     }
 
     override suspend fun refreshProduct(productID: String) {
-        val remoteProduct = mercadoPagoNetwork.refreshProduct(productID)
-        if (remoteProduct is Success) {
-            database.saveProduct(remoteProduct.data.asDatabaseModel())
-        } else if (remoteProduct is ResultMercadoPago.Error) {
-            throw remoteProduct.exception
-        }
     }
 
     override fun observeProduct(productID: String): LiveData<ResultMercadoPago<Product>> {
@@ -109,6 +104,20 @@ class ProductsRepository(
             return@withContext ResultMercadoPago.Error(e)
         }
     }
+
+    override suspend fun getProductDescription(productID: String): ResultMercadoPago<String> =
+        withContext(ioDispatcher) {
+            try {
+                val description=mercadoPagoNetwork.getProductDescription(productID)
+                if (description is Success)
+                    return@withContext description
+                else
+                    return@withContext ResultMercadoPago.Error((description as ResultMercadoPago.Error).exception)
+            }catch (e:Exception){
+                return@withContext ResultMercadoPago.Error(e)
+            }
+
+        }
 
     override suspend fun saveProduct(product: Product) {
         TODO("Not yet implemented")

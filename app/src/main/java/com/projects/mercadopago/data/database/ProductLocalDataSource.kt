@@ -77,5 +77,8 @@ class ProductLocalDataSource internal constructor(
         productDao.insertListOfProducts(productsList)
     }
 
+    override suspend fun getProductDescription(productID: String): ResultMercadoPago<String> {
+        TODO("Not yet implemented")
+    }
 
 }

@@ -86,25 +86,25 @@ fun ResultModel.asDatabaseModel(): DatabaseProduct {
 
 fun ProductDetailsResponse.asDatabaseModel():DatabaseProduct{
     return DatabaseProduct(
-        productID = body.id,
-        title = body.title,
-        price = body.price,
-        basePrice = body.basePrice?:body.price,
-        stopTime = body.stopTime,
-        condition = body.condition,
-        permalink = body.permalink,
-        thumbnail = body.thumbnail,
+        productID = body.id?:"Error",
+        title = body.title?:"Error",
+        price = body.price?:0,
+        basePrice = body.basePrice?:0,
+        stopTime = body.stopTime?:"Error",
+        condition = body.condition?:"Error",
+        permalink = body.permalink?:"Error",
+        thumbnail = body.thumbnail?:"Error",
     )
 }
 
 fun ProductDetailsResponse.asDomainModel():Product{
     return Product(
-        body.id,
-        body.title,
-        body.price,
-        body.thumbnail,
-        body.pictures.map {
-            it.url
+        productID = body.id?:"Error",
+        title = body.title?:"Error",
+        price = body.price?:0,
+        image = body.thumbnail?:"Error",
+        imagesUrls = body.pictures.map {
+            it?.url?:"Error"
         }
     )
 }

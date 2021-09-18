@@ -31,4 +31,6 @@ interface ProductsDataSource {
     suspend fun deleteProduct(productID: String)
 
     suspend fun saveProductsList(productsList:List<DatabaseProduct>)
+
+    suspend fun getProductDescription(productID:String):ResultMercadoPago<String>
 }

@@ -4,78 +4,77 @@ import com.squareup.moshi.Json
 
 
 data class ProductDetailsResponse(
-    val code: Long,
+    val code: Long?,
     val body: ProductDetails
 )
 
 data class ProductDetails(
-    val id: String,
+    val id: String?,
     @Json(name="site_id")
-    val siteId: String,
-    val title: String,
+    val siteId: String?,
+    val title: String?,
     val subtitle: String?,
     @Json(name="seller_id")
-    val sellerId: Long,
+    val sellerId: Long?,
     @Json(name="category_id")
-    val categoryId: String,
+    val categoryId: String?,
     @Json(name="official_store_id")
     val officialStoreId: String?,
-    val price: Long,
+    val price: Long?,
     @Json(name="base_price")
     val basePrice: Long?,
     @Json(name="original_price")
     val originalPrice: Long?,
     @Json(name="currency_id")
-    val currencyId: String,
+    val currencyId: String?,
     @Json(name="initial_quantity")
-    val initialQuantity: Long,
+    val initialQuantity: Long?,
     @Json(name="available_quantity")
-    val availableQuantity: Long,
+    val availableQuantity: Long?,
     @Json(name="sold_quantity")
-    val soldQuantity: Long,
+    val soldQuantity: Long?,
     @Json(name="sale_terms")
-    val saleTerms: List<SaleTerm>,
+    val saleTerms: List<SaleTerm?>,
     @Json(name="buying_mode")
-    val buyingMode: String,
+    val buyingMode: String?,
     @Json(name="listing_type_id")
-    val listingTypeId: String,
+    val listingTypeId: String?,
     @Json(name="start_time")
-    val startTime: String,
+    val startTime: String?,
     @Json(name="stop_time")
-    val stopTime: String,
-    val condition: String,
-    val permalink: String,
+    val stopTime: String?,
+    val condition: String?,
+    val permalink: String?,
     @Json(name="thumbnail_id")
-    val thumbnailId: String,
-    val thumbnail: String,
+    val thumbnailId: String?,
+    val thumbnail: String?,
     @Json(name="secure_thumbnail")
-    val secureThumbnail: String,
-    val pictures: List<Picture>,
+    val secureThumbnail: String?,
+    val pictures: List<Picture?>,
     @Json(name="video_id")
-    val videoId: String,
+    val videoId: String?,
     val descriptions: List<Description>,
     @Json(name="accepts_mercadopago")
     val acceptsMercadopago: Boolean,
-    val shipping: Shipping,
+    val shipping: Shipping?,
     @Json(name="international_delivery_mode")
-    val internationalDeliveryMode: String,
+    val internationalDeliveryMode: String?,
     @Json(name="seller_address")
-    val sellerAddress: SellerAddress,
+    val sellerAddress: SellerAddress?,
     @Json(name="seller_contact")
     val sellerContact: String?,
-    val attributes: List<Attribute>,
+    val attributes: List<Attribute?>,
     @Json(name="listing_source")
-    val listingSource: String,
-    val variations: List<Variation>,
-    val status: String,
+    val listingSource: String?,
+    val status: String?,
     @Json(name="sub_status")
     val subStatus: List<String?>,
-    val tags: List<String>,
-    val warranty: String,
+    val tags: List<String?>,
+    val warranty: String?,
     @Json(name="catalog_product_id")
-    val catalogProductId: String,
+    val catalogProductId: String?,
     @Json(name="domain_id")
-    val domainId: String,
+    val domainId: String?,
     @Json(name="parent_item_id")
     val parentItemId: String?,
     @Json(name="differential_pricing")
@@ -83,63 +82,62 @@ data class ProductDetails(
     @Json(name="automatic_relist")
     val automaticRelist: Boolean,
     @Json(name="date_created")
-    val dateCreated: String,
+    val dateCreated: String?,
     @Json(name="last_updated")
-    val lastUpdated: String,
-    val health: Double,
+    val lastUpdated: String?,
     @Json(name="catalog_listing")
     val catalogListing: Boolean,
-    val channels: List<String>
+    val channels: List<String?>
 )
 
 data class SaleTerm(
-    val id: String,
-    val name: String,
+    val id: String?,
+    val name: String?,
     @Json(name="value_id")
     val valueId: String?,
     @Json(name="value_name")
-    val valueName: String,
+    val valueName: String?,
     @Json(name="value_struct")
     val valueStruct: ValueStruct?,
-    val values: List<Value>
+    val values: List<Value?>
 )
 
 data class ValueStruct(
-    val number: Long,
-    val unit: String
+    val number: Long?,
+    val unit: String?
 )
 
 data class Value(
     val id: String?,
-    val name: String,
+    val name: String?,
     val struct: Struct?
 )
 
 data class Struct(
-    val number: Long,
-    val unit: String
+    val number: Long?,
+    val unit: String?
 )
 
 data class Picture(
-    val id: String,
-    val url: String,
+    val id: String?,
+    val url: String?,
     @Json(name="secure_url")
-    val secureUrl: String,
-    val size: String,
+    val secureUrl: String?,
+    val size: String?,
     @Json(name="max_size")
-    val maxSize: String,
-    val quality: String
+    val maxSize: String?,
+    val quality: String?
 )
 
 data class Description(
-    val id: String
+    val id: String?
 )
 
 data class Shipping(
     val mode: String?,
     @Json(name="free_methods")
     val freeMethods: List<FreeMethod>?,
-    val tags: List<String>?,
+    val tags: List<String?>?,
     @Json(name="local_pick_up")
     val localPickUp: Boolean?,
     @Json(name="free_shipping")
@@ -151,63 +149,63 @@ data class Shipping(
 )
 
 data class FreeMethod(
-    val id: Long,
+    val id: Long?,
     val rule: Rule
 )
 
 data class Rule(
     val default: Boolean,
     @Json(name="free_mode")
-    val freeMode: String,
+    val freeMode: String?,
     @Json(name="free_shipping_flag")
     val freeShippingFlag: Boolean,
 )
 
 data class SearchLocation(
-    val neighborhood: Neighborhood,
-    val city: City2,
-    val state: State2
+    val neighborhood: Neighborhood?,
+    val city: City2?,
+    val state: State2?
 )
 
 data class Neighborhood(
-    val id: String,
-    val name: String
+    val id: String?,
+    val name: String?
 )
 
 data class City2(
-    val id: String,
-    val name: String
+    val id: String?,
+    val name: String?
 )
 
 data class State2(
-    val id: String,
-    val name: String
+    val id: String?,
+    val name: String?
 )
 
 data class Variation(
-    val id: Long,
-    val price: Long,
+    val id: Long?,
+    val price: Long?,
     @Json(name="attribute_combinations")
     val attributeCombinations: List<AttributeCombination>,
     @Json(name="available_quantity")
-    val availableQuantity: Long,
+    val availableQuantity: Long?,
     @Json(name="sold_quantity")
-    val soldQuantity: Long,
+    val soldQuantity: Long?,
     @Json(name="picture_ids")
-    val pictureIds: List<String>
+    val pictureIds: List<String?>
 )
 
 data class AttributeCombination(
-    val id: String,
-    val name: String,
+    val id: String?,
+    val name: String?,
     @Json(name="value_id")
-    val valueId: String,
+    val valueId: String?,
     @Json(name="value_name")
-    val valueName: String,
+    val valueName: String?,
     val values: List<Value3>
 )
 
 data class Value3(
-    val id: String,
-    val name: String
+    val id: String?,
+    val name: String?
 )

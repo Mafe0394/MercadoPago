@@ -5,53 +5,63 @@
     tools:context=".uiControllers.fragments.DetailFragment">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.projects.mercadopago.viewModels.DetailViewModel" />
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="@dimen/_25dp">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/productNameTextView"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="@{viewModel.productDetail.title}"
-            tools:text="Product Name"/>
+            android:layout_height="match_parent"
+            android:padding="@dimen/_25dp">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/imagesRecyclerView"
-            android:layout_width="@dimen/_250dp"
-            android:layout_height="@dimen/_250dp"
-            android:layout_marginTop="@dimen/_10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/productNameTextView" />
+            <TextView
+                android:id="@+id/productNameTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.productDetail.title}"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Product Name" />
 
-        <TextView
-            android:id="@+id/priceTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/PriceTextStyle"
-            app:layout_constraintTop_toBottomOf="@id/imagesRecyclerView"
-            tools:text="$ 50.000"
-            priceInCop="@{viewModel.productDetail.price}"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/imagesRecyclerView"
+                android:layout_width="@dimen/_250dp"
+                android:layout_height="@dimen/_250dp"
+                android:layout_marginTop="@dimen/_10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/productNameTextView" />
 
-        <TextView
-            android:id="@+id/productDetailTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/DetailTextStyle"
-            app:layout_constraintTop_toBottomOf="@id/priceTextView"
-            tools:text="Aqui vamos a poner el detalle del producto, solo escribimos para
-            llenar este texto y visualizar la salida" />
+            <TextView
+                android:id="@+id/priceTextView"
+                priceInCop="@{viewModel.productDetail.price}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/PriceTextStyle"
+                app:layout_constraintTop_toBottomOf="@id/imagesRecyclerView"
+                tools:text="$ 50.000" />
+
+            <TextView
+                android:id="@+id/productDetailTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/DetailTextStyle"
+                app:layout_constraintTop_toBottomOf="@id/priceTextView"
+                tools:text="Aqui vamos a poner el detalle del producto, solo escribimos para
+                llenar este texto y visualizar la salida"
+                android:text="@{viewModel.description}"
+                android:layout_marginTop="@dimen/_25dp" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>

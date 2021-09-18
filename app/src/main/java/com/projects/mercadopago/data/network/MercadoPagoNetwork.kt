@@ -10,6 +10,7 @@ import com.projects.mercadopago.data.repository.ResultMercadoPago
 import com.projects.mercadopago.data.repository.ResultMercadoPago.Success
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import retrofit2.HttpException
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
@@ -46,7 +47,7 @@ object MercadoPagoNetwork : ProductsDataSource {
     override suspend fun refreshProducts(query: String): ResultMercadoPago<ResponseModel>? =
         try {
             Success(retrofitService.getProductsByQuery(query))
-        } catch (e: Exception) {
+        } catch (e: HttpException) {
             ResultMercadoPago.Error(e)
         }
 
@@ -64,9 +65,18 @@ object MercadoPagoNetwork : ProductsDataSource {
         try {
             Success(retrofitService.getProductDetails(productID = productID)[0])
 
-        } catch (e: java.lang.Exception) {
+        } catch (e: HttpException) {
+            ResultMercadoPago.Error(e
+            )
+        }
+
+    override suspend fun getProductDescription(productID: String): ResultMercadoPago<String> =
+        try{
+            Success(retrofitService.getProductDescription(productID).plainText)
+        }catch (e:HttpException){
             ResultMercadoPago.Error(e)
         }
+
 
     override suspend fun saveProduct(product: DatabaseProduct) {
         TODO("Not yet implemented")
