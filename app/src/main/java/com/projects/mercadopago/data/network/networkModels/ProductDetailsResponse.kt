@@ -2,13 +2,7 @@ package com.projects.mercadopago.data.network.networkModels
 
 import com.squareup.moshi.Json
 
-
 data class ProductDetailsResponse(
-    val code: Long?,
-    val body: ProductDetails
-)
-
-data class ProductDetails(
     val id: String?,
     @Json(name="site_id")
     val siteId: String?,

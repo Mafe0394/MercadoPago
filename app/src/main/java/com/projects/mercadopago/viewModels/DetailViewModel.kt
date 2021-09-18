@@ -26,6 +26,8 @@ class DetailViewModel(private val repository: ProductsRepository) : ViewModel() 
     val description: LiveData<String?>
         get() = _description
 
+
+
     fun getProductDetails(productID: String) {
         _productID.value = productID
         viewModelScope.launch {
@@ -34,10 +36,8 @@ class DetailViewModel(private val repository: ProductsRepository) : ViewModel() 
                 _productDetail.value = product.data
                 Timber.i("product ${product.data}")
                 val description = repository.getProductDescription(productID)
-                if (description is ResultMercadoPago.Success) {
+                if (description is ResultMercadoPago.Success)
                     _description.value = description.data
-                    Timber.i("product ${description.data}")
-                }
                 else if (description is ResultMercadoPago.Error)
                     Timber.i("Error \n ${description.exception}")
             } else if (product is ResultMercadoPago.Error)

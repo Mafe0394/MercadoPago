@@ -63,7 +63,7 @@ object MercadoPagoNetwork : ProductsDataSource {
 
     override suspend fun refreshProduct(productID: String): ResultMercadoPago<ProductDetailsResponse>? =
         try {
-            Success(retrofitService.getProductDetails(productID = productID)[0])
+            Success(retrofitService.getProductDetails(productID = productID))
 
         } catch (e: HttpException) {
             ResultMercadoPago.Error(e

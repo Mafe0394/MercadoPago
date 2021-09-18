@@ -2,6 +2,7 @@ package com.projects.mercadopago.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -45,7 +46,8 @@ class ResultsAdapter : ListAdapter<Product,
     }
 }
 
-class ResultsAdapter1(private val callback:ProductClick) : RecyclerView.Adapter<ResultsAdapter1.HolderProductAdapter>() {
+class ResultsAdapter1(private val callback:ProductClick) : PagingDataAdapter<Product,ResultsAdapter1.HolderProductAdapter>(
+    ResultsAdapter) {
 
     private lateinit var itemList:List<Product>
 
