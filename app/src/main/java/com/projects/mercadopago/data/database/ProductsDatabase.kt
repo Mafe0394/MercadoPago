@@ -1,8 +1,6 @@
 package com.projects.mercadopago.data.database
 
-import android.content.Context
 import androidx.room.Database
-import androidx.room.Room
 import androidx.room.RoomDatabase
 
 /** A database tha stores Product information.
@@ -10,7 +8,7 @@ import androidx.room.RoomDatabase
  * Note that exportSchema should be true in production databases.
  */
 @Database(entities = [DatabaseProduct::class,
-                     DatabaseProduct1::class], version = 2)
+                     DatabaseProductDetails::class], version = 3)
 abstract class ProductsDatabase : RoomDatabase() {
 
 

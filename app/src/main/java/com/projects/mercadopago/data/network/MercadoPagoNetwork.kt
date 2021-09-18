@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import com.projects.mercadopago.data.ProductsDataSource
 import com.projects.mercadopago.data.database.DatabaseProduct
 import com.projects.mercadopago.data.domain.Product
+import com.projects.mercadopago.data.network.networkModels.ProductDetailsResponse
 import com.projects.mercadopago.data.network.networkModels.ResponseModel
 import com.projects.mercadopago.data.repository.ResultMercadoPago
 import com.projects.mercadopago.data.repository.ResultMercadoPago.Success
@@ -13,10 +14,11 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 
-object MercadoPagoNetwork:ProductsDataSource {
+object MercadoPagoNetwork : ProductsDataSource {
 
     private const val BASE_URL = "https://api.mercadolibre.com/"
     private const val SITE_ID = "MCO"
+
     // Moshi object to use as a converter factory
     private val moshi = Moshi.Builder()
         .add(KotlinJsonAdapterFactory())
@@ -41,35 +43,40 @@ object MercadoPagoNetwork:ProductsDataSource {
         return null
     }
 
-    override suspend fun refreshProducts(query:String): ResultMercadoPago<ResponseModel>? =
+    override suspend fun refreshProducts(query: String): ResultMercadoPago<ResponseModel>? =
         try {
-           Success (retrofitService.getProductsByQuery(query))
-        }catch (e:Exception){
+            Success(retrofitService.getProductsByQuery(query))
+        } catch (e: Exception) {
             ResultMercadoPago.Error(e)
         }
 
 
-    override fun observeProduct(ProductId: String): LiveData<ResultMercadoPago<Product>> {
+    override fun observeProduct(productID: String): LiveData<ResultMercadoPago<Product>>? {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getProduct(ProductId: String): ResultMercadoPago<Product> {
+    override suspend fun getProduct(productID: String): ResultMercadoPago<Product>? {
+        return null
+    }
+
+
+    override suspend fun refreshProduct(productID: String): ResultMercadoPago<ProductDetailsResponse>? =
+        try {
+            Success(retrofitService.getProductDetails(productID = productID)[0])
+
+        } catch (e: java.lang.Exception) {
+            ResultMercadoPago.Error(e)
+        }
+
+    override suspend fun saveProduct(product: DatabaseProduct) {
         TODO("Not yet implemented")
     }
 
-    override suspend fun refreshProduct(ProductId: String) {
+    override suspend fun activateProduct(product: Product) {
         TODO("Not yet implemented")
     }
 
-    override suspend fun saveProduct(Product: Product) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun activateProduct(Product: Product) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun activateProduct(ProductId: String) {
+    override suspend fun activateProduct(productID: String) {
         TODO("Not yet implemented")
     }
 
@@ -77,7 +84,7 @@ object MercadoPagoNetwork:ProductsDataSource {
         TODO("Not yet implemented")
     }
 
-    override suspend fun deleteProduct(ProductId: String) {
+    override suspend fun deleteProduct(productID: String) {
         TODO("Not yet implemented")
     }
 

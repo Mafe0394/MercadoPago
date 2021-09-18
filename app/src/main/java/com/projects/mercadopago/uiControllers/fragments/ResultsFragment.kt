@@ -56,7 +56,7 @@ class ResultsFragment : Fragment() {
     private fun initViewModel() {
         val arguments = ResultsFragmentArgs.fromBundle(requireArguments())
         Timber.i("Query ${arguments.queryString}")
-        viewModel.result.observe(viewLifecycleOwner, {
+        viewModel.result?.observe(viewLifecycleOwner, {
             viewModel.refreshProducts(it)
         })
         viewModel.startQueryResults(arguments.queryString)
@@ -92,7 +92,7 @@ class ResultsFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         viewModel.resetViewModel()
-        viewModel.result.removeObservers(viewLifecycleOwner)
+        viewModel.result?.removeObservers(viewLifecycleOwner)
         Timber.i("Back to Search Fragment")
 
         return NavigationUI.onNavDestinationSelected(item,

@@ -29,14 +29,14 @@ interface ProductDao {
 
     /* Visited Products*/
 
-    @Query("select * from databaseproduct1")
+    @Query("select * from databaseproductdetails")
     fun getVisitedProductsFromDatabase(): List<DatabaseProduct>
 
     /* Insert a product fetched from the network into the database.*/
-    @Insert(onConflict = OnConflictStrategy.REPLACE,entity = DatabaseProduct1::class)
+    @Insert(onConflict = OnConflictStrategy.REPLACE,entity = DatabaseProductDetails::class)
     fun insertProduct(product: DatabaseProduct)
 
-    @Query("DELETE FROM databaseproduct1")
+    @Query("DELETE FROM databaseproductdetails")
     suspend fun deleteVisitedProducts()
 
 }

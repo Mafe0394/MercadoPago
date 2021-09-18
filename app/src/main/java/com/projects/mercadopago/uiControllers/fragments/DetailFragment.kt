@@ -1,12 +1,12 @@
 package com.projects.mercadopago.uiControllers.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.projects.mercadopago.R
+import com.projects.mercadopago.data.repository.ProductsRepository
 import com.projects.mercadopago.databinding.FragmentDetailBinding
 import com.projects.mercadopago.viewModels.DetailViewModel
 import com.projects.mercadopago.viewModels.viewModelsFactory.DetailViewModelFactory
@@ -18,7 +18,7 @@ class DetailFragment : Fragment() {
     private lateinit var binding:FragmentDetailBinding
 
     private val viewModel by viewModels<DetailViewModel> {
-        DetailViewModelFactory()
+        DetailViewModelFactory(ProductsRepository.getRepository(requireActivity().application))
     }
 
     override fun onCreateView(

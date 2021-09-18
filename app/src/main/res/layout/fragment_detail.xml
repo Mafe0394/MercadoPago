@@ -22,7 +22,8 @@
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="@{viewModel.productID}" />
+            android:text="@{viewModel.productDetail.title}"
+            tools:text="Product Name"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/imagesRecyclerView"
@@ -39,7 +40,8 @@
             android:layout_height="wrap_content"
             android:textAppearance="@style/PriceTextStyle"
             app:layout_constraintTop_toBottomOf="@id/imagesRecyclerView"
-            tools:text="$ 50.000" />
+            tools:text="$ 50.000"
+            priceInCop="@{viewModel.productDetail.price}"/>
 
         <TextView
             android:id="@+id/productDetailTextView"

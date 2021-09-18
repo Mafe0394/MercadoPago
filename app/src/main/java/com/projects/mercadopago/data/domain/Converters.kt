@@ -1,6 +1,8 @@
 package com.projects.mercadopago.data.domain
 
 import com.projects.mercadopago.data.database.DatabaseProduct
+import com.projects.mercadopago.data.database.ProductsDatabase
+import com.projects.mercadopago.data.network.networkModels.ProductDetailsResponse
 import com.projects.mercadopago.data.network.networkModels.ResponseModel
 import com.projects.mercadopago.data.network.networkModels.ResultModel
 
@@ -79,5 +81,30 @@ fun ResultModel.asDatabaseModel(): DatabaseProduct {
         condition = condition,
         permalink = permalink,
         thumbnail = thumbnail,
+    )
+}
+
+fun ProductDetailsResponse.asDatabaseModel():DatabaseProduct{
+    return DatabaseProduct(
+        productID = body.id,
+        title = body.title,
+        price = body.price,
+        basePrice = body.basePrice?:body.price,
+        stopTime = body.stopTime,
+        condition = body.condition,
+        permalink = body.permalink,
+        thumbnail = body.thumbnail,
+    )
+}
+
+fun ProductDetailsResponse.asDomainModel():Product{
+    return Product(
+        body.id,
+        body.title,
+        body.price,
+        body.thumbnail,
+        body.pictures.map {
+            it.url
+        }
     )
 }

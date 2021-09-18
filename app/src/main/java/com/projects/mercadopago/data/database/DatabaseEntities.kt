@@ -22,7 +22,7 @@ data class DatabaseProduct constructor(
 )
 
 @Entity
-data class DatabaseProduct1 constructor(
+data class DatabaseProductDetails constructor(
     @PrimaryKey
     val productID:String,
     val title:String,

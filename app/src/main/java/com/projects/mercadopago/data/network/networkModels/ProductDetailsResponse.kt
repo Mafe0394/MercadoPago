@@ -5,26 +5,26 @@ import com.squareup.moshi.Json
 
 data class ProductDetailsResponse(
     val code: Long,
-    val body: Body
+    val body: ProductDetails
 )
 
-data class Body(
+data class ProductDetails(
     val id: String,
     @Json(name="site_id")
     val siteId: String,
     val title: String,
-    val subtitle: Any,
+    val subtitle: String?,
     @Json(name="seller_id")
     val sellerId: Long,
     @Json(name="category_id")
     val categoryId: String,
     @Json(name="official_store_id")
-    val officialStoreId: Any,
+    val officialStoreId: String?,
     val price: Long,
     @Json(name="base_price")
-    val basePrice: Long,
+    val basePrice: Long?,
     @Json(name="original_price")
-    val originalPrice: Any,
+    val originalPrice: Long?,
     @Json(name="currency_id")
     val currencyId: String,
     @Json(name="initial_quantity")
@@ -56,26 +56,20 @@ data class Body(
     val descriptions: List<Description>,
     @Json(name="accepts_mercadopago")
     val acceptsMercadopago: Boolean,
-    @Json(name="non_mercado_pago_payment_methods")
-    val nonMercadoPagoPaymentMethods: List<Any>,
     val shipping: Shipping,
     @Json(name="international_delivery_mode")
     val internationalDeliveryMode: String,
     @Json(name="seller_address")
     val sellerAddress: SellerAddress,
     @Json(name="seller_contact")
-    val sellerContact: Any,
-    val location: Location,
-    @Json(name="coverage_areas")
-    val coverageAreas: List<Any>,
+    val sellerContact: String?,
     val attributes: List<Attribute>,
-    val warnings: List<Any>,
     @Json(name="listing_source")
     val listingSource: String,
     val variations: List<Variation>,
     val status: String,
     @Json(name="sub_status")
-    val subStatus: List<Any>,
+    val subStatus: List<String?>,
     val tags: List<String>,
     val warranty: String,
     @Json(name="catalog_product_id")
@@ -83,11 +77,9 @@ data class Body(
     @Json(name="domain_id")
     val domainId: String,
     @Json(name="parent_item_id")
-    val parentItemId: Any,
+    val parentItemId: String?,
     @Json(name="differential_pricing")
-    val differentialPricing: Any,
-    @Json(name="deal_ids")
-    val dealIds: List<Any>,
+    val differentialPricing: Long?,
     @Json(name="automatic_relist")
     val automaticRelist: Boolean,
     @Json(name="date_created")
@@ -169,22 +161,6 @@ data class Rule(
     val freeMode: String,
     @Json(name="free_shipping_flag")
     val freeShippingFlag: Boolean,
-    val value: Any
-)
-
-data class City(
-    val id: String,
-    val name: String
-)
-
-data class State(
-    val id: String,
-    val name: String
-)
-
-data class Country(
-    val id: String,
-    val name: String
 )
 
 data class SearchLocation(
@@ -208,10 +184,6 @@ data class State2(
     val name: String
 )
 
-data class Location(
-    val dummy:Any
-)
-
 data class Variation(
     val id: Long,
     val price: Long,
@@ -221,12 +193,8 @@ data class Variation(
     val availableQuantity: Long,
     @Json(name="sold_quantity")
     val soldQuantity: Long,
-    @Json(name="sale_terms")
-    val saleTerms: List<Any>,
     @Json(name="picture_ids")
-    val pictureIds: List<String>,
-    @Json(name="catalog_product_id")
-    val catalogProductId: Any
+    val pictureIds: List<String>
 )
 
 data class AttributeCombination(
@@ -236,13 +204,10 @@ data class AttributeCombination(
     val valueId: String,
     @Json(name="value_name")
     val valueName: String,
-    @Json(name="value_struct")
-    val valueStruct: Any,
     val values: List<Value3>
 )
 
 data class Value3(
     val id: String,
-    val name: String,
-    val struct: Any
+    val name: String
 )
