@@ -1,7 +1,10 @@
 package com.projects.mercadopago.data.network
 
-import com.projects.mercadopago.data.domain.ResponseModel
+import com.projects.mercadopago.data.network.networkModels.ProductDescription
+import com.projects.mercadopago.data.network.networkModels.ProductDetailsResponse
+import com.projects.mercadopago.data.network.networkModels.ResponseModel
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface MercadoPagoApiService {
@@ -15,6 +18,18 @@ interface MercadoPagoApiService {
         @Query("offset")
         offset: Int,
     ): ResponseModel
+
+    @GET("items/{productID}/")
+    suspend fun getProductDetails(
+        @Path("productID")
+        productID: String
+    ): ProductDetailsResponse
+
+    @GET("items/{productID}/description")
+    suspend fun getProductDescription(
+        @Path("productID")
+        productID: String
+    ):ProductDescription
 }
 
 

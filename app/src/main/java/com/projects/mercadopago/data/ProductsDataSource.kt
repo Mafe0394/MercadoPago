@@ -2,9 +2,9 @@ package com.projects.mercadopago.data
 
 import androidx.lifecycle.LiveData
 import com.projects.mercadopago.data.database.DatabaseProduct
-import com.projects.mercadopago.data.database.ProductsDatabase
 import com.projects.mercadopago.data.domain.Product
-import com.projects.mercadopago.data.domain.ResponseModel
+import com.projects.mercadopago.data.network.networkModels.ProductDetailsResponse
+import com.projects.mercadopago.data.network.networkModels.ResponseModel
 import com.projects.mercadopago.data.repository.ResultMercadoPago
 
 interface ProductsDataSource {
@@ -14,21 +14,23 @@ interface ProductsDataSource {
 
     suspend fun refreshProducts(query:String):ResultMercadoPago<ResponseModel>?
 
-    fun observeProduct(ProductId: String): LiveData<ResultMercadoPago<Product>>
+    fun observeProduct(productID: String): LiveData<ResultMercadoPago<Product>>?
 
-    suspend fun getProduct(ProductId: String): ResultMercadoPago<Product>
+    suspend fun getProduct(productID: String): ResultMercadoPago<Product>?
 
-    suspend fun refreshProduct(ProductId: String)
+    suspend fun refreshProduct(productID: String):ResultMercadoPago<ProductDetailsResponse>?
 
-    suspend fun saveProduct(Product: Product)
+    suspend fun saveProduct(product: DatabaseProduct)
 
-    suspend fun activateProduct(Product: Product)
+    suspend fun activateProduct(product: Product)
 
-    suspend fun activateProduct(ProductId: String)//maybe for favorite
+    suspend fun activateProduct(productID: String)//maybe for favorite
 
     suspend fun deleteAllProducts()
 
-    suspend fun deleteProduct(ProductId: String)
+    suspend fun deleteProduct(productID: String)
 
     suspend fun saveProductsList(productsList:List<DatabaseProduct>)
+
+    suspend fun getProductDescription(productID:String):ResultMercadoPago<String>
 }

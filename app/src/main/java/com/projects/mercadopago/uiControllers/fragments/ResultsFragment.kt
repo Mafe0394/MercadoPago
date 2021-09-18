@@ -9,20 +9,17 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.projects.mercadopago.adapters.ResultsAdapter1
-import com.projects.mercadopago.databinding.FragmentResultsBinding
+import com.projects.mercadopago.adapters.ResultsAdapter
 import com.projects.mercadopago.data.repository.ProductsRepository
-import com.projects.mercadopago.util.Event
+import com.projects.mercadopago.databinding.FragmentResultsBinding
 import com.projects.mercadopago.util.ProductClick
 import com.projects.mercadopago.viewModels.ResultsViewModel
 import com.projects.mercadopago.viewModels.viewModelsFactory.ResultsViewModelFactory
 import timber.log.Timber
-import androidx.recyclerview.widget.LinearLayoutManager
-
-
-
 
 
 class ResultsFragment : Fragment() {
@@ -42,37 +39,42 @@ class ResultsFragment : Fragment() {
 
         setHasOptionsMenu(true)
 
-        val arguments = ResultsFragmentArgs.fromBundle(requireArguments())
-        Timber.i("Query ${arguments.queryString}")
+        initViewModel()
 
-        viewModel.startQueryResults(arguments.queryString)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
-
-        viewModel.result.observe(viewLifecycleOwner, {
-            viewModel.refreshProducts(it)
-        })
 
         initializeRecyclerView()
 
         return binding.root
     }
 
+    private fun initViewModel() {
+        val arguments = ResultsFragmentArgs.fromBundle(requireArguments())
+        Timber.i("Query ${arguments.queryString}")
+        viewModel.result.observe(viewLifecycleOwner, {
+            viewModel.refreshProducts(it)
+        })
+        viewModel.startQueryResults(arguments.queryString)
+    }
+
     private fun initializeRecyclerView() {
         // Initialize the RecyclerView
-        binding.resultsRecyclerView.adapter = ResultsAdapter1(ProductClick {
+        binding.resultsRecyclerView.adapter = ResultsAdapter(ProductClick {
             // context is not around, we can safely discard this click since the Fragment is no
             // longer on the screen
             val packageManager = context?.packageManager ?: return@ProductClick
 
+            findNavController().navigate(ResultsFragmentDirections.actionResultsFragmentToDetailFragment(
+                it.productID))
             Timber.i("Product Title ${it.title}")
         })
-        var i=0
+        var i = 0
         binding.resultsRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
 
                 val layoutManager = LinearLayoutManager::class.java.cast(recyclerView.layoutManager)
-                val totalItemCount = layoutManager?.itemCount?:0
+                val totalItemCount = layoutManager?.itemCount ?: 0
                 val lastVisible = layoutManager?.findLastVisibleItemPosition()
                 val endHasBeenReached = lastVisible?.plus(1) ?: 0 == totalItemCount
                 if (totalItemCount > 0 && endHasBeenReached) {

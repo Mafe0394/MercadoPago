@@ -57,7 +57,7 @@ class ResultsViewModel(private val repository: ProductsRepository) : ViewModel()
         if (_status.value != MercadoApiStatus.ERROR)
             if (productsResult is Success) {
                 _products.value = productsResult.data
-            } else if( productsResult is Error){
+            } else if (productsResult is Error) {
                 _products.value = null
                 _status.value = MercadoApiStatus.ERROR
                 Timber.e("Error getting data from database \n ${productsResult.exception}")

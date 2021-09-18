@@ -4,11 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import com.projects.mercadopago.data.ProductsDataSource
 import com.projects.mercadopago.data.domain.Product
-import com.projects.mercadopago.data.domain.ResponseModel
 import com.projects.mercadopago.data.domain.asDomainModel
+import com.projects.mercadopago.data.network.networkModels.ProductDetailsResponse
+import com.projects.mercadopago.data.network.networkModels.ResponseModel
 import com.projects.mercadopago.data.repository.ResultMercadoPago
-import com.projects.mercadopago.data.repository.ResultMercadoPago.Success
 import com.projects.mercadopago.data.repository.ResultMercadoPago.Error
+import com.projects.mercadopago.data.repository.ResultMercadoPago.Success
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -40,41 +41,44 @@ class ProductLocalDataSource internal constructor(
         return null
     }
 
-    override fun observeProduct(ProductId: String): LiveData<ResultMercadoPago<Product>> {
-        TODO("Not yet implemented")
+    override fun observeProduct(productID: String): LiveData<ResultMercadoPago<Product>>? {
+        return null
     }
 
-    override suspend fun getProduct(ProductId: String): ResultMercadoPago<Product> {
-        TODO("Not yet implemented")
+    override suspend fun getProduct(productID: String): ResultMercadoPago<Product>? {
+        return null
     }
 
-    override suspend fun refreshProduct(ProductId: String) {
-        TODO("Not yet implemented")
+    override suspend fun refreshProduct(productID: String): ResultMercadoPago<ProductDetailsResponse>? {
+        return null
     }
 
-    override suspend fun saveProduct(Product: Product) {
-        TODO("Not yet implemented")
+    override suspend fun saveProduct(product: DatabaseProduct) {
+        //nope
     }
 
-    override suspend fun activateProduct(Product: Product) {
-        TODO("Not yet implemented")
+    override suspend fun activateProduct(product: Product) {
+        // nope
     }
 
-    override suspend fun activateProduct(ProductId: String) {
-        TODO("Not yet implemented")
+    override suspend fun activateProduct(productID: String) {
+        // nope
     }
 
     override suspend fun deleteAllProducts() = withContext(ioDispatcher) {
         productDao.deleteProducts()
     }
 
-    override suspend fun deleteProduct(ProductId: String) {
-        TODO("Not yet implemented")
+    override suspend fun deleteProduct(productID: String) {
+        // nope
     }
 
     override suspend fun saveProductsList(productsList: List<DatabaseProduct>) {
         productDao.insertListOfProducts(productsList)
     }
 
+    override suspend fun getProductDescription(productID: String): ResultMercadoPago<String> {
+        TODO("Not yet implemented")
+    }
 
 }

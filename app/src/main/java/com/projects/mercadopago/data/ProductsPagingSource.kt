@@ -2,10 +2,10 @@ package com.projects.mercadopago.data
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.projects.mercadopago.data.domain.Paging
 import com.projects.mercadopago.data.domain.Product
 import com.projects.mercadopago.data.domain.asDomainModel
 import com.projects.mercadopago.data.network.MercadoPagoApiService
+import com.projects.mercadopago.data.network.networkModels.Paging
 import retrofit2.HttpException
 import java.io.IOException
 

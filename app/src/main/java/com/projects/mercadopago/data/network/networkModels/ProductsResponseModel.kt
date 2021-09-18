@@ -1,4 +1,4 @@
-package com.projects.mercadopago.data.domain
+package com.projects.mercadopago.data.network.networkModels
 
 import com.squareup.moshi.Json
 
@@ -223,7 +223,22 @@ data class Prices (
     val referencePrices: List<Any>? = null,
 
     @Json(name="purchase_discounts")
-    val purchaseDiscounts: List<String>? = null
+    val purchaseDiscounts: List<PurchaseDiscount>? = null
+)
+
+data class PurchaseDiscount(
+    @Json(name = "purchase_discount_id")
+    val purchaseDiscountId: String?,
+    @Json(name = "campaign_id")
+    val campaignId: String?,
+    @Json(name = "rebate_id")
+    val rebateId: String?,
+    val type: String?,
+    @Json(name = "buy_quantity")
+    val buyQuantity: Long?,
+    @Json(name = "discount_percentage")
+    val discountPercentage: Double?,
+    val conditions: Conditions?
 )
 
 
@@ -312,6 +327,8 @@ data class Seller (
 data class SellerAddress (
     val id: String? = null,
     val comment: String? = null,
+    @Json(name="search_location")
+    val searchLocation: SearchLocation?,
 
     @Json(name="address_line")
     val addressLine: String? = null,
@@ -326,20 +343,6 @@ data class SellerAddress (
     val longitude: String? = null
 )
 
-
-data class Shipping (
-    @Json(name="free_shipping")
-    val freeShipping: Boolean? = null,
-
-    val mode: String? = null,
-    val tags: List<String>? = null,
-
-    @Json(name="logistic_type")
-    val logisticType: String? = null,
-
-    @Json(name="store_pick_up")
-    val storePickUp: Boolean? = null
-)
 
 
 
