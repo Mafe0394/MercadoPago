@@ -52,7 +52,7 @@ object MercadoPagoNetwork : ProductsDataSource {
         }
 
 
-    override fun observeProduct(productID: String): LiveData<ResultMercadoPago<Product>>? {
+    override fun observeVisitedProducts(): LiveData<ResultMercadoPago<List<Product>>> {
         TODO("Not yet implemented")
     }
 
@@ -70,7 +70,7 @@ object MercadoPagoNetwork : ProductsDataSource {
             )
         }
 
-    override suspend fun getProductDescription(productID: String): ResultMercadoPago<String> =
+    override suspend fun getProductDescription(productID: String): ResultMercadoPago<String>? =
         try{
             Success(retrofitService.getProductDescription(productID).plainText)
         }catch (e:HttpException){
@@ -100,5 +100,9 @@ object MercadoPagoNetwork : ProductsDataSource {
 
     override suspend fun saveProductsList(productsList: List<DatabaseProduct>) {
         // nope
+    }
+
+    override suspend fun getVisitedProducts(): ResultMercadoPago<List<Product>>? {
+        TODO("Not yet implemented")
     }
 }

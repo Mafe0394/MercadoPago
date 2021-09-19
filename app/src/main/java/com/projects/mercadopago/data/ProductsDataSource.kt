@@ -14,7 +14,7 @@ interface ProductsDataSource {
 
     suspend fun refreshProducts(query:String):ResultMercadoPago<ResponseModel>?
 
-    fun observeProduct(productID: String): LiveData<ResultMercadoPago<Product>>?
+    fun observeVisitedProducts(): LiveData<ResultMercadoPago<List<Product>>>
 
     suspend fun getProduct(productID: String): ResultMercadoPago<Product>?
 
@@ -32,5 +32,7 @@ interface ProductsDataSource {
 
     suspend fun saveProductsList(productsList:List<DatabaseProduct>)
 
-    suspend fun getProductDescription(productID:String):ResultMercadoPago<String>
+    suspend fun getProductDescription(productID:String):ResultMercadoPago<String>?
+
+    suspend fun getVisitedProducts():ResultMercadoPago<List<Product>>?
 }

@@ -25,9 +25,8 @@ class ResultsAdapter(private val callback: ProductClick) :
             binding.also {
                 it.product = product
                 it.productCallback = callback
+                it.executePendingBindings()
             }
-            // Causes the update to excute immediately
-            binding.executePendingBindings()
         }
 
     }

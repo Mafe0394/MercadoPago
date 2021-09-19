@@ -7,11 +7,15 @@ interface IProductsRepository {
 
     suspend fun getProducts(query: String): ResultMercadoPago<List<Product>>?
 
-    suspend fun refreshProducts()
+    fun observeVisitedProducts():LiveData<ResultMercadoPago<List<Product>>>
+
     fun observeProducts(): LiveData<ResultMercadoPago<List<Product>>>
 
     suspend fun refreshProduct(productID: String)
+
     fun observeProduct(productID: String): LiveData<ResultMercadoPago<Product>>
+
+    suspend fun getVisitedProducts():ResultMercadoPago<List<Product>>?
 
     /**
      * Relies on [getProducts] to fetch data and picks the Product with the same ID.

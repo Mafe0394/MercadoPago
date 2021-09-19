@@ -10,7 +10,6 @@ import com.projects.mercadopago.data.domain.Product
 import com.projects.mercadopago.data.domain.asDatabaseModel
 import com.projects.mercadopago.data.domain.asDomainModel
 import com.projects.mercadopago.data.network.MercadoPagoNetwork
-import com.projects.mercadopago.data.network.networkModels.Description
 import com.projects.mercadopago.data.repository.ResultMercadoPago.Success
 import kotlinx.coroutines.*
 
@@ -74,13 +73,11 @@ class ProductsRepository(
         }
     }
 
-    override suspend fun refreshProducts() {
-        TODO("Not yet implemented")
-    }
+    override fun observeVisitedProducts(): LiveData<ResultMercadoPago<List<Product>>> =
+        database.observeVisitedProducts()
 
-    override fun observeProducts(): LiveData<ResultMercadoPago<List<Product>>> {
-        return database.observeProducts()
-    }
+    override fun observeProducts(): LiveData<ResultMercadoPago<List<Product>>> =
+        database.observeProducts()
 
     override suspend fun refreshProduct(productID: String) {
     }
@@ -153,5 +150,9 @@ class ProductsRepository(
 
     override suspend fun deleteProduct(productID: String) {
         database.deleteAllProducts()
+    }
+
+    override suspend fun getVisitedProducts(): ResultMercadoPago<List<Product>>? {
+        return database.getVisitedProducts()
     }
 }

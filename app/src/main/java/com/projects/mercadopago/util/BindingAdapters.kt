@@ -11,6 +11,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.projects.mercadopago.R
 import com.projects.mercadopago.adapters.MarginItemDecoration
 import com.projects.mercadopago.adapters.ResultsAdapter
+import com.projects.mercadopago.adapters.VisitedProductsAdapter
 import com.projects.mercadopago.data.domain.Product
 import com.projects.mercadopago.data.network.MercadoApiStatus
 
@@ -32,19 +33,22 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
 }
 
 @BindingAdapter("listData")
-fun bindRecyclerView(
-    recyclerView: RecyclerView,
+fun RecyclerView.bindRecyclerView(
     data: List<Product>?,
 ) {
-    val adapter: ResultsAdapter = recyclerView.adapter as ResultsAdapter
+    val adapter = adapter as ResultsAdapter
+    addItemDecoration(MarginItemDecoration(context.resources.getDimensionPixelSize(R.dimen._2dp)))
+    adapter.submitList(data)
+}
 
-    // Adding separation between the recycler view Items
-    recyclerView.addItemDecoration(
-        MarginItemDecoration(
-            recyclerView.context.resources.getDimensionPixelSize(R.dimen._2dp)
-        )
-    )
-    // Tells the RecyclerView when a new list is available
+@BindingAdapter("listVisitedProducts")
+fun RecyclerView.bindVisitedProducts(data: List<Product>?) {
+    val adapter = adapter as VisitedProductsAdapter
+    addItemDecoration(MarginItemDecoration(context.resources.getDimensionPixelSize(R.dimen._2dp)))
+    val x = arrayListOf(Product("Gato", "algo", 40000, "Error"),
+        Product("Gato", "algo", 40000, "Error"),
+        Product("Gato", "algo", 40000, "Error"),
+        Product("Gato", "algo", 40000, "Error"))
     adapter.submitList(data)
 }
 

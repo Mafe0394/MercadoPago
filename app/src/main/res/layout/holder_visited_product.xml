@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="product"
+            type="com.projects.mercadopago.data.domain.Product" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/blue_700">
+
+        <ImageView
+            android:id="@+id/productThumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_250dp"
+            android:contentDescription="@string/product_image"
+            android:scaleType="fitCenter"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/shopping_basket_icon"
+            app:imageUrl="@{product.image}"/>
+
+        <TextView
+            android:id="@+id/productNameTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            app:layout_constraintTop_toBottomOf="@id/productThumbnail"
+            tools:text="Nombre del producto"
+            android:text="@{product.title}" />
+
+        <TextView
+            android:id="@+id/priceTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/productNameTextView"
+            tools:text="$ 50.000"
+            app:priceInCop="@{product.price}"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
