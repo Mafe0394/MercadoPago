@@ -29,8 +29,11 @@ interface ProductDao {
 
     /* Visited Products*/
 
-    @Query("select * from databaseproductdetails")
-    fun getVisitedProductsFromDatabase(): List<DatabaseProduct>
+    @Query("select * from databaseproductdetails ORDER BY last_visit_time DESC")
+    fun getVisitedProducts(): List<DatabaseProduct>
+
+    @Query("select * from databaseproductdetails ORDER BY last_visit_time DESC")
+    fun observeVisitedProducts(): LiveData<List<DatabaseProduct>>
 
     /* Insert a product fetched from the network into the database.*/
     @Insert(onConflict = OnConflictStrategy.REPLACE,entity = DatabaseProductDetails::class)

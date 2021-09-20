@@ -1,6 +1,7 @@
 package com.projects.mercadopago.util
 
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.net.toUri
@@ -11,104 +12,105 @@ import com.bumptech.glide.request.RequestOptions
 import com.projects.mercadopago.R
 import com.projects.mercadopago.adapters.MarginItemDecoration
 import com.projects.mercadopago.adapters.ResultsAdapter
+import com.projects.mercadopago.adapters.VisitedProductsAdapter
 import com.projects.mercadopago.data.domain.Product
 import com.projects.mercadopago.data.network.MercadoApiStatus
 
 @BindingAdapter("imageUrl")
-fun bindImage(imgView: ImageView, imgUrl: String?) {
+fun ImageView.bindImage(imgUrl: String?) {
     imgUrl?.let { url ->
         // Converts the URL string (from the XML) to a URI object
         // The server requires to use secure scheme (HTTPS)
         val imgUri = url.toUri().buildUpon().scheme("https").build()
-        Glide.with(imgView.context)
+        Glide.with(context)
             .load(imgUri)
             .apply(
                 RequestOptions()
-                    .placeholder(R.drawable.loading_animation)
+                    .placeholder(R.drawable.loading_image)
                     .error(R.drawable.broken_image)
             )
-            .into(imgView)
+            .into(this)
     }
 }
 
 @BindingAdapter("listData")
-fun bindRecyclerView(
-    recyclerView: RecyclerView,
+fun RecyclerView.bindRecyclerView(
     data: List<Product>?,
 ) {
-    val adapter: ResultsAdapter = recyclerView.adapter as ResultsAdapter
+    val adapter = adapter as ResultsAdapter
+    addItemDecoration(MarginItemDecoration(context.resources.getDimensionPixelSize(R.dimen._2dp)))
+    adapter.submitList(data)
+}
 
-    // Adding separation between the recycler view Items
-    recyclerView.addItemDecoration(
-        MarginItemDecoration(
-            recyclerView.context.resources.getDimensionPixelSize(R.dimen._2dp)
-        )
-    )
-    // Tells the RecyclerView when a new list is available
+@BindingAdapter("listVisitedProducts")
+fun RecyclerView.bindVisitedProducts(data: List<Product>?) {
+    val adapter = adapter as VisitedProductsAdapter
+    addItemDecoration(MarginItemDecoration(context.resources.getDimensionPixelSize(R.dimen._2dp)))
     adapter.submitList(data)
 }
 
 @BindingAdapter("appApiStatus")
-fun bindStatus(
-    statusImageView: ImageView,
+fun ImageView.bindStatus(
     status: MercadoApiStatus?,
 ) {
     when (status) {
         MercadoApiStatus.LOADING -> {
-            statusImageView.visibility = View.VISIBLE
-            statusImageView.setImageResource(R.drawable.loading_animation)
+            visibility = View.VISIBLE
+            setImageResource(R.drawable.loading_animation)
         }
         MercadoApiStatus.ERROR -> {
-            statusImageView.visibility = View.VISIBLE
-            statusImageView.setImageResource(R.drawable.no_connection_icon)
+            visibility = View.VISIBLE
+            setImageResource(R.drawable.no_connection_icon)
         }
-        MercadoApiStatus.DONE -> statusImageView.visibility = View.GONE
+        MercadoApiStatus.DONE -> visibility = View.GONE
     }
 }
 
 @BindingAdapter("appApiSTextStatus")
-fun bindTextStatus(
-    statusTextView: TextView,
+fun TextView.bindTextStatus(
     status: MercadoApiStatus?,
 ) {
     when (status) {
         MercadoApiStatus.LOADING -> {
-            statusTextView.visibility = View.VISIBLE
-            statusTextView.setText(R.string.loading_elllipsis)
+            visibility = View.VISIBLE
+            setText(R.string.loading_elllipsis)
         }
         MercadoApiStatus.ERROR -> {
-            statusTextView.visibility = View.VISIBLE
-            statusTextView.setText(R.string.something_went_wrong)
+            visibility = View.VISIBLE
+            setText(R.string.something_went_wrong)
         }
-        MercadoApiStatus.DONE -> statusTextView.visibility = View.GONE
+        MercadoApiStatus.DONE -> visibility = View.GONE
 
     }
 }
 
-@BindingAdapter("emptySearchText")
-fun isEmptySearchText(
-    textView: TextView,
+@BindingAdapter("visibility")
+fun TextView.visibility(
     isEmpty: Boolean,
 ) {
-
-    if (isEmpty)
-        textView.visibility = View.VISIBLE
-    else
-        textView.visibility = View.GONE
+    visibility = if (isEmpty) View.VISIBLE else View.GONE
 }
 
 @BindingAdapter("priceInCop")
-fun priceFormatted(
-    textView: TextView,
+fun TextView.priceFormatted(
     price: Long?,
 ) {
-    textView.text = textView.context.getString(R.string.display_price, price)
+    text = context.getString(R.string.display_price, price)
 }
 
 @BindingAdapter("resultsFor")
-fun queryFormatted(
-    textView: TextView,
+fun TextView.queryFormatted(
     query: String,
 ) {
-    textView.text = textView.context.getString(R.string.results_for, query)
+    text = context.getString(R.string.results_for, query)
+}
+
+@BindingAdapter("visibility")
+fun Button.visibility(visible: Boolean){
+    visibility = if (visible) View.VISIBLE else View.GONE
+}
+
+@BindingAdapter("visibility")
+fun RecyclerView.visibility(visible: Boolean){
+    visibility = if (visible) View.VISIBLE else View.GONE
 }

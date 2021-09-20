@@ -21,11 +21,10 @@ class ProductLocalDataSource internal constructor(
     private val productDao: ProductDao,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : ProductsDataSource {
-    override fun observeProducts(): LiveData<ResultMercadoPago<List<Product>>> {
-        return productDao.observeProducts().map {
+    override fun observeProducts(): LiveData<ResultMercadoPago<List<Product>>> =
+        productDao.observeProducts().map {
             Success(it.asDomainModel())
         }
-    }
 
     override suspend fun getProducts(): ResultMercadoPago<List<Product>> =
         withContext(ioDispatcher) {
@@ -37,13 +36,13 @@ class ProductLocalDataSource internal constructor(
         }
 
     override suspend fun refreshProducts(query: String): ResultMercadoPago<ResponseModel>? {
-        // no used
         return null
     }
 
-    override fun observeProduct(productID: String): LiveData<ResultMercadoPago<Product>>? {
-        return null
-    }
+    override fun observeVisitedProducts(): LiveData<ResultMercadoPago<List<Product>>> =
+        productDao.observeVisitedProducts().map {
+            Success(it.asDomainModel())
+        }
 
     override suspend fun getProduct(productID: String): ResultMercadoPago<Product>? {
         return null
@@ -54,7 +53,7 @@ class ProductLocalDataSource internal constructor(
     }
 
     override suspend fun saveProduct(product: DatabaseProduct) {
-        //nope
+        productDao.insertProduct(product = product)
     }
 
     override suspend fun activateProduct(product: Product) {
@@ -77,8 +76,21 @@ class ProductLocalDataSource internal constructor(
         productDao.insertListOfProducts(productsList)
     }
 
-    override suspend fun getProductDescription(productID: String): ResultMercadoPago<String> {
-        TODO("Not yet implemented")
+    override suspend fun getProductDescription(productID: String): ResultMercadoPago<String>? {
+        return null
+    }
+
+    override suspend fun getVisitedProducts(): ResultMercadoPago<List<Product>> =
+        withContext(ioDispatcher) {
+            return@withContext try {
+                Success(productDao.getVisitedProducts().asDomainModel())
+            } catch (e: Exception) {
+                Error(e)
+            }
+        }
+
+    override suspend fun deleteVisitedProducts() = withContext(ioDispatcher) {
+        productDao.deleteVisitedProducts()
     }
 
 }

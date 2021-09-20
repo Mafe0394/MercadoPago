@@ -5,7 +5,6 @@
     tools:context=".uiControllers.fragments.SearchFragment">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.projects.mercadopago.viewModels.SearchViewModel" />
@@ -17,11 +16,12 @@
         android:padding="@dimen/_10dp">
 
         <TextView
+            app:visibility="@{!viewModel.emptyList}"
             android:id="@+id/productsTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/_10dp"
-            android:text="@string/products"
+            android:text="@string/last_seen"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -30,36 +30,64 @@
             android:id="@+id/productsRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_0dp"
-            app:layout_constraintTop_toBottomOf="@id/productsTextView" />
+            android:clipToPadding="false"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/productsTextView"
+            app:listVisitedProducts="@{viewModel.visitedProducts}"
+            app:spanCount="2"
+            tools:itemCount="6"
+            app:visibility="@{viewModel.isLoading}"/>
 
         <Button
             android:id="@+id/clearAllButton"
             style="@style/ClearButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="@{()->viewModel.deleteVisitedProducts()}"
             android:text="@string/clear_All"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-        <ImageView
-            android:contentDescription="@string/welcome_start_your_search"
-            android:id="@+id/welcomeImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/shopping_basket_icon"/>
+            app:visibility="@{!viewModel.emptyList}"/>
+
         <TextView
             android:id="@+id/welcomeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/_25dp"
+            android:gravity="center"
             android:text="@string/welcome_start_your_search"
-            app:layout_constraintTop_toBottomOf="@id/welcomeImageView"
+            android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Subtitle"
+            app:drawableTopCompat="@drawable/shopping_basket_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:visibility="@{viewModel.emptyList}"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageView
+            android:id="@+id/status_image"
+            android:contentDescription="@string/api_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:scaleType="center"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="@dimen/_25dp"
+            app:appApiStatus="@{viewModel.status}"/>
+        <TextView
+            android:id="@+id/statusTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/status_image"
+            app:layout_constraintEnd_toEndOf="@id/status_image"
+            app:layout_constraintTop_toBottomOf="@id/status_image"
+            android:layout_marginTop="@dimen/_10dp"
             android:gravity="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Subtitle"/>
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            app:appApiSTextStatus="@{viewModel.status}"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

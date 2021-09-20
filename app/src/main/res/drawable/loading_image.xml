@@ -18,6 +18,6 @@
   -->
 
 <animated-rotate xmlns:android="http://schemas.android.com/apk/res/android"
-    android:drawable="@drawable/ic_loading"
+    android:drawable="@drawable/sync_icon"
     android:pivotX="50%"
     android:pivotY="50%" />

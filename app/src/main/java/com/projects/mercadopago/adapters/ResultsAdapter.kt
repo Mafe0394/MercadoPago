@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.projects.mercadopago.data.domain.Product
 import com.projects.mercadopago.databinding.HolderProductSearchBinding
 import com.projects.mercadopago.util.ProductClick
+import timber.log.Timber
 
 class ResultsAdapter(private val callback: ProductClick) :
     PagingDataAdapter<Product, ResultsAdapter.HolderProductAdapter>(
@@ -25,9 +26,8 @@ class ResultsAdapter(private val callback: ProductClick) :
             binding.also {
                 it.product = product
                 it.productCallback = callback
+                it.executePendingBindings()
             }
-            // Causes the update to excute immediately
-            binding.executePendingBindings()
         }
 
     }
@@ -44,6 +44,7 @@ class ResultsAdapter(private val callback: ProductClick) :
     }
 
     override fun getItemCount(): Int {
+        Timber.i("Result size ${itemList.size}")
         return itemList.size
     }
 
