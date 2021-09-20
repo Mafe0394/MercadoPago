@@ -1,6 +1,7 @@
 package com.projects.mercadopago.data.repository
 
 import android.app.Application
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.room.Room
 import com.projects.mercadopago.data.ProductsDataSource
@@ -12,11 +13,14 @@ import com.projects.mercadopago.data.domain.asDomainModel
 import com.projects.mercadopago.data.network.MercadoPagoNetwork
 import com.projects.mercadopago.data.repository.ResultMercadoPago.Success
 import kotlinx.coroutines.*
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /** [database] is a [ProductsDatabase] object that works as the class's constructor
  * parameter to access the Dao methods
  * */
-class ProductsRepository(
+@Singleton
+class ProductsRepository @Inject constructor(
     private val database: ProductsDataSource,
     private val mercadoPagoNetwork: ProductsDataSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
@@ -35,10 +39,10 @@ class ProductsRepository(
         @Volatile
         private var INSTANCE: ProductsRepository? = null
 
-        fun getRepository(app: Application): ProductsRepository {
+        fun getRepository(appContext: Context): ProductsRepository {
             return INSTANCE ?: synchronized(this) {
                 val database = Room.databaseBuilder(
-                    app,
+                    appContext,
                     ProductsDatabase::class.java,
                     "product_history_database"
                 ).fallbackToDestructiveMigration().build()
