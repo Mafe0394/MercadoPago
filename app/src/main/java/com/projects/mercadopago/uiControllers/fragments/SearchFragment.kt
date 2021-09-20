@@ -44,7 +44,6 @@ class SearchFragment : Fragment() {
 
         viewModel.complete.observe(viewLifecycleOwner, {
             viewModel.setLitVisitedProducts(it)
-            binding.notifyPropertyChanged(R.id.productsRecyclerView)
         })
 
         return binding.root
