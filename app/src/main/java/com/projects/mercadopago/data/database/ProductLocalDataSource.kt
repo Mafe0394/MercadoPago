@@ -80,7 +80,7 @@ class ProductLocalDataSource internal constructor(
         return null
     }
 
-    override suspend fun getVisitedProducts(): ResultMercadoPago<List<Product>>? =
+    override suspend fun getVisitedProducts(): ResultMercadoPago<List<Product>> =
         withContext(ioDispatcher) {
             return@withContext try {
                 Success(productDao.getVisitedProducts().asDomainModel())
@@ -88,5 +88,9 @@ class ProductLocalDataSource internal constructor(
                 Error(e)
             }
         }
+
+    override suspend fun deleteVisitedProducts() = withContext(ioDispatcher) {
+        productDao.deleteVisitedProducts()
+    }
 
 }

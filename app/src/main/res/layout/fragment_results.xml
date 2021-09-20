@@ -68,7 +68,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:text="@string/we_couldnt_find_products_that_match_your_search_criteria"
-            app:emptySearchText="@{viewModel.isEmptySearch}"
+            app:visibility="@{viewModel.isEmptySearch}"
             app:drawableTopCompat="@drawable/no_results_icon"
             android:gravity="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Subtitle"/>

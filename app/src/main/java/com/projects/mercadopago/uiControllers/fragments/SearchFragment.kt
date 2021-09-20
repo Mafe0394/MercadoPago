@@ -4,14 +4,15 @@ import android.app.SearchManager
 import android.content.Context
 import android.os.Bundle
 import android.view.*
+import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.projects.mercadopago.R
 import com.projects.mercadopago.adapters.VisitedProductsAdapter
 import com.projects.mercadopago.data.repository.ProductsRepository
-import com.projects.mercadopago.data.repository.ResultMercadoPago
 import com.projects.mercadopago.databinding.FragmentSearchBinding
 import com.projects.mercadopago.util.ProductClick
 import com.projects.mercadopago.viewModels.SearchViewModel
@@ -28,37 +29,36 @@ class SearchFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        savedInstanceState: Bundle?,
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentSearchBinding.inflate(inflater)
 
 
         binding.lifecycleOwner = this.viewLifecycleOwner
-        binding.viewModel=viewModel
+        binding.viewModel = viewModel
 
         setHasOptionsMenu(true)
 
         initializeRecyclerView()
 
-        viewModel.x.observe(viewLifecycleOwner,{
-            Timber.i("Is ther data?$it")
-            if (it is ResultMercadoPago.Success)
-                viewModel.setPr(it.data)
+        viewModel.complete.observe(viewLifecycleOwner, {
+            viewModel.setLitVisitedProducts(it)
+            binding.notifyPropertyChanged(R.id.productsRecyclerView)
         })
 
         return binding.root
     }
 
     private fun initializeRecyclerView() {
-        binding.productsRecyclerView.adapter=VisitedProductsAdapter(ProductClick {
-
+        binding.productsRecyclerView.adapter = VisitedProductsAdapter(ProductClick {
+            findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToDetailFragment(
+                it.productID))
         })
     }
 
     override fun onResume() {
-        if(viewModel!=null)
-            viewModel.getVisitedProductsFromDatabase()
+        viewModel.getVisitedProductsFromDatabase()
         super.onResume()
     }
 
@@ -69,8 +69,6 @@ class SearchFragment : Fragment() {
         // Check if searchView is expanded and keep it after rotation
         keepExpandedAfterRotation(menu)
 
-        // Associate searchable configuration with the SearchView
-        val searchManager = activity?.getSystemService(Context.SEARCH_SERVICE) as SearchManager
         (menu.findItem(R.id.search)?.actionView as SearchView).apply {
             // Open SearchView when click on optionsMenu search icon
             isIconifiedByDefault = false
@@ -114,6 +112,7 @@ class SearchFragment : Fragment() {
         searchViewMenuItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
             override fun onMenuItemActionExpand(p0: MenuItem?): Boolean {
                 Timber.i("expanded")
+
                 viewModel.setIsExpanded(true)
                 return true
             }
@@ -121,6 +120,7 @@ class SearchFragment : Fragment() {
             override fun onMenuItemActionCollapse(p0: MenuItem?): Boolean {
                 Timber.i("collased")
                 viewModel.setIsExpanded(false)
+
                 return true
             }
 

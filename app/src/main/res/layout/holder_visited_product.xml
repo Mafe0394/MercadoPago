@@ -4,43 +4,53 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="product"
             type="com.projects.mercadopago.data.domain.Product" />
+
+        <variable
+            name="productCallback"
+            type="com.projects.mercadopago.util.ProductClick" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/blue_700">
+        android:background="@drawable/recycler_item_shape"
+        android:elevation="@dimen/_2dp"
+        android:paddingBottom="@dimen/_5dp"
+        android:onClick="@{()->productCallback.onClick(product)}">
 
         <ImageView
             android:id="@+id/productThumbnail"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_250dp"
+            android:layout_height="@dimen/_0dp"
             android:contentDescription="@string/product_image"
             android:scaleType="fitCenter"
+            app:imageUrl="@{product.image}"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/shopping_basket_icon"
-            app:imageUrl="@{product.image}"/>
+            tools:src="@drawable/shopping_basket_icon" />
 
         <TextView
             android:id="@+id/productNameTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_10dp"
             android:ellipsize="end"
             android:maxLines="1"
+            android:text="@{product.title}"
             app:layout_constraintTop_toBottomOf="@id/productThumbnail"
-            tools:text="Nombre del producto"
-            android:text="@{product.title}" />
+            tools:text="Nombre del producto" />
 
         <TextView
             android:id="@+id/priceTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_10dp"
             app:layout_constraintTop_toBottomOf="@id/productNameTextView"
-            tools:text="$ 50.000"
-            app:priceInCop="@{product.price}"/>
+            app:priceInCop="@{product.price}"
+            tools:text="$ 50.000" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

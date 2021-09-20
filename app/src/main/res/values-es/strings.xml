@@ -18,4 +18,5 @@
     <string name="clear_All">Borrar todo</string>
     <string name="welcome_start_your_search"><b>Bienvenido!!!</b> \n  Empieza a buscar</string>
     <string name="product_details">Detalles del producto</string>
+    <string name="last_seen">Productos vistos</string>
 </resources>

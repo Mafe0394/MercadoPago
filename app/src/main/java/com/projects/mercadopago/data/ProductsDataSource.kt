@@ -35,4 +35,6 @@ interface ProductsDataSource {
     suspend fun getProductDescription(productID:String):ResultMercadoPago<String>?
 
     suspend fun getVisitedProducts():ResultMercadoPago<List<Product>>?
+
+    suspend fun deleteVisitedProducts()
 }

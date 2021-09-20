@@ -39,4 +39,6 @@ interface IProductsRepository {
     suspend fun deleteProduct(productID: String)
 
     suspend fun getProductDescription(productID:String):ResultMercadoPago<String>
+
+    suspend fun deleteVisitedProducts()
 }

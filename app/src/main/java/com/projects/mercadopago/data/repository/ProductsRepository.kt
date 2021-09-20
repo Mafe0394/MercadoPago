@@ -137,7 +137,7 @@ class ProductsRepository(
     }
 
     override suspend fun clearCompletedProducts() {
-        TODO("Not yet implemented")
+        TODO("No implemented")
     }
 
     override suspend fun deleteAllProducts() {
@@ -154,5 +154,9 @@ class ProductsRepository(
 
     override suspend fun getVisitedProducts(): ResultMercadoPago<List<Product>>? {
         return database.getVisitedProducts()
+    }
+
+    override suspend fun deleteVisitedProducts() {
+        database.deleteVisitedProducts()
     }
 }

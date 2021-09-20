@@ -105,4 +105,8 @@ object MercadoPagoNetwork : ProductsDataSource {
     override suspend fun getVisitedProducts(): ResultMercadoPago<List<Product>>? {
         TODO("Not yet implemented")
     }
+
+    override suspend fun deleteVisitedProducts() {
+        TODO("Not yet implemented")
+    }
 }

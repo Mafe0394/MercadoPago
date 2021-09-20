@@ -21,6 +21,7 @@ class VisitedProductsAdapter(private val onItemClick: ProductClick) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(product: Product, onClick: ProductClick) {
             binding.product = product
+            binding.productCallback=onClick
             // Causes the update to execute immediately
             binding.executePendingBindings()
         }

@@ -63,7 +63,7 @@ class ResultsFragment : Fragment() {
         binding.resultsRecyclerView.adapter = ResultsAdapter(ProductClick {
             // context is not around, we can safely discard this click since the Fragment is no
             // longer on the screen
-            val packageManager = context?.packageManager ?: return@ProductClick
+            context?.packageManager ?: return@ProductClick
 
             findNavController().navigate(ResultsFragmentDirections.actionResultsFragmentToDetailFragment(
                 it.productID))
