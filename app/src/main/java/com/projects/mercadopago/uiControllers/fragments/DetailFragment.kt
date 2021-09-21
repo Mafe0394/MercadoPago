@@ -12,7 +12,6 @@ import com.projects.mercadopago.data.repository.ProductsRepository
 import com.projects.mercadopago.databinding.FragmentDetailBinding
 import com.projects.mercadopago.util.observeOnce
 import com.projects.mercadopago.viewModels.DetailViewModel
-import com.projects.mercadopago.viewModels.viewModelsFactory.DetailViewModelFactory
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject
@@ -24,9 +23,7 @@ class DetailFragment : Fragment() {
 
     @Inject lateinit var repository:ProductsRepository
 
-    private val viewModel by viewModels<DetailViewModel> {
-        DetailViewModelFactory(repository)
-    }
+    private val viewModel by viewModels<DetailViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

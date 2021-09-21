@@ -18,7 +18,6 @@ import com.projects.mercadopago.data.repository.ProductsRepository
 import com.projects.mercadopago.databinding.FragmentResultsBinding
 import com.projects.mercadopago.util.ProductClick
 import com.projects.mercadopago.viewModels.ResultsViewModel
-import com.projects.mercadopago.viewModels.viewModelsFactory.ResultsViewModelFactory
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject
@@ -29,9 +28,7 @@ class ResultsFragment : Fragment() {
     @Inject
     lateinit var repository: ProductsRepository
 
-    private val viewModel by viewModels<ResultsViewModel> {
-        ResultsViewModelFactory(repository)
-    }
+    private val viewModel by viewModels<ResultsViewModel> ()
 
     private lateinit var binding: FragmentResultsBinding
 

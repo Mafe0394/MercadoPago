@@ -7,10 +7,16 @@ import com.projects.mercadopago.data.repository.ProductsRepository
 import com.projects.mercadopago.data.repository.ResultMercadoPago
 import com.projects.mercadopago.data.repository.ResultMercadoPago.Error
 import com.projects.mercadopago.data.repository.ResultMercadoPago.Success
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import javax.inject.Inject
 
-class ResultsViewModel(private val repository: ProductsRepository) : ViewModel() {
+@HiltViewModel
+class ResultsViewModel @Inject constructor(
+    private val repository: ProductsRepository,
+    private val savedStateHandle: SavedStateHandle,
+) : ViewModel() {
 
     private val _status = MutableLiveData<MercadoApiStatus>()
     private val _query = MutableLiveData<String>()
