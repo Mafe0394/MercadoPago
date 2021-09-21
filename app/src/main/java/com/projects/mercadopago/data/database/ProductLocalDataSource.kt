@@ -10,7 +10,6 @@ import com.projects.mercadopago.data.network.networkModels.ResponseModel
 import com.projects.mercadopago.data.repository.ResultMercadoPago
 import com.projects.mercadopago.data.repository.ResultMercadoPago.Error
 import com.projects.mercadopago.data.repository.ResultMercadoPago.Success
-import com.projects.mercadopago.di.MercadoPagoLocal
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

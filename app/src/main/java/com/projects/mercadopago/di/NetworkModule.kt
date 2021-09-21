@@ -1,5 +1,6 @@
 package com.projects.mercadopago.di
 
+import com.projects.mercadopago.data.network.BASE_URL
 import com.projects.mercadopago.data.network.MercadoPagoApiService
 import com.projects.mercadopago.data.network.MercadoPagoNetwork
 import com.squareup.moshi.Moshi
@@ -29,7 +30,7 @@ object NetworkModule {
     fun provideRetrofit(moshi: Moshi): Retrofit.Builder {
         return Retrofit.Builder()
             .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .baseUrl("https://api.mercadolibre.com/")
+            .baseUrl(BASE_URL)
     }
 
     @Singleton

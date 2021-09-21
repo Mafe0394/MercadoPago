@@ -8,16 +8,11 @@ import com.projects.mercadopago.data.network.networkModels.ProductDetailsRespons
 import com.projects.mercadopago.data.network.networkModels.ResponseModel
 import com.projects.mercadopago.data.repository.ResultMercadoPago
 import com.projects.mercadopago.data.repository.ResultMercadoPago.Success
-import com.projects.mercadopago.di.MercadoPagoService
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.HttpException
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Inject
 
-private const val BASE_URL = "https://api.mercadolibre.com/"
-private const val SITE_ID = "MCO"
+const val BASE_URL = "https://api.mercadolibre.com/"
+const val SITE_ID = "MCO"
 
 class MercadoPagoNetwork  @Inject constructor(
     private val retrofitService:MercadoPagoApiService
