@@ -8,40 +8,45 @@ import com.projects.mercadopago.data.network.networkModels.ProductDetailsRespons
 import com.projects.mercadopago.data.network.networkModels.ResponseModel
 import com.projects.mercadopago.data.repository.ResultMercadoPago
 import com.projects.mercadopago.data.repository.ResultMercadoPago.Success
+import com.projects.mercadopago.di.MercadoPagoService
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.HttpException
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import javax.inject.Inject
+
+private const val BASE_URL = "https://api.mercadolibre.com/"
+private const val SITE_ID = "MCO"
+
+class MercadoPagoNetwork  @Inject constructor(
+    private val retrofitService:MercadoPagoApiService
+) : ProductsDataSource {
 
 
-object MercadoPagoNetwork : ProductsDataSource {
 
-    private const val BASE_URL = "https://api.mercadolibre.com/"
-    private const val SITE_ID = "MCO"
-
+//    @Inject lateinit var moshi: Moshi
     // Moshi object to use as a converter factory
-    private val moshi = Moshi.Builder()
-        .add(KotlinJsonAdapterFactory())
-        .build()
+//    private val moshi = Moshi.Builder()
+//        .add(KotlinJsonAdapterFactory())
+//        .build()
 
     /* Retrofit Object
     * Retrofit needs the base URI for the web service and the converter factory.*/
-    private val retrofit = Retrofit.Builder()
-        .addConverterFactory(MoshiConverterFactory.create(moshi))
-        .baseUrl(BASE_URL)
-        .build()
-    val retrofitService: MercadoPagoApiService by lazy {
-        retrofit.create(MercadoPagoApiService::class.java)
-    }
+//    private val retrofit = Retrofit.Builder()
+//        .addConverterFactory(MoshiConverterFactory.create(moshi))
+//        .baseUrl(BASE_URL)
+//        .build()
+//    private val retrofitService: MercadoPagoApiService by lazy {
+//        retrofit.create(MercadoPagoApiService::class.java)
+//    }
 
     override fun observeProducts(): LiveData<ResultMercadoPago<List<Product>>> {
-        TODO("Not yet implemented")
+        TODO("Not implemented")
     }
 
     override suspend fun getProducts(): ResultMercadoPago<List<Product>>? {
-        // nope
-        return null
+        TODO("Not implemented")
     }
 
     override suspend fun refreshProducts(query: String): ResultMercadoPago<ResponseModel>? =
@@ -51,15 +56,9 @@ object MercadoPagoNetwork : ProductsDataSource {
             ResultMercadoPago.Error(e)
         }
 
-
     override fun observeVisitedProducts(): LiveData<ResultMercadoPago<List<Product>>> {
-        TODO("Not yet implemented")
+        TODO("Not implemented")
     }
-
-    override suspend fun getProduct(productID: String): ResultMercadoPago<Product>? {
-        return null
-    }
-
 
     override suspend fun refreshProduct(productID: String): ResultMercadoPago<ProductDetailsResponse>? =
         try {
@@ -70,6 +69,18 @@ object MercadoPagoNetwork : ProductsDataSource {
             )
         }
 
+    override suspend fun saveProduct(product: DatabaseProduct) {
+        TODO("Not implemented")
+    }
+
+    override suspend fun deleteAllProducts() {
+        TODO("Not implemented")
+    }
+
+    override suspend fun saveProductsList(productsList: List<DatabaseProduct>) {
+        TODO("Not implemented")
+    }
+
     override suspend fun getProductDescription(productID: String): ResultMercadoPago<String>? =
         try{
             Success(retrofitService.getProductDescription(productID).plainText)
@@ -77,36 +88,13 @@ object MercadoPagoNetwork : ProductsDataSource {
             ResultMercadoPago.Error(e)
         }
 
-
-    override suspend fun saveProduct(product: DatabaseProduct) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun activateProduct(product: Product) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun activateProduct(productID: String) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun deleteAllProducts() {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun deleteProduct(productID: String) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun saveProductsList(productsList: List<DatabaseProduct>) {
-        // nope
-    }
-
     override suspend fun getVisitedProducts(): ResultMercadoPago<List<Product>>? {
-        TODO("Not yet implemented")
+        TODO("Not implemented")
     }
 
     override suspend fun deleteVisitedProducts() {
-        TODO("Not yet implemented")
+        TODO("Not implemented")
     }
+
+
 }

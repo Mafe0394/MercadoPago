@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase
  * Note that exportSchema should be true in production databases.
  */
 @Database(entities = [DatabaseProduct::class,
-                     DatabaseProductDetails::class], version = 3)
+    DatabaseProductDetails::class], version = 3)
 abstract class ProductsDatabase : RoomDatabase() {
 
 

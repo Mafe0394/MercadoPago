@@ -1,12 +1,8 @@
 package com.projects.mercadopago.uiControllers.fragments
 
-import android.app.SearchManager
-import android.content.Context
 import android.os.Bundle
 import android.view.*
-import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -17,12 +13,18 @@ import com.projects.mercadopago.databinding.FragmentSearchBinding
 import com.projects.mercadopago.util.ProductClick
 import com.projects.mercadopago.viewModels.SearchViewModel
 import com.projects.mercadopago.viewModels.viewModelsFactory.SearchViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class SearchFragment : Fragment() {
 
+    @Inject
+    lateinit var repository: ProductsRepository
+
     private val viewModel by viewModels<SearchViewModel> {
-        SearchViewModelFactory(ProductsRepository.getRepository(requireActivity().application))
+        SearchViewModelFactory(repository)
     }
 
     private lateinit var binding: FragmentSearchBinding

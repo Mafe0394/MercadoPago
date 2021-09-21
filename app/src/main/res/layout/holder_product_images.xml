@@ -3,25 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="imageUrl"
             type="String" />
-        <variable
-            name="visible"
-            type="Boolean" />
-
     </data>
 
     <LinearLayout
-        android:orientation="vertical"
-        android:gravity="center_vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
         <ImageView
             android:id="@+id/productsImagesRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:imageUrl="@{imageUrl}"/>
+            android:contentDescription="@string/product_image"
+            app:imageUrl="@{imageUrl}" />
 
     </LinearLayout>
 </layout>
