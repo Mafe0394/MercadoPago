@@ -11,7 +11,7 @@ interface IProductsRepository {
 
     fun observeProducts(): LiveData<ResultMercadoPago<List<Product>>>
 
-    suspend fun refreshProduct(productID: String)
+    suspend fun refreshProducts()
 
     suspend fun getVisitedProducts():ResultMercadoPago<List<Product>>?
 

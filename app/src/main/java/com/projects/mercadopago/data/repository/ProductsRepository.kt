@@ -1,15 +1,11 @@
 package com.projects.mercadopago.data.repository
 
-import android.content.Context
 import androidx.lifecycle.LiveData
-import androidx.room.Room
 import com.projects.mercadopago.data.ProductsDataSource
-import com.projects.mercadopago.data.database.ProductLocalDataSource
 import com.projects.mercadopago.data.database.ProductsDatabase
 import com.projects.mercadopago.data.domain.Product
 import com.projects.mercadopago.data.domain.asDatabaseModel
 import com.projects.mercadopago.data.domain.asDomainModel
-import com.projects.mercadopago.data.network.MercadoPagoNetwork
 import com.projects.mercadopago.data.repository.ResultMercadoPago.Success
 import com.projects.mercadopago.di.MercadoPagoLocal
 import com.projects.mercadopago.di.MercadoPagoService
@@ -25,36 +21,6 @@ class ProductsRepository @Inject constructor(
     @MercadoPagoLocal val mercadoPagoLocal: ProductsDataSource,
     @MercadoPagoService val mercadoPagoNetwork: ProductsDataSource
 ) : IProductsRepository {
-
-    /**
-     * Refresh the products stored in the offline cache.
-     *
-     * This function uses the IO dispatcher to ensure the database insert database operation
-     * happens on the IO dispatcher. By switching to the IO dispatcher using `withContext` this
-     * function is now safe to call from any thread including the Main thread.
-     *
-     */
-
-//    companion object {
-//        @Volatile
-//        private var INSTANCE: ProductsRepository? = null
-//
-//        fun getRepository(appContext: Context): ProductsRepository {
-//            return INSTANCE ?: synchronized(this) {
-//                val database = Room.databaseBuilder(
-//                    appContext,
-//                    ProductsDatabase::class.java,
-//                    "product_history_database"
-//                ).fallbackToDestructiveMigration().build()
-//                ProductsRepository(
-//                    mercadoPagoLocal = ProductLocalDataSource(database.productDao),
-//                    mercadoPagoNetwork = MercadoPagoNetwork
-//                ).also {
-//                    INSTANCE = it
-//                }
-//            }
-//        }
-//    }
 
     override suspend fun getProducts(query: String): ResultMercadoPago<List<Product>>? {
         try {
@@ -83,7 +49,7 @@ class ProductsRepository @Inject constructor(
     override fun observeProducts(): LiveData<ResultMercadoPago<List<Product>>> =
         mercadoPagoLocal.observeProducts()
 
-    override suspend fun refreshProduct(productID: String) {
+    override suspend fun refreshProducts() {
     }
 
     override suspend fun getProduct(
