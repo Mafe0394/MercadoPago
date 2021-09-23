@@ -18,6 +18,7 @@ class ResultsAdapter(private val callback: ProductClick) :
 
     fun submitList(items: List<Product>?) {
         itemList = items ?: ArrayList()
+        Timber.i("Recycler search results ${if (items?.isNotEmpty() == true)itemList[0].title else "Empty"}")
     }
 
     class HolderProductAdapter(private var binding: HolderProductSearchBinding) :
@@ -43,10 +44,7 @@ class ResultsAdapter(private val callback: ProductClick) :
         holder.bind(itemList[position], callback)
     }
 
-    override fun getItemCount(): Int {
-        Timber.i("Result size ${itemList.size}")
-        return itemList.size
-    }
+    override fun getItemCount(): Int = itemList.size
 
     companion object DiffCallback : DiffUtil.ItemCallback<Product>() {
         override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean {

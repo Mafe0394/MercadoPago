@@ -21,8 +21,6 @@ class DetailFragment : Fragment() {
 
     private lateinit var binding: FragmentDetailBinding
 
-    @Inject lateinit var repository:ProductsRepository
-
     private val viewModel by viewModels<DetailViewModel>()
 
     override fun onCreateView(
@@ -34,8 +32,6 @@ class DetailFragment : Fragment() {
         binding = FragmentDetailBinding.inflate(inflater)
 
         setHasOptionsMenu(true)
-
-        initViewModel()
 
         initializeRecyclerView()
 
@@ -56,13 +52,5 @@ class DetailFragment : Fragment() {
                 }
             }
         })
-
-//        binding.indicator.setViewPager(binding.imageSliderViewPager)
-    }
-
-    private fun initViewModel() {
-        val arguments = DetailFragmentArgs.fromBundle(requireArguments())
-        Timber.i("Query ${arguments.productId}")
-        viewModel.getProductDetails(arguments.productId)
     }
 }

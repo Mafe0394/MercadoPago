@@ -9,6 +9,7 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -16,7 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     private val repository: ProductsRepository,
-    private val savedStateHandle: SavedStateHandle,
+    private val savedStateHandle: SavedStateHandle?,
 ) :
     ViewModel() {
 
@@ -61,16 +62,22 @@ class SearchViewModel @Inject constructor(
     }
 
     fun getVisitedProductsFromDatabase() {
-        _status.value = MercadoApiStatus.LOADING
+        _status.value=MercadoApiStatus.LOADING
         viewModelScope.launch {
-            val products = repository.getVisitedProducts()
-            if (products is ResultMercadoPago.Success) {
-                _visitedProducts.value = products.data
-                Timber.i("Success ${products.data}")
-                _status.value = MercadoApiStatus.DONE
-            } else if (products is ResultMercadoPago.Error) {
-                _status.value = MercadoApiStatus.ERROR
-                Timber.i("Error ${products.exception}")
+            when(val products = repository.getVisitedProducts()){
+                is ResultMercadoPago.Success->{
+                    _visitedProducts.value = products.data
+                    Timber.i("Success ${products.data}")
+                    _status.value = MercadoApiStatus.DONE
+                }
+                is ResultMercadoPago.Error->{
+                    _status.value = MercadoApiStatus.ERROR
+                    Timber.i("Error ${products.exception}")
+                }
+                else->{
+                    _status.value=MercadoApiStatus.LOADING
+                    Timber.i("Loading Data")
+                }
             }
         }
     }

@@ -16,7 +16,7 @@ android {
         versionCode 1
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.example.android.hilt.CustomTestRunner"
     }
 
     buildTypes {
@@ -90,8 +90,15 @@ dependencies {
 
     // Hilt testing dependency
     androidTestImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
+
     // Make Hilt generate code in the androidTest folder
+    kaptTest "com.google.dagger:hilt-android-compiler:2.38.1"
     kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hilt_version"
+
+    // Architecture Components core testing library
+    testImplementation "androidx.arch.core:core-testing:$archTestingVersion"
+
+    androidTestImplementation "androidx.fragment:fragment-testing:1.3.6"
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
@@ -99,6 +106,5 @@ dependencies {
 
     // Testing Navigation
     androidTestImplementation "androidx.navigation:navigation-testing:$navigationVersion"
-
 
 }

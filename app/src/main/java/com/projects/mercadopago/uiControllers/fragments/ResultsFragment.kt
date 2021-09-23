@@ -14,19 +14,15 @@ import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.projects.mercadopago.adapters.ResultsAdapter
-import com.projects.mercadopago.data.repository.ProductsRepository
 import com.projects.mercadopago.databinding.FragmentResultsBinding
 import com.projects.mercadopago.util.ProductClick
 import com.projects.mercadopago.viewModels.ResultsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class ResultsFragment : Fragment() {
 
-    @Inject
-    lateinit var repository: ProductsRepository
 
     private val viewModel by viewModels<ResultsViewModel> ()
 
@@ -52,12 +48,9 @@ class ResultsFragment : Fragment() {
     }
 
     private fun initViewModel() {
-        val arguments = ResultsFragmentArgs.fromBundle(requireArguments())
-        Timber.i("Query ${arguments.queryString}")
         viewModel.result.observe(viewLifecycleOwner, {
             viewModel.refreshProducts(it)
         })
-        viewModel.startQueryResults(arguments.queryString)
     }
 
     private fun initializeRecyclerView() {

@@ -15,6 +15,7 @@ import com.projects.mercadopago.adapters.ResultsAdapter
 import com.projects.mercadopago.adapters.VisitedProductsAdapter
 import com.projects.mercadopago.data.domain.Product
 import com.projects.mercadopago.data.network.MercadoApiStatus
+import timber.log.Timber
 
 @BindingAdapter("imageUrl")
 fun ImageView.bindImage(imgUrl: String?) {
