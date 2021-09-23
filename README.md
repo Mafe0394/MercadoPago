@@ -21,6 +21,7 @@ A continuación se muestra un resument de los paquetes que componen la aplicaci�
 |.viewModels| Los ViewModel encargados manejar los datos de la aplicación obtenidos a través del repositorio.|
 
 La clase **MainActivity**  es la actividad que contiene todos los fragments. La navegación entre fragmentos es controlada por un [Navigation component](https://developer.android.com/guide/navigation). Éste está definido en el archivo **navigation.xml**.
+
 ![WhatsApp-Video-2021-09-22-at-110](https://user-images.githubusercontent.com/37948478/134449487-02b95874-afb3-4942-b0e2-b1dde86fe3d5.gif)
 
 
