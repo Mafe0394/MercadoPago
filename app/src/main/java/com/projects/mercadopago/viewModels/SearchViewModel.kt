@@ -17,7 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     private val repository: ProductsRepository,
-    private val savedStateHandle: SavedStateHandle,
+    private val savedStateHandle: SavedStateHandle?,
 ) :
     ViewModel() {
 
@@ -79,14 +79,6 @@ class SearchViewModel @Inject constructor(
                     Timber.i("Loading Data")
                 }
             }
-//            if (products is ResultMercadoPago.Success) {
-//                _visitedProducts.value = products.data
-//                Timber.i("Success ${products.data}")
-//                _status.value = MercadoApiStatus.DONE
-//            } else if (products is ResultMercadoPago.Error) {
-//                _status.value = MercadoApiStatus.ERROR
-//                Timber.i("Error ${products.exception}")
-//            }
         }
     }
 

@@ -38,11 +38,15 @@ class SearchFragment : Fragment() {
 
         initializeRecyclerView()
 
+        initializeObservers()
+
+        return binding.root
+    }
+
+    private fun initializeObservers() {
         viewModel.complete.observe(viewLifecycleOwner, {
             viewModel.setLitVisitedProducts(it)
         })
-
-        return binding.root
     }
 
     private fun initializeRecyclerView() {

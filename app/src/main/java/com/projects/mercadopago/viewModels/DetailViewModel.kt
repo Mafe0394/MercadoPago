@@ -13,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     private val repository: ProductsRepository,
-    private val savedStateHandle: SavedStateHandle,
+    savedStateHandle: SavedStateHandle?,
 ) : ViewModel() {
 
 
@@ -34,26 +34,33 @@ class DetailViewModel @Inject constructor(
     val status: LiveData<MercadoApiStatus>
         get() = _status
 
-
-    fun getProductDetails(productID: String) {
+    init {
+        val productID = savedStateHandle?.get<String>("product_id")
         _productID.value = productID
-        _status.value = MercadoApiStatus.LOADING
-        viewModelScope.launch {
-            val product = repository.getProduct(_productID.value ?: "")
-            if (product is ResultMercadoPago.Success) {
-                _productDetail.value = product.data
-                Timber.i("product ${product.data}")
-                val description = repository.getProductDescription(productID)
-                if (description is ResultMercadoPago.Success)
-                    _description.value = description.data
-                else if (description is ResultMercadoPago.Error)
-                    Timber.i("Error \n ${description.exception}")
-                _status.value = MercadoApiStatus.DONE
-            } else if (product is ResultMercadoPago.Error) {
-                Timber.i("Error \n ${product.exception}")
-                _status.value = MercadoApiStatus.ERROR
-            }
+        getProductDetails(productID)
+    }
 
+
+    private fun getProductDetails(productID: String?) {
+        if (!productID.isNullOrBlank()) {
+            _status.value = MercadoApiStatus.LOADING
+            viewModelScope.launch {
+                val product = repository.getProduct(_productID.value ?: "")
+                if (product is ResultMercadoPago.Success) {
+                    _productDetail.value = product.data
+                    Timber.i("product ${product.data}")
+                    val description = repository.getProductDescription(productID)
+                    if (description is ResultMercadoPago.Success)
+                        _description.value = description.data
+                    else if (description is ResultMercadoPago.Error)
+                        Timber.i("Error \n ${description.exception}")
+                    _status.value = MercadoApiStatus.DONE
+                } else if (product is ResultMercadoPago.Error) {
+                    Timber.i("Error \n ${product.exception}")
+                    _status.value = MercadoApiStatus.ERROR
+                }
+
+            }
         }
     }
 

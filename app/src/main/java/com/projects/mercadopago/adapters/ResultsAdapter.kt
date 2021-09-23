@@ -18,6 +18,7 @@ class ResultsAdapter(private val callback: ProductClick) :
 
     fun submitList(items: List<Product>?) {
         itemList = items ?: ArrayList()
+        Timber.i("Recycler search results ${if (items?.isNotEmpty() == true)itemList[0].title else "Empty"}")
     }
 
     class HolderProductAdapter(private var binding: HolderProductSearchBinding) :
