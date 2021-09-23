@@ -10,24 +10,26 @@ import com.projects.mercadopago.data.network.networkModels.ResponseModel
 import com.projects.mercadopago.data.repository.ResultMercadoPago
 import com.projects.mercadopago.data.repository.ResultMercadoPago.Error
 import com.projects.mercadopago.data.repository.ResultMercadoPago.Success
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * Concrete implementation of a data source as a db.
  */
-class ProductLocalDataSource internal constructor(
+@Singleton
+class ProductLocalDataSource  @Inject internal constructor(
     private val productDao: ProductDao,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : ProductsDataSource {
+
     override fun observeProducts(): LiveData<ResultMercadoPago<List<Product>>> =
         productDao.observeProducts().map {
             Success(it.asDomainModel())
         }
 
     override suspend fun getProducts(): ResultMercadoPago<List<Product>> =
-        withContext(ioDispatcher) {
+        withContext(Dispatchers.IO) {
             return@withContext try {
                 Success(productDao.getProductsFromDatabase().asDomainModel())
             } catch (e: Exception) {
@@ -36,7 +38,7 @@ class ProductLocalDataSource internal constructor(
         }
 
     override suspend fun refreshProducts(query: String): ResultMercadoPago<ResponseModel>? {
-        return null
+        TODO("Not implemented")
     }
 
     override fun observeVisitedProducts(): LiveData<ResultMercadoPago<List<Product>>> =
@@ -44,32 +46,16 @@ class ProductLocalDataSource internal constructor(
             Success(it.asDomainModel())
         }
 
-    override suspend fun getProduct(productID: String): ResultMercadoPago<Product>? {
-        return null
-    }
-
     override suspend fun refreshProduct(productID: String): ResultMercadoPago<ProductDetailsResponse>? {
-        return null
+        TODO("Not implemented")
     }
 
     override suspend fun saveProduct(product: DatabaseProduct) {
         productDao.insertProduct(product = product)
     }
 
-    override suspend fun activateProduct(product: Product) {
-        // nope
-    }
-
-    override suspend fun activateProduct(productID: String) {
-        // nope
-    }
-
-    override suspend fun deleteAllProducts() = withContext(ioDispatcher) {
+    override suspend fun deleteAllProducts() = withContext(Dispatchers.IO) {
         productDao.deleteProducts()
-    }
-
-    override suspend fun deleteProduct(productID: String) {
-        // nope
     }
 
     override suspend fun saveProductsList(productsList: List<DatabaseProduct>) {
@@ -77,11 +63,11 @@ class ProductLocalDataSource internal constructor(
     }
 
     override suspend fun getProductDescription(productID: String): ResultMercadoPago<String>? {
-        return null
+        TODO("Not implemented")
     }
 
     override suspend fun getVisitedProducts(): ResultMercadoPago<List<Product>> =
-        withContext(ioDispatcher) {
+        withContext(Dispatchers.IO) {
             return@withContext try {
                 Success(productDao.getVisitedProducts().asDomainModel())
             } catch (e: Exception) {
@@ -89,7 +75,7 @@ class ProductLocalDataSource internal constructor(
             }
         }
 
-    override suspend fun deleteVisitedProducts() = withContext(ioDispatcher) {
+    override suspend fun deleteVisitedProducts() = withContext(Dispatchers.IO) {
         productDao.deleteVisitedProducts()
     }
 

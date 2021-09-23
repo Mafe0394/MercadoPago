@@ -8,10 +8,10 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface MercadoPagoApiService {
-    @GET("sites/MCO/search")
+    @GET("sites/$SITE_ID/search")
     suspend fun getProductsByQuery(@Query("q") query: String): ResponseModel
 
-    @GET("sites/MCO/search")
+    @GET("sites/$SITE_ID/search")
     suspend fun getProductsByQueryWithOffset(
         @Query("q")
         query: String,

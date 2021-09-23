@@ -1,29 +1,26 @@
 package com.projects.mercadopago.uiControllers.fragments
 
-import android.app.SearchManager
-import android.content.Context
 import android.os.Bundle
 import android.view.*
-import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.projects.mercadopago.R
 import com.projects.mercadopago.adapters.VisitedProductsAdapter
-import com.projects.mercadopago.data.repository.ProductsRepository
 import com.projects.mercadopago.databinding.FragmentSearchBinding
 import com.projects.mercadopago.util.ProductClick
 import com.projects.mercadopago.viewModels.SearchViewModel
-import com.projects.mercadopago.viewModels.viewModelsFactory.SearchViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
+@AndroidEntryPoint
 class SearchFragment : Fragment() {
 
-    private val viewModel by viewModels<SearchViewModel> {
-        SearchViewModelFactory(ProductsRepository.getRepository(requireActivity().application))
-    }
+//    @Inject
+//    lateinit var repository: ProductsRepository
+
+    private val viewModel:SearchViewModel by viewModels()
 
     private lateinit var binding: FragmentSearchBinding
 
@@ -44,7 +41,6 @@ class SearchFragment : Fragment() {
 
         viewModel.complete.observe(viewLifecycleOwner, {
             viewModel.setLitVisitedProducts(it)
-            binding.notifyPropertyChanged(R.id.productsRecyclerView)
         })
 
         return binding.root

@@ -16,11 +16,11 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/_210dp"
         android:background="@drawable/recycler_item_shape"
         android:elevation="@dimen/_2dp"
-        android:paddingBottom="@dimen/_5dp"
-        android:onClick="@{()->productCallback.onClick(product)}">
+        android:onClick="@{()->productCallback.onClick(product)}"
+        android:paddingBottom="@dimen/_5dp">
 
         <ImageView
             android:id="@+id/productThumbnail"
@@ -48,6 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/productNameTextView"
             app:priceInCop="@{product.price}"
             tools:text="$ 50.000" />

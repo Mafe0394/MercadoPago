@@ -5,10 +5,20 @@ import com.projects.mercadopago.data.domain.Product
 import com.projects.mercadopago.data.network.MercadoApiStatus
 import com.projects.mercadopago.data.repository.ProductsRepository
 import com.projects.mercadopago.data.repository.ResultMercadoPago
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import javax.inject.Inject
 
-class SearchViewModel(private val repository: ProductsRepository) : ViewModel() {
+@HiltViewModel
+class SearchViewModel @Inject constructor(
+    private val repository: ProductsRepository,
+    private val savedStateHandle: SavedStateHandle,
+) :
+    ViewModel() {
 
     private val _query = MutableLiveData("")
     private val _isExpanded = MutableLiveData(false)
@@ -23,8 +33,8 @@ class SearchViewModel(private val repository: ProductsRepository) : ViewModel() 
     private val _emptyList = _visitedProducts.map {
         it.isNullOrEmpty()
     }
-    var isLoading=_status.map {
-        it==MercadoApiStatus.DONE
+    var isLoading = _status.map {
+        it == MercadoApiStatus.DONE
     }
 
     val query: LiveData<String>
@@ -51,15 +61,15 @@ class SearchViewModel(private val repository: ProductsRepository) : ViewModel() 
     }
 
     fun getVisitedProductsFromDatabase() {
-        _status.value=MercadoApiStatus.LOADING
+        _status.value = MercadoApiStatus.LOADING
         viewModelScope.launch {
             val products = repository.getVisitedProducts()
             if (products is ResultMercadoPago.Success) {
                 _visitedProducts.value = products.data
                 Timber.i("Success ${products.data}")
-                _status.value=MercadoApiStatus.DONE
+                _status.value = MercadoApiStatus.DONE
             } else if (products is ResultMercadoPago.Error) {
-                _status.value=MercadoApiStatus.ERROR
+                _status.value = MercadoApiStatus.ERROR
                 Timber.i("Error ${products.exception}")
             }
         }
@@ -70,6 +80,6 @@ class SearchViewModel(private val repository: ProductsRepository) : ViewModel() 
     }
 
     fun setLitVisitedProducts(list: List<Product>?) {
-        _visitedProducts.value=list
+        _visitedProducts.value = list
     }
 }
