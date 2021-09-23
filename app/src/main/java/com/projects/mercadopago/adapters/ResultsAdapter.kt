@@ -43,10 +43,7 @@ class ResultsAdapter(private val callback: ProductClick) :
         holder.bind(itemList[position], callback)
     }
 
-    override fun getItemCount(): Int {
-        Timber.i("Result size ${itemList.size}")
-        return itemList.size
-    }
+    override fun getItemCount(): Int = itemList.size
 
     companion object DiffCallback : DiffUtil.ItemCallback<Product>() {
         override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean {

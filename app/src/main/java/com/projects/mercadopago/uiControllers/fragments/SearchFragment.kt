@@ -1,7 +1,9 @@
 package com.projects.mercadopago.uiControllers.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.view.*
+import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -17,10 +19,7 @@ import timber.log.Timber
 @AndroidEntryPoint
 class SearchFragment : Fragment() {
 
-//    @Inject
-//    lateinit var repository: ProductsRepository
-
-    private val viewModel:SearchViewModel by viewModels()
+    private val viewModel: SearchViewModel by viewModels()
 
     private lateinit var binding: FragmentSearchBinding
 
@@ -80,11 +79,12 @@ class SearchFragment : Fragment() {
                     viewModel.setIsExpanded(false)
 
                     // Go to Results Fragment to show results
-                    findNavController().navigate(
-                        SearchFragmentDirections.actionSearchFragmentToResultsFragment(
-                            p0 ?: ""
+                    if (this@SearchFragment.isVisible)
+                        findNavController().navigate(
+                            SearchFragmentDirections.actionSearchFragmentToResultsFragment(
+                                p0 ?: ""
+                            )
                         )
-                    )
                     return false
                 }
 
@@ -105,22 +105,37 @@ class SearchFragment : Fragment() {
         val searchViewMenuItem = menu.findItem(R.id.search)
         if (viewModel.isExpanded.value == true)
             searchViewMenuItem.expandActionView()
+        setSearchViewOnExpandListener(searchViewMenuItem)
+
+    }
+
+    private fun setSearchViewOnExpandListener(searchViewMenuItem: MenuItem) {
         searchViewMenuItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
             override fun onMenuItemActionExpand(p0: MenuItem?): Boolean {
                 Timber.i("expanded")
-
-                viewModel.setIsExpanded(true)
+                hideSoftKeyboard(hide = false)
+                viewModel.setIsExpanded(isExpanded = true)
                 return true
             }
 
             override fun onMenuItemActionCollapse(p0: MenuItem?): Boolean {
-                Timber.i("collased")
-                viewModel.setIsExpanded(false)
-
+                Timber.i("collapsed")
+                hideSoftKeyboard(hide = true)
+                viewModel.setIsExpanded(isExpanded = false)
                 return true
             }
 
         })
+    }
+
+    private fun hideSoftKeyboard(hide: Boolean) {
+        activity?.let {
+            val imm = it.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+            if (hide)
+                imm?.hideSoftInputFromWindow(it.currentFocus?.windowToken, 0)
+            else
+                imm?.showSoftInput(it.currentFocus, 0)
+        }
     }
 
 

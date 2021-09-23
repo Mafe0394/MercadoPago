@@ -17,6 +17,7 @@ import com.projects.mercadopago.adapters.ResultsAdapter
 import com.projects.mercadopago.data.repository.ProductsRepository
 import com.projects.mercadopago.databinding.FragmentResultsBinding
 import com.projects.mercadopago.util.ProductClick
+import com.projects.mercadopago.util.observeOnce
 import com.projects.mercadopago.viewModels.ResultsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber

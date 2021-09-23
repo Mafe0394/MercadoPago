@@ -39,10 +39,6 @@ class ResultsViewModel @Inject constructor(
     val query: LiveData<String>
         get() = _query
 
-    init {
-        resetViewModel()
-    }
-
     fun resetViewModel() {
         viewModelScope.launch {
             repository.deleteAllProducts()
@@ -73,12 +69,14 @@ class ResultsViewModel @Inject constructor(
     private fun getQueryProducts(query: String) {
         _status.value = MercadoApiStatus.LOADING
         viewModelScope.launch {
-            val result = repository.getProducts(query)
-            if (result is Success)
-                _status.value = MercadoApiStatus.DONE
-            else if (result is Error) {
-                _status.value = MercadoApiStatus.ERROR
-                Timber.e("Error getting data from service \n ${result.exception}")
+            when (val result = repository.getProducts(query)) {
+                is Success -> _status.value = MercadoApiStatus.DONE
+                is Error -> {
+                    _status.value = MercadoApiStatus.ERROR
+                    Timber.e("Error getting data from service \n ${result.exception}")
+                }
+                else ->
+                    _status.value = MercadoApiStatus.LOADING
             }
         }
     }

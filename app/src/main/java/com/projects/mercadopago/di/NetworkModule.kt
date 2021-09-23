@@ -27,11 +27,15 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(moshi: Moshi): Retrofit.Builder {
+    fun provideRetrofit(moshi: Moshi,url:String): Retrofit.Builder {
         return Retrofit.Builder()
             .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .baseUrl(BASE_URL)
+            .baseUrl(url)
     }
+
+    @Singleton
+    @Provides
+    fun provideUrl():String= BASE_URL
 
     @Singleton
     @Provides
