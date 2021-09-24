@@ -5,11 +5,7 @@ import com.projects.mercadopago.data.domain.Product
 import com.projects.mercadopago.data.network.MercadoApiStatus
 import com.projects.mercadopago.data.repository.ProductsRepository
 import com.projects.mercadopago.data.repository.ResultMercadoPago
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedFactory
-import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject

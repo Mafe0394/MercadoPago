@@ -42,13 +42,15 @@ fun ResponseModel.asDomainModel(): List<Product> {
     }
 }
 
-fun ResultModel.asDomainModel(): Product {
-    return Product(
-        productID = id,
-        title = title,
-        price = price,
-        image = thumbnail
-    )
+fun List<ResultModel>.asDomainModellist(): List<Product> {
+    return map {
+        Product(
+            productID = it.id,
+            title = it.title,
+            price = it.price,
+            image = it.thumbnail
+        )
+    }
 }
 
 /**
