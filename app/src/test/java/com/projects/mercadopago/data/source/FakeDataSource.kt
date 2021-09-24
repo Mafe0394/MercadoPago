@@ -16,7 +16,7 @@ import com.projects.mercadopago.data.repository.ResultMercadoPago.Error
 
 class FakeDataSource(
     private var productsRemote: MutableList<ResultModel>? = mutableListOf(),
-    private var productsDatabase: MutableList<DatabaseProduct>?= mutableListOf(),
+    private var productsDatabase: MutableList<DatabaseProduct>? = mutableListOf(),
 ) : ProductsDataSource {
 
     override fun observeProducts(): LiveData<ResultMercadoPago<List<Product>>> {
@@ -47,7 +47,26 @@ class FakeDataSource(
     }
 
     override suspend fun refreshProduct(productID: String): ResultMercadoPago<ProductDetailsResponse>? {
-        TODO("Not yet implemented")
+        try{
+            productsRemote?.filter {
+                productID == it.id
+            }?.get(0).let {
+                return Success(ProductDetailsResponse(
+                    id = it?.id,
+                    title = it?.title,
+                    price = it?.price,
+                    stopTime = it?.stopTime,
+                    condition = it?.condition,
+                    permalink = it?.permalink,
+                    thumbnail = it?.thumbnail,
+                    originalPrice = it?.originalPrice
+                ))
+            }
+        }catch (e:Exception) {
+            return Error(
+                Exception("Details not found")
+            )
+        }
     }
 
     override suspend fun saveProduct(product: DatabaseProduct) {

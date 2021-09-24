@@ -3,6 +3,7 @@ package com.projects.mercadopago.data.repository
 import com.projects.mercadopago.data.database.DatabaseProduct
 import com.projects.mercadopago.data.database.ProductsDatabase
 import com.projects.mercadopago.data.domain.Product
+import com.projects.mercadopago.data.domain.asDatabaseModel
 import com.projects.mercadopago.data.domain.asDomainModel
 import com.projects.mercadopago.data.domain.asDomainModellist
 import com.projects.mercadopago.data.network.networkModels.ResultModel
@@ -81,5 +82,12 @@ class ProductsRepositoryTest {
         val products=productsRepository.getVisitedProducts() as ResultMercadoPago.Success
 
         assertThat(products.data,IsEqual(localProducts.asDomainModel()))
+    }
+
+    @Test
+    fun getProductDetails_requestProductDetail()= runBlockingTest {
+        val product=productsRepository.getProduct(productID = "id2") as ResultMercadoPago.Success
+
+        assertThat(product.data.productID,IsEqual(remoteProducts.asDomainModellist()[1].productID))
     }
 }
