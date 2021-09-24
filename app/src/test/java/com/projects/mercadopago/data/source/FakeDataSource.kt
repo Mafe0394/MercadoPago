@@ -1,30 +1,45 @@
 package com.projects.mercadopago.data.source
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.projects.mercadopago.data.ProductsDataSource
 import com.projects.mercadopago.data.database.DatabaseProduct
 import com.projects.mercadopago.data.domain.Product
 import com.projects.mercadopago.data.domain.asDomainModel
+import com.projects.mercadopago.data.domain.asDomainModellist
 import com.projects.mercadopago.data.network.networkModels.ProductDetailsResponse
 import com.projects.mercadopago.data.network.networkModels.ResponseModel
+import com.projects.mercadopago.data.network.networkModels.ResultModel
 import com.projects.mercadopago.data.repository.ResultMercadoPago.Success
 import com.projects.mercadopago.data.repository.ResultMercadoPago
 import com.projects.mercadopago.data.repository.ResultMercadoPago.Error
 
-class FakeDataSource(var products: MutableList<Product>? = mutableListOf()):ProductsDataSource {
+class FakeDataSource(
+    private var productsRemote: MutableList<ResultModel>? = mutableListOf(),
+    private var productsDatabase: MutableList<DatabaseProduct>?= mutableListOf(),
+) : ProductsDataSource {
+
     override fun observeProducts(): LiveData<ResultMercadoPago<List<Product>>> {
-        TODO("Not yet implemented")
+        productsDatabase?.let { return MutableLiveData(Success(it.asDomainModel())) }
+        return MutableLiveData(
+            Error(
+                Exception("No productos in fake database")
+            ))
     }
 
     override suspend fun getProducts(): ResultMercadoPago<List<Product>>? {
-        products?.let { return Success(ArrayList(it)) }
+        productsDatabase?.let {
+            return Success(it.asDomainModel())
+        }
         return Error(
             Exception("Products not found")
         )
     }
 
     override suspend fun refreshProducts(query: String): ResultMercadoPago<ResponseModel>? {
-        TODO("Not yet implemented")
+        return productsRemote?.let {
+            Success(ResponseModel(results = it))
+        }
     }
 
     override fun observeVisitedProducts(): LiveData<ResultMercadoPago<List<Product>>> {
@@ -36,15 +51,16 @@ class FakeDataSource(var products: MutableList<Product>? = mutableListOf()):Prod
     }
 
     override suspend fun saveProduct(product: DatabaseProduct) {
-        products?.add(product.asDomainModel())
+        productsDatabase?.add(product)
     }
 
     override suspend fun deleteAllProducts() {
-        products?.clear()
+        productsDatabase?.clear()
     }
 
     override suspend fun saveProductsList(productsList: List<DatabaseProduct>) {
-        TODO("Not yet implemented")
+        productsDatabase?.clear()
+        productsDatabase?.addAll(productsList)
     }
 
     override suspend fun getProductDescription(productID: String): ResultMercadoPago<String>? {

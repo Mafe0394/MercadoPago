@@ -9,6 +9,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
@@ -20,14 +22,21 @@ object RepositoryModule {
     fun provideRepository(
         mercadoPagoLocal: ProductLocalDataSource,
         mercadoPagoNetwork: MercadoPagoNetwork,
+        ioDispatcher: CoroutineDispatcher
     ): IProductsRepository {
-        return ProductsRepository(mercadoPagoLocal, mercadoPagoNetwork)
+        return ProductsRepository(mercadoPagoLocal, mercadoPagoNetwork,ioDispatcher)
     }
 
     @Singleton
     @Provides
     fun provideIRepository(repository: ProductsRepository): IProductsRepository {
         return repository
+    }
+
+    @Singleton
+    @Provides
+    fun provideDispatcher(): CoroutineDispatcher {
+        return Dispatchers.IO
     }
 }
 

@@ -19,12 +19,13 @@ import javax.inject.Singleton
 @Singleton
 class ProductsRepository @Inject constructor(
     @MercadoPagoLocal val mercadoPagoLocal: ProductsDataSource,
-    @MercadoPagoService val mercadoPagoNetwork: ProductsDataSource
+    @MercadoPagoService val mercadoPagoNetwork: ProductsDataSource,
+    private val ioDispatcher:CoroutineDispatcher=Dispatchers.IO
 ) : IProductsRepository {
 
     override suspend fun getProducts(query: String): ResultMercadoPago<List<Product>>? {
         try {
-            withContext(Dispatchers.IO) {
+            withContext(ioDispatcher) {
                 getSearchProducts(query)
             }
         } catch (error: Exception) {
@@ -54,7 +55,7 @@ class ProductsRepository @Inject constructor(
 
     override suspend fun getProduct(
         productID: String,
-    ): ResultMercadoPago<Product> = withContext(Dispatchers.IO) {
+    ): ResultMercadoPago<Product> = withContext(ioDispatcher) {
         try {
             val product = mercadoPagoNetwork.refreshProduct(productID)
             if (product is Success) {
@@ -69,7 +70,7 @@ class ProductsRepository @Inject constructor(
     }
 
     override suspend fun getProductDescription(productID: String): ResultMercadoPago<String> =
-        withContext(Dispatchers.IO) {
+        withContext(ioDispatcher) {
             try {
                 val description = mercadoPagoNetwork.getProductDescription(productID)
                 if (description is Success)
@@ -83,7 +84,7 @@ class ProductsRepository @Inject constructor(
         }
 
     override suspend fun deleteAllProducts() {
-        withContext(Dispatchers.IO) {
+        withContext(ioDispatcher) {
             coroutineScope {
                 launch { mercadoPagoLocal.deleteAllProducts() }
             }
