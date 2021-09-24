@@ -68,7 +68,9 @@ class FakeDataSource(
     }
 
     override suspend fun getVisitedProducts(): ResultMercadoPago<List<Product>>? {
-        TODO("Not yet implemented")
+        return productsDatabase?.let {
+            Success(it.asDomainModel())
+        }
     }
 
     override suspend fun deleteVisitedProducts() {
