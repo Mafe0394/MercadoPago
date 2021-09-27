@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -18,11 +19,17 @@ import com.projects.mercadopago.databinding.FragmentResultsBinding
 import com.projects.mercadopago.util.ProductClick
 import com.projects.mercadopago.viewModels.ResultsViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 @AndroidEntryPoint
 class ResultsFragment : Fragment() {
 
+    private val productsAdapter by lazy {
+        ResultsAdapter(ProductClick {
+            Timber.i("${it.title}")
+        })
+    }
 
     private val viewModel by viewModels<ResultsViewModel> ()
 
@@ -42,7 +49,8 @@ class ResultsFragment : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        initializeRecyclerView()
+//        initializeRecyclerView()
+        initView()
 
         return binding.root
     }
@@ -91,5 +99,18 @@ class ResultsFragment : Fragment() {
             view?.findNavController() as NavController) || super.onOptionsItemSelected(item)
     }
 
+    private fun initView() {
+        // initial recyclerView
+        binding.resultsRecyclerView.adapter = productsAdapter
+        initObservers()
+    }
+
+    private fun initObservers() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.getProductsList().observe(viewLifecycleOwner, {
+                productsAdapter.submitData(lifecycle, it)
+            })
+        }
+    }
 
 }

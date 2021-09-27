@@ -41,18 +41,16 @@ class ResultsAdapter(private val callback: ProductClick) :
     }
 
     override fun onBindViewHolder(holder: HolderProductAdapter, position: Int) {
-        holder.bind(itemList[position], callback)
+        getItem(position)?.let { holder.bind(it, callback) }
     }
-
-    override fun getItemCount(): Int = itemList.size
 
     companion object DiffCallback : DiffUtil.ItemCallback<Product>() {
         override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean {
-            return oldItem === newItem
+            return oldItem.productID == newItem.productID
         }
 
         override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean {
-            return oldItem.productID == newItem.productID
+            return oldItem == newItem
         }
     }
 

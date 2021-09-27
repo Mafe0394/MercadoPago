@@ -35,7 +35,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:listData="@{viewModel.products}"
             android:clipToPadding="true"
             tools:listitem="@layout/holder_product_search"/>
         <ImageView

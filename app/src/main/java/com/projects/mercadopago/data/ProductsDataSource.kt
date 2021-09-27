@@ -29,4 +29,6 @@ interface ProductsDataSource {
     suspend fun getVisitedProducts():ResultMercadoPago<List<Product>>?
 
     suspend fun deleteVisitedProducts()
+
+    suspend fun getQueryWithOffset(query: String,offset:Int): ResponseModel
 }

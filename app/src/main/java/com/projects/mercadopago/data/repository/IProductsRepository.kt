@@ -1,6 +1,7 @@
 package com.projects.mercadopago.data.repository
 
 import androidx.lifecycle.LiveData
+import androidx.paging.PagingData
 import com.projects.mercadopago.data.domain.Product
 
 interface IProductsRepository {
@@ -22,4 +23,6 @@ interface IProductsRepository {
     suspend fun getProductDescription(productID:String):ResultMercadoPago<String>
 
     suspend fun deleteVisitedProducts()
+
+    suspend fun getProductsPaging(value: String?): LiveData<PagingData<Product>>
 }

@@ -91,5 +91,9 @@ class MercadoPagoNetwork  @Inject constructor(
         TODO("Not implemented")
     }
 
+    override suspend fun getQueryWithOffset(query: String, offset: Int):ResponseModel{
+        return retrofitService.getProductsByQueryWithOffset(query, offset)
+    }
+
 
 }

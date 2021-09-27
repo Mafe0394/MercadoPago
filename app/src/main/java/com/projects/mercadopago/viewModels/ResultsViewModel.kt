@@ -1,6 +1,8 @@
 package com.projects.mercadopago.viewModels
 
 import androidx.lifecycle.*
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.projects.mercadopago.data.domain.Product
 import com.projects.mercadopago.data.network.MercadoApiStatus
 import com.projects.mercadopago.data.repository.ProductsRepository
@@ -18,6 +20,13 @@ class ResultsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle?,
 ) : ViewModel() {
 
+    private val _productsList = MutableLiveData<PagingData<Product>>()
+
+    suspend fun getProductsList(): LiveData<PagingData<Product>> {
+        val response = repository.getProductsPaging(_query.value).cachedIn(viewModelScope)
+        _productsList.value = response.value
+        return response
+    }
 
 
     private val _status = MutableLiveData<MercadoApiStatus>()

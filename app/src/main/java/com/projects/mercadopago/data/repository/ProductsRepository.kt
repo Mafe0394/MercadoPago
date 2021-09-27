@@ -1,7 +1,13 @@
 package com.projects.mercadopago.data.repository
 
 import androidx.lifecycle.LiveData
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.liveData
+import com.projects.mercadopago.data.NETWORK_PAGE_SIZE
 import com.projects.mercadopago.data.ProductsDataSource
+import com.projects.mercadopago.data.ProductsPagingSource
 import com.projects.mercadopago.data.database.ProductsDatabase
 import com.projects.mercadopago.data.domain.Product
 import com.projects.mercadopago.data.domain.asDatabaseModel
@@ -22,6 +28,18 @@ class ProductsRepository @Inject constructor(
     @MercadoPagoService val mercadoPagoNetwork: ProductsDataSource,
     private val ioDispatcher:CoroutineDispatcher=Dispatchers.IO
 ) : IProductsRepository {
+
+    override suspend fun getProductsPaging(value: String?): LiveData<PagingData<Product>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = NETWORK_PAGE_SIZE,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = {
+                ProductsPagingSource(query = value?:"", mercadoPagoNetwork = mercadoPagoNetwork)
+            }
+        ).liveData
+    }
 
     override suspend fun getProducts(query: String): ResultMercadoPago<List<Product>>? {
         try {
