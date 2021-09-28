@@ -1,6 +1,7 @@
 package com.projects.mercadopago.viewModels
 
 import androidx.lifecycle.*
+import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.projects.mercadopago.data.domain.Product
@@ -24,11 +25,7 @@ class ResultsViewModel @Inject constructor(
     private val _status = MutableLiveData<MercadoApiStatus>()
     private val _query = MutableLiveData<String?>()
     private val _products = MutableLiveData<List<Product>?>()
-    private val _isEmptySearch = Transformations.switchMap(products) { list ->
-        Transformations.map(_status) { status ->
-            list?.isEmpty() == true && status == MercadoApiStatus.DONE
-        }
-    }
+    private val _isEmptySearch = MutableLiveData<Boolean>()
 
     val isEmptySearch: LiveData<Boolean>
         get() = _isEmptySearch
@@ -50,6 +47,18 @@ class ResultsViewModel @Inject constructor(
         val response = repository.getProductsPaging(_query.value).cachedIn(viewModelScope)
         _productsList.value = response.value
         return response
+    }
+
+    fun isLoading(state:LoadState){
+        when (state) {
+            is LoadState.Loading -> _status.value=MercadoApiStatus.LOADING
+            is LoadState.Error -> _status.value=MercadoApiStatus.ERROR
+            else -> _status.value=MercadoApiStatus.DONE
+        }
+    }
+
+    fun isEmptySearch(boolean: Boolean){
+        _isEmptySearch.value=boolean
     }
 
 }

@@ -95,4 +95,8 @@ class FakeDataSource(
     override suspend fun deleteVisitedProducts() {
         TODO("Not yet implemented")
     }
+
+    override suspend fun getQueryWithOffset(query: String, offset: Int): ResponseModel {
+        TODO("Not yet implemented")
+    }
 }

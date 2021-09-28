@@ -2,6 +2,7 @@ package com.projects.mercadopago.data.source
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.paging.PagingData
 import com.projects.mercadopago.data.domain.Product
 import com.projects.mercadopago.data.repository.IProductsRepository
 import com.projects.mercadopago.data.repository.ResultMercadoPago
@@ -60,6 +61,10 @@ class FakeTestRepository:IProductsRepository {
     }
 
     override suspend fun deleteVisitedProducts() {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getProductsPaging(value: String?): LiveData<PagingData<Product>> {
         TODO("Not yet implemented")
     }
 }

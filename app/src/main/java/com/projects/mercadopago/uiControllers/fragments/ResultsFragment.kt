@@ -36,7 +36,7 @@ class ResultsFragment : Fragment() {
         })
     }
 
-    private val viewModel by viewModels<ResultsViewModel> ()
+    private val viewModel by viewModels<ResultsViewModel>()
 
     private lateinit var binding: FragmentResultsBinding
 
@@ -65,17 +65,13 @@ class ResultsFragment : Fragment() {
         // initial recyclerView
         binding.resultsRecyclerView.adapter = productsAdapter
         initObservers()
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             productsAdapter.loadStateFlow.collectLatest { loadStates ->
-                Timber.i("Loading ${loadStates.refresh is LoadState.Loading}")
-                Timber.i("Retry ${loadStates.refresh !is LoadState.Loading}")
-                Timber.i("Error ${loadStates.refresh is LoadState.Error}")
+                viewModel.isLoading(loadStates.refresh)
+                viewModel.isEmptySearch(loadStates.refresh is LoadState.NotLoading
+                        && productsAdapter.itemCount == 0)
             }
         }
-//            // Only emit when REFRESH LoadState for RemoteMediator changes.
-//            .distinctUntilChangedBy { it.refresh }
-//            // Only react to cases where Remote REFRESH completes i.e., NotLoading.
-//            .map { it.refresh is LoadState.NotLoading }
     }
 
     private fun initObservers() {
