@@ -11,11 +11,9 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.projects.mercadopago.R
 import com.projects.mercadopago.adapters.MarginItemDecoration
-import com.projects.mercadopago.adapters.ResultsAdapter
 import com.projects.mercadopago.adapters.VisitedProductsAdapter
 import com.projects.mercadopago.data.domain.Product
 import com.projects.mercadopago.data.network.MercadoApiStatus
-import timber.log.Timber
 
 @BindingAdapter("imageUrl")
 fun ImageView.bindImage(imgUrl: String?) {
@@ -32,15 +30,6 @@ fun ImageView.bindImage(imgUrl: String?) {
             )
             .into(this)
     }
-}
-
-@BindingAdapter("listData")
-fun RecyclerView.bindRecyclerView(
-    data: List<Product>?,
-) {
-    val adapter = adapter as ResultsAdapter
-    addItemDecoration(MarginItemDecoration(context.resources.getDimensionPixelSize(R.dimen._2dp)))
-    adapter.submitList(data)
 }
 
 @BindingAdapter("listVisitedProducts")

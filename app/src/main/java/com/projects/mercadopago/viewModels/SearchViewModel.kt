@@ -63,16 +63,13 @@ class SearchViewModel @Inject constructor(
             when(val products = repository.getVisitedProducts()){
                 is ResultMercadoPago.Success->{
                     _visitedProducts.value = products.data
-                    Timber.i("Success ${products.data}")
                     _status.value = MercadoApiStatus.DONE
                 }
                 is ResultMercadoPago.Error->{
                     _status.value = MercadoApiStatus.ERROR
-                    Timber.i("Error ${products.exception}")
                 }
                 else->{
                     _status.value=MercadoApiStatus.LOADING
-                    Timber.i("Loading Data")
                 }
             }
         }

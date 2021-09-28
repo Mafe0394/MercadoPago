@@ -48,15 +48,14 @@ class DetailViewModel @Inject constructor(
                 val product = repository.getProduct(_productID.value ?: "")
                 if (product is ResultMercadoPago.Success) {
                     _productDetail.value = product.data
-                    Timber.i("product ${product.data}")
                     val description = repository.getProductDescription(productID)
                     if (description is ResultMercadoPago.Success)
                         _description.value = description.data
                     else if (description is ResultMercadoPago.Error)
-                        Timber.i("Error \n ${description.exception}")
+                        Timber.e("Error \n ${description.exception}")
                     _status.value = MercadoApiStatus.DONE
                 } else if (product is ResultMercadoPago.Error) {
-                    Timber.i("Error \n ${product.exception}")
+                    Timber.e("Error \n ${product.exception}")
                     _status.value = MercadoApiStatus.ERROR
                 }
 

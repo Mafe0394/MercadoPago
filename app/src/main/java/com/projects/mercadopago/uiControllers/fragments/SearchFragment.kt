@@ -77,7 +77,6 @@ class SearchFragment : Fragment() {
 
             this.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(p0: String?): Boolean {
-                    Timber.i("Submited $p0")
                     // Reset SearchView
 //                    viewModel.resetQuery()
                     viewModel.setIsExpanded(false)
@@ -93,7 +92,6 @@ class SearchFragment : Fragment() {
                 }
 
                 override fun onQueryTextChange(p0: String?): Boolean {
-                    Timber.i("Text changed $p0")
                     // Update Query in ViewModel
                     viewModel.setQuery(p0)
                     return true
@@ -116,14 +114,12 @@ class SearchFragment : Fragment() {
     private fun setSearchViewOnExpandListener(searchViewMenuItem: MenuItem) {
         searchViewMenuItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
             override fun onMenuItemActionExpand(p0: MenuItem?): Boolean {
-                Timber.i("expanded")
                 hideSoftKeyboard(hide = false)
                 viewModel.setIsExpanded(isExpanded = true)
                 return true
             }
 
             override fun onMenuItemActionCollapse(p0: MenuItem?): Boolean {
-                Timber.i("collapsed")
                 hideSoftKeyboard(hide = true)
                 viewModel.setIsExpanded(isExpanded = false)
                 return true

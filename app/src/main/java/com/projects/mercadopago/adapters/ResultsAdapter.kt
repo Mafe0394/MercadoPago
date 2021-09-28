@@ -13,14 +13,6 @@ import timber.log.Timber
 class ResultsAdapter(private val callback: ProductClick) :
     PagingDataAdapter<Product, ResultsAdapter.HolderProductAdapter>(
         DiffCallback) {
-
-    private lateinit var itemList: List<Product>
-
-    fun submitList(items: List<Product>?) {
-        itemList = items ?: ArrayList()
-        Timber.i("Recycler search results ${if (items?.isNotEmpty() == true)itemList[0].title else "Empty"}")
-    }
-
     class HolderProductAdapter(private var binding: HolderProductSearchBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(product: Product, callback: ProductClick) {
@@ -41,7 +33,10 @@ class ResultsAdapter(private val callback: ProductClick) :
     }
 
     override fun onBindViewHolder(holder: HolderProductAdapter, position: Int) {
-        getItem(position)?.let { holder.bind(it, callback) }
+        Timber.i("$position")
+        getItem(position)?.let {
+            holder.bind(it, callback)
+        }
     }
 
     companion object DiffCallback : DiffUtil.ItemCallback<Product>() {
