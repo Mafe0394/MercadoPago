@@ -4,7 +4,6 @@ import androidx.lifecycle.*
 import com.projects.mercadopago.data.domain.Product
 import com.projects.mercadopago.data.network.MercadoApiStatus
 import com.projects.mercadopago.data.repository.IProductsRepository
-import com.projects.mercadopago.data.repository.ProductsRepository
 import com.projects.mercadopago.data.repository.ResultMercadoPago
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

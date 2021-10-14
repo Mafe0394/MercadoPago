@@ -1,9 +1,7 @@
 package com.projects.mercadopago.uiControllers.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.view.*
-import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -12,6 +10,7 @@ import com.projects.mercadopago.R
 import com.projects.mercadopago.adapters.VisitedProductsAdapter
 import com.projects.mercadopago.data.repository.ResultMercadoPago
 import com.projects.mercadopago.databinding.FragmentSearchBinding
+import com.projects.mercadopago.uiControllers.activities.MainActivity
 import com.projects.mercadopago.util.ProductClick
 import com.projects.mercadopago.viewModels.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -80,15 +79,15 @@ class SearchFragment : Fragment() {
                 override fun onQueryTextSubmit(p0: String?): Boolean {
                     // Reset SearchView
 //                    viewModel.resetQuery()
-                    viewModel.setIsExpanded(false)
-
                     // Go to Results Fragment to show results
+                    viewModel.setIsExpanded(false)
                     if (this@SearchFragment.isVisible)
                         findNavController().navigate(
                             SearchFragmentDirections.actionSearchFragmentToResultsFragment(
                                 p0 ?: ""
                             )
                         )
+
                     return false
                 }
 
@@ -115,13 +114,14 @@ class SearchFragment : Fragment() {
     private fun setSearchViewOnExpandListener(searchViewMenuItem: MenuItem) {
         searchViewMenuItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
             override fun onMenuItemActionExpand(p0: MenuItem?): Boolean {
-                hideSoftKeyboard(hide = false)
+                (activity as MainActivity).hideSoftKeyboard(hide = false)
+                searchViewMenuItem.actionView.requestFocus()
                 viewModel.setIsExpanded(isExpanded = true)
                 return true
             }
 
             override fun onMenuItemActionCollapse(p0: MenuItem?): Boolean {
-                hideSoftKeyboard(hide = true)
+                (activity as MainActivity).hideSoftKeyboard(hide = true)
                 viewModel.setIsExpanded(isExpanded = false)
                 return true
             }
@@ -129,15 +129,7 @@ class SearchFragment : Fragment() {
         })
     }
 
-    private fun hideSoftKeyboard(hide: Boolean) {
-        activity?.let {
-            val imm = it.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-            if (hide)
-                imm?.hideSoftInputFromWindow(it.currentFocus?.windowToken, 0)
-            else
-                imm?.showSoftInput(it.currentFocus, 0)
-        }
-    }
+
 
 
 }

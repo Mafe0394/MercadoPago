@@ -7,7 +7,6 @@ import com.projects.mercadopago.data.domain.Product
 import com.projects.mercadopago.data.domain.ProductDetail
 import com.projects.mercadopago.data.repository.IProductsRepository
 import com.projects.mercadopago.data.repository.ResultMercadoPago
-import kotlinx.coroutines.runBlocking
 
 class FakeTestRepository : IProductsRepository {
 

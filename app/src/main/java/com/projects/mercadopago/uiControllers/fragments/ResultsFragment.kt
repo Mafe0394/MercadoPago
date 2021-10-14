@@ -1,10 +1,12 @@
 package com.projects.mercadopago.uiControllers.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -15,6 +17,7 @@ import androidx.navigation.ui.NavigationUI
 import androidx.paging.LoadState
 import com.projects.mercadopago.adapters.ResultsAdapter
 import com.projects.mercadopago.databinding.FragmentResultsBinding
+import com.projects.mercadopago.uiControllers.activities.MainActivity
 import com.projects.mercadopago.util.ProductClick
 import com.projects.mercadopago.viewModels.ResultsViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -46,6 +49,8 @@ class ResultsFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         binding = FragmentResultsBinding.inflate(inflater)
+
+        (activity as MainActivity).hideSoftKeyboard(true)
 
         setHasOptionsMenu(true)
 

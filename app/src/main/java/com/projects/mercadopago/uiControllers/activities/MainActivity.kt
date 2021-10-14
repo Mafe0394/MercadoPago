@@ -1,7 +1,9 @@
 package com.projects.mercadopago.uiControllers.activities
 
 import android.app.Activity
+import android.content.Context
 import android.os.Bundle
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -31,9 +33,14 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp() || super.onSupportNavigateUp()
 
     }
-}
 
-// Keys for navigation
-const val ADD_EDIT_RESULT_OK = Activity.RESULT_FIRST_USER + 1
-const val DELETE_RESULT_OK = Activity.RESULT_FIRST_USER + 2
-const val EDIT_RESULT_OK = Activity.RESULT_FIRST_USER + 3
+
+    fun hideSoftKeyboard(hide: Boolean) {
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+            if (hide)
+                imm?.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
+            else
+                imm?.showSoftInput(currentFocus, 0)
+
+    }
+}
