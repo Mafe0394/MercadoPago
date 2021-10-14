@@ -12,7 +12,7 @@ interface ProductDao {
     * This method returns LiveData, so that the data displayed in the UI is refreshed
     * whenever the data in the database is changed*/
     @Query("select * from databaseproduct")
-    fun getProductsFromDatabase(): List<DatabaseProduct>
+    suspend fun getProductsFromDatabase(): List<DatabaseProduct>
 
     @Query("select * from databaseproduct")
     fun observeProducts(): LiveData<List<DatabaseProduct>>

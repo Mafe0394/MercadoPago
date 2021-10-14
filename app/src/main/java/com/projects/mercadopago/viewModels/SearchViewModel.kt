@@ -3,6 +3,7 @@ package com.projects.mercadopago.viewModels
 import androidx.lifecycle.*
 import com.projects.mercadopago.data.domain.Product
 import com.projects.mercadopago.data.network.MercadoApiStatus
+import com.projects.mercadopago.data.repository.IProductsRepository
 import com.projects.mercadopago.data.repository.ProductsRepository
 import com.projects.mercadopago.data.repository.ResultMercadoPago
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val repository: ProductsRepository,
+    private val repository: IProductsRepository,
     private val savedStateHandle: SavedStateHandle?,
 ) :
     ViewModel() {
@@ -21,14 +22,12 @@ class SearchViewModel @Inject constructor(
     private val _isExpanded = MutableLiveData(false)
     private val _visitedProducts = MutableLiveData<List<Product>?>()
     private val _status = MutableLiveData<MercadoApiStatus>()
-    var complete = repository.observeVisitedProducts().map {
-        if (it is ResultMercadoPago.Success)
-            it.data
+    var complete = repository.observeVisitedProducts()
+    private val _emptyList = repository.observeVisitedProducts().map {
+        if(it is ResultMercadoPago.Success)
+            it.data.isNullOrEmpty()
         else
-            ArrayList()
-    }
-    private val _emptyList = _visitedProducts.map {
-        it.isNullOrEmpty()
+            false
     }
     var isLoading = _status.map {
         it == MercadoApiStatus.DONE

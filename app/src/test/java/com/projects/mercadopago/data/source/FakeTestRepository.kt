@@ -4,67 +4,96 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagingData
 import com.projects.mercadopago.data.domain.Product
+import com.projects.mercadopago.data.domain.ProductDetail
 import com.projects.mercadopago.data.repository.IProductsRepository
 import com.projects.mercadopago.data.repository.ResultMercadoPago
 import kotlinx.coroutines.runBlocking
 
-class FakeTestRepository:IProductsRepository {
+class FakeTestRepository : IProductsRepository {
 
-    // Variable representing the current list of tasks
-    var productsServidata: LinkedHashMap<String, Product> = LinkedHashMap()
+    private val visitedProducts = mutableListOf<Product>()
+    private val searchResults = mutableListOf<Product>()
 
-    private val observableProducts = MutableLiveData<ResultMercadoPago<List<Product>>>()
+    private val observableVisitedProducts =
+        MutableLiveData<ResultMercadoPago<List<Product>>>(ResultMercadoPago.Success(visitedProducts))
+    private val observableSearchResults =
+        MutableLiveData<ResultMercadoPago<List<Product>>>(ResultMercadoPago.Success(searchResults))
+    private val productDetail = MutableLiveData<ProductDetail>()
 
-    // To test is better to have some tasks already in our repository,
-    // Instead of calling saveTask, we can add a helper method specifically for tests
-    // that lets us add tasks
-    fun addTasks(vararg  products:Product){
-        for(product in products){
-            productsServidata[product.productID]=product
-        }
-        runBlocking { refreshProducts() }
+    private var shouldReturnError = false
+
+    fun setShouldErrorError(value: Boolean) {
+        shouldReturnError = value
     }
 
-    override suspend fun getProducts(query: String): ResultMercadoPago<List<Product>>? {
-        return ResultMercadoPago.Success(productsServidata.values.toList())
+    private fun refreshLiveData() {
+        observableVisitedProducts.postValue(ResultMercadoPago.Success(visitedProducts))
+        observableSearchResults.postValue(ResultMercadoPago.Success(searchResults))
+    }
+
+    override suspend fun getProducts(query: String): ResultMercadoPago<List<Product>> {
+        return if (shouldReturnError)
+            ResultMercadoPago.Error(Exception("Error Test"))
+        else {
+            val resultList = listOf(
+                Product(
+                    "ProductID",
+                    "title",
+                    50000,
+                    "ImageUrl"
+                )
+            )
+            searchResults.addAll(resultList)
+            refreshLiveData()
+            ResultMercadoPago.Success(
+                resultList
+            )
+        }
     }
 
     override fun observeVisitedProducts(): LiveData<ResultMercadoPago<List<Product>>> {
-        TODO("Not yet implemented")
+        return observableVisitedProducts
     }
 
     override fun observeProducts(): LiveData<ResultMercadoPago<List<Product>>> {
-        runBlocking {
-            refreshProducts()
-        }
-        return observableProducts
+        return observableSearchResults
     }
 
     override suspend fun refreshProducts() {
-        observableProducts.value = getProducts("query")
     }
 
-    override suspend fun getVisitedProducts(): ResultMercadoPago<List<Product>>? {
-        TODO("Not yet implemented")
+    override suspend fun getVisitedProducts(): ResultMercadoPago<List<Product>> {
+        return ResultMercadoPago.Success(visitedProducts)
     }
 
     override suspend fun getProduct(productID: String): ResultMercadoPago<Product> {
-        TODO("Not yet implemented")
+        val product = Product(
+            productID,
+            "title2",
+            50,
+            "url2"
+        )
+        visitedProducts.add(product)
+
+        return ResultMercadoPago.Success(product)
     }
 
     override suspend fun deleteAllProducts() {
-        TODO("Not yet implemented")
+        searchResults.removeAll { true }
     }
 
     override suspend fun getProductDescription(productID: String): ResultMercadoPago<String> {
-        TODO("Not yet implemented")
+        return if (shouldReturnError)
+            ResultMercadoPago.Error(Exception("Error in Test"))
+        else
+            ResultMercadoPago.Success("$productID description for test")
     }
 
     override suspend fun deleteVisitedProducts() {
-        TODO("Not yet implemented")
+        visitedProducts.removeAll { true }
     }
 
     override suspend fun getProductsPaging(value: String?): LiveData<PagingData<Product>> {
-        TODO("Not yet implemented")
+        return MutableLiveData()
     }
 }

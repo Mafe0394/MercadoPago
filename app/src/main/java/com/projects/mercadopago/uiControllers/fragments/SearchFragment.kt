@@ -10,11 +10,11 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.projects.mercadopago.R
 import com.projects.mercadopago.adapters.VisitedProductsAdapter
+import com.projects.mercadopago.data.repository.ResultMercadoPago
 import com.projects.mercadopago.databinding.FragmentSearchBinding
 import com.projects.mercadopago.util.ProductClick
 import com.projects.mercadopago.viewModels.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class SearchFragment : Fragment() {
@@ -45,7 +45,8 @@ class SearchFragment : Fragment() {
 
     private fun initializeObservers() {
         viewModel.complete.observe(viewLifecycleOwner, {
-            viewModel.setLitVisitedProducts(it)
+            if(it is ResultMercadoPago.Success)
+                viewModel.setLitVisitedProducts(it.data)
         })
     }
 

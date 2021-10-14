@@ -6,6 +6,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.projects.mercadopago.data.domain.Product
 import com.projects.mercadopago.data.network.MercadoApiStatus
+import com.projects.mercadopago.data.repository.IProductsRepository
 import com.projects.mercadopago.data.repository.ProductsRepository
 import com.projects.mercadopago.data.repository.ResultMercadoPago
 import com.projects.mercadopago.data.repository.ResultMercadoPago.Error
@@ -17,7 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ResultsViewModel @Inject constructor(
-    private val repository: ProductsRepository,
+    private val repository: IProductsRepository,
     savedStateHandle: SavedStateHandle?,
 ) : ViewModel() {
 

@@ -3,6 +3,7 @@ package com.projects.mercadopago.viewModels
 import androidx.lifecycle.*
 import com.projects.mercadopago.data.domain.Product
 import com.projects.mercadopago.data.network.MercadoApiStatus
+import com.projects.mercadopago.data.repository.IProductsRepository
 import com.projects.mercadopago.data.repository.ProductsRepository
 import com.projects.mercadopago.data.repository.ResultMercadoPago
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
-    private val repository: ProductsRepository,
+    private val repository: IProductsRepository,
     savedStateHandle: SavedStateHandle?,
 ) : ViewModel() {
 

@@ -23,7 +23,7 @@ class FakeDataSource(
         productsDatabase?.let { return MutableLiveData(Success(it.asDomainModel())) }
         return MutableLiveData(
             Error(
-                Exception("No productos in fake database")
+                Exception("No products in fake database")
             ))
     }
 

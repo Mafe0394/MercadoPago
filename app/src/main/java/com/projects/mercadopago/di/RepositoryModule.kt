@@ -29,23 +29,12 @@ object RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideIRepository(repository: ProductsRepository): IProductsRepository {
-        return repository
-    }
-
-    @Singleton
-    @Provides
     fun provideDispatcher(): CoroutineDispatcher {
         return Dispatchers.IO
     }
 }
 
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class RepositoryModule2 {
-    @Binds
-    abstract fun bindMercadoPagoRepository(mercadoPagoNetwork: ProductsRepository): IProductsRepository
-}
+
 
 
 
